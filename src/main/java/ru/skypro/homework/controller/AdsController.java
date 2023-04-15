@@ -185,7 +185,7 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
             })
     @GetMapping(value = "/me")
-    public ResponseEntity<ResponseWrapperAds> getAdsMe(@NotNull Authentication authentication) {
+    public ResponseEntity<ResponseWrapperAds> getAdsMe(@RequestBody Authentication authentication) {
         List<Ads> adsList = new ArrayList<>();
         ResponseWrapperAds ads = new ResponseWrapperAds(adsList);
         return ResponseEntity.ok(ads);
