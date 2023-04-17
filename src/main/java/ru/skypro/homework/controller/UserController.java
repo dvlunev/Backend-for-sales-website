@@ -14,10 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.User;
 
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Пользователи")
-//@CrossOrigin(value = "http://localhost:3000")
+
 public class UserController {
 
 
@@ -98,7 +99,6 @@ public class UserController {
         User user = new User();
         return ResponseEntity.ok().body(user);
     }
-
 
     @Operation(
             summary = "Изменение данных пользователя",
