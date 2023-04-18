@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.Collection;
 
 @Data
-public class ResponseWrapperAds {
+public class ResponseWrapperAdsDto {
     private int count;
-    private Collection<Ads> results;
+    private Collection<AdsDto> results;
 
-    public ResponseWrapperAds(Collection<Ads> results) {
+    public ResponseWrapperAdsDto(Collection<AdsDto> results) {
         this.count = results.size();
         this.results = results;
     }

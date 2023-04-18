@@ -5,14 +5,15 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class FullAds {
+public class FullAdsDto {
+    private int id;
     private String authorFirstName;
     private String authorLastName;
-    private String description;
     private String email;
-    private List<String> image;
     private String phone;
-    private Integer pk;
-    private Integer price;
     private String title;
+    private String description;
+    private String image;//ссылка на картинку объявления
+    private int price;
+
 }

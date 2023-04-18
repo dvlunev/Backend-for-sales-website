@@ -11,18 +11,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.NewPassword;
-import ru.skypro.homework.dto.User;
+import ru.skypro.homework.dto.NewPasswordDto;
+import ru.skypro.homework.dto.UserDto;
 
+//@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Пользователи")
-//@CrossOrigin(value = "http://localhost:3000")
+
 public class UserController {
 
 
     @Operation(
-            summary = "Изменение пароля",
+            summary = "Обновление пароля",
             description = "Изменение пароля пользователя из тела запроса"
     )
     @ApiResponses(value = {
@@ -33,7 +34,7 @@ public class UserController {
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = NewPassword.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = NewPasswordDto.class))
                             )
                     }
             ),
@@ -55,14 +56,14 @@ public class UserController {
     }
     )
     @PostMapping("/set_password")
-    public ResponseEntity<NewPassword> setPassword(@RequestBody NewPassword passwords) {
-        NewPassword newPassword = new NewPassword();
+    public ResponseEntity<NewPasswordDto> setPassword(@RequestBody NewPasswordDto passwords) {
+        NewPasswordDto newPassword = new NewPasswordDto();
         return ResponseEntity.ok().body(newPassword);
     }
 
 
     @Operation(
-            summary = "Получение данных пользователя"
+            summary = "Получить информацию об авторизованном пользователе"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -72,7 +73,7 @@ public class UserController {
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = User.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class))
                             )
                     }
             ),
@@ -94,14 +95,13 @@ public class UserController {
     }
     )
     @GetMapping("/me")
-    public ResponseEntity<User> getUser() {
-        User user = new User();
+    public ResponseEntity<UserDto> getUser() {
+        UserDto user = new UserDto();
         return ResponseEntity.ok().body(user);
     }
 
-
     @Operation(
-            summary = "Изменение данных пользователя",
+            summary = "Обновить информацию об авторизованном пользователе",
             description = "Обновление данных пользователя из тела запроса"
     )
     @ApiResponses(value = {
@@ -112,7 +112,7 @@ public class UserController {
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = User.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class))
                             )
                     }
             ),
@@ -139,13 +139,13 @@ public class UserController {
     }
     )
     @PatchMapping("/me")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        User newuser = new User();
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
+        UserDto newuser = new UserDto();
         return ResponseEntity.ok().body(newuser);
     }
 
     @Operation(
-            summary = "Изменение изображения пользователя",
+            summary = "Обновить аватар авторизованного пользователя",
             description = "Обновление изображения пользователя из тела запроса"
     )
     @ApiResponses(value = {
