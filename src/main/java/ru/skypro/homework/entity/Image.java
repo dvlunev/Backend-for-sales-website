@@ -1,13 +1,10 @@
 package ru.skypro.homework.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -15,10 +12,9 @@ import javax.validation.constraints.NotNull;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
-    @NotNull
+    @Column(nullable = false)
     private int id;
 
-    @Column(name = "image_link", length = 200)
+    @Column(name = "image_link", length = 200, nullable = false)
     private String imageLink;
 }
