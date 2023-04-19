@@ -32,8 +32,9 @@ public class User {
     @Column(length = 15)
     private String phone;
 
-    @Column(name = "image_id")
-    private int imageId;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @Column(length = 50)
     private String password;

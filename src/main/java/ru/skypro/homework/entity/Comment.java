@@ -19,11 +19,13 @@ public class Comment {
     @NotNull
     private int id;
 
-    @Column(name = "ad_id")
-    private int adId; //id объявления
+    @ManyToOne
+    @JoinColumn(name = "ad_id")
+    private Ad ad;
 
-    @Column(name = "author_id")
-    private int authorId; //id автора комментария
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
     @Column(name = "ad_date", length = 25)
     private String createdAt; //дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
