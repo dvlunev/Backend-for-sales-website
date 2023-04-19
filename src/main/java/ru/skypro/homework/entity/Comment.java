@@ -1,13 +1,11 @@
 package ru.skypro.homework.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -15,21 +13,20 @@ import javax.validation.constraints.NotNull;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    @NotNull
+    @Column (nullable = false)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "ad_id")
+    @JoinColumn(name = "ad_id", nullable = false)
     private Ad ad;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
-    @Column(name = "ad_date", length = 25)
+    @Column(name = "ad_date", length = 25, nullable = false)
     private String createdAt; //дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
 
-    @Column(length = 1000)
+    @Column(length = 1000, nullable = false)
     private String text;
 }

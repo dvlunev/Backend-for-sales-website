@@ -1,38 +1,47 @@
 package ru.skypro.homework.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "ad")
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    @NotNull
+    @Column (nullable = false)
     private int id;
 
     @ManyToOne
-    @JoinColumn (name = "author_id")
+    @JoinColumn (name = "author_id", nullable = false)
     private User author;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String title;
 
     @Column(length = 500)
     private String description;
 
     @OneToOne
-    @JoinColumn(name = "image_id")
+   @JoinColumn(name = "image_id")
     private Image image;
 
-    @Column
+    @Column (nullable = false)
     private int price;
+
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments =new ArrayList<>();
+
+    public Ad(int id, User author, String title, String description, Image image, int price) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.description = description;
+       this.image = image;
+        this.price = price;
+    }
 }
