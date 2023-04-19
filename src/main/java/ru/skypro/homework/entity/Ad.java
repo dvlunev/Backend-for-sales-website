@@ -19,8 +19,9 @@ public class Ad {
     @NotNull
     private int id;
 
-    @Column(name = "author_id")
-    private int authorId;
+    @ManyToOne
+    @JoinColumn (name = "author_id")
+    private User author;
 
     @Column(length = 50)
     private String title;
@@ -28,8 +29,9 @@ public class Ad {
     @Column(length = 500)
     private String description;
 
-    @Column(name = "image_id")
-    private int imageId;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @Column
     private int price;
