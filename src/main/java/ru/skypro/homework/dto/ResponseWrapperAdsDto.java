@@ -6,6 +6,7 @@ import java.util.Collection;
 
 @Data
 public class ResponseWrapperAdsDto {
+    //общее количество объявлений
     private int count;
     private Collection<AdsDto> results;
 
