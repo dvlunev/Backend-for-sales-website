@@ -1,0 +1,9 @@
+databaseChangeLog:
+   - include:
+        file: liquibase/scripts/image.xml
+   - include:
+      file: liquibase/scripts/user.xml
+   - include:
+      file: liquibase/scripts/ad.xml
+   - include:
+      file: liquibase/scripts/comment.xml
