@@ -20,7 +20,7 @@ public class Ad {
     @JoinColumn (name = "author_id", nullable = false)
     private User author;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 32, nullable = false)
     private String title;
 
     @Column(length = 500)
