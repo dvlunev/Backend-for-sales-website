@@ -1,16 +1,34 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import ru.skypro.homework.dto.AdsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.CommentDto;
-import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
-@Mapper(componentModel = "spring")
-public interface CommentMapper {
-//    CommentDto MAPPER = Mappers.getMapper(CommentDto.class);
+import ru.skypro.homework.repository.CommentRepository;
 
-    CommentDto mapToCommentDto(Comment comment);
+public class CommentMapper {
+    @Autowired
+    private static CommentRepository commentRepository;
+    public static CommentDto mapToCommentDto(Comment comment){
+        CommentDto commentDto = new CommentDto();
+        commentDto.setId(comment.getId());
+        commentDto.setAuthor(comment.getAuthor().getId());
+        commentDto.setAuthorImage(comment.getAuthor().getImage().getImageLink());
+        commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
+        commentDto.setCreatedAt(comment.getCreatedAt());
+        commentDto.setText(comment.getText());
+        return commentDto;
+    }
 
-    Comment mapToComment(CommentDto commentDto);
+    public static Comment mapToComment(CommentDto commentDto){
+        Comment mappedComment = new Comment();
+        if(commentRepository.existsById((long) commentDto.getId())){
+            mappedComment = commentRepository.getReferenceById((long) commentDto.getId());
+        }
+        mappedComment.getAuthor().setId(commentDto.getAuthor());
+        mappedComment.getAuthor().getImage().setImageLink(commentDto.getAuthorImage());
+        mappedComment.getAuthor().setFirstName(commentDto.getAuthorFirstName());
+        mappedComment.setCreatedAt(commentDto.getCreatedAt());
+        mappedComment.setText(commentDto.getText());
+        return mappedComment;
+    }
 }

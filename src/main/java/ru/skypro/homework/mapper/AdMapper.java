@@ -1,14 +1,36 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.AdsDto;
-import org.mapstruct.factory.Mappers;
+import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.Ad;
-@Mapper(componentModel = "spring", uses = {UserMapper.class,ImageMapper.class})
-public interface AdMapper {
-//    AdsDto MAPPER = Mappers.getMapper(AdsDto.class);
+import ru.skypro.homework.repository.AdRepository;
 
-    AdsDto mapToAdsDto(Ad ad);
+public class AdMapper {
+    @Autowired
+    private static AdRepository adRepository;
 
-    Ad mapToAd(AdsDto adsDto);
+    public static AdsDto mapToUserDto(Ad ad) {
+
+        AdsDto adsDto = new AdsDto();
+
+        adsDto.setId(ad.getId());
+        adsDto.setAuthor(ad.getAuthor().getId());
+        adsDto.setPrice(ad.getPrice());
+        adsDto.setImage(ad.getImage().getImageLink());
+        adsDto.setTitle(ad.getTitle());
+        return adsDto;
+    }
+
+    public static Ad mapToUserDto(AdsDto adsDto) {
+        Ad mappedAd = new Ad();
+        if(adRepository.existsById((long) adsDto.getId())){
+            mappedAd = adRepository.getReferenceById((long) adsDto.getId());
+        }
+        mappedAd.getAuthor().setId(adsDto.getAuthor());
+        mappedAd.setPrice(adsDto.getPrice());
+        mappedAd.getImage().setImageLink(adsDto.getImage());
+        mappedAd.setTitle(adsDto.getTitle());
+        return mappedAd;
+    }
 }

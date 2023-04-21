@@ -1,16 +1,37 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import ru.skypro.homework.dto.AdsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.UserDto;
-import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.User;
-@Mapper(componentModel = "spring",uses = {UserMapper.class})
-public interface UserMapper {
-//    ImageMapper MAPPER = Mappers.getMapper(ImageMapper.class);
+import ru.skypro.homework.repository.UserRepository;
 
-    UserDto mapToUserDto(User user);
 
-    User mapToUser(UserDto userDto);
+public class UserMapper {
+    @Autowired
+    private static UserRepository userRepository;
+
+    public static UserDto mapToUserDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setPhone(user.getPhone());
+        userDto.setImage(user.getImage().getImageLink());
+        return userDto;
+    }
+
+    public User mapToUser(UserDto userDto) {
+        User mappedUser = new User();
+        if (userRepository.existsById((long) userDto.getId())) {
+            mappedUser = userRepository.getReferenceById((long) userDto.getId());
+        }
+        mappedUser.setEmail(userDto.getEmail());
+        mappedUser.setFirstName(userDto.getFirstName());
+        mappedUser.setLastName(userDto.getLastName());
+        mappedUser.setPhone(userDto.getPhone());
+        mappedUser.getImage().setImageLink(userDto.getImage());
+        userRepository.save(mappedUser);
+        return mappedUser;
+    }
 }
