@@ -6,6 +6,7 @@ import java.util.Collection;
 
 @Data
 public class ResponseWrapperCommentDto {
+    //общее количество комментариев
     private int count;
     private Collection<CommentDto> results;
 

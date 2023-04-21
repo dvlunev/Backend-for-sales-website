@@ -1,6 +1,7 @@
 package ru.skypro.homework.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,32 +28,10 @@ public class UserController {
             description = "Изменение пароля пользователя из тела запроса"
     )
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK. Установлен новый пароль",
-
-                    content = {
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = NewPasswordDto.class))
-                            )
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = {@Content()}
-            )
+            @ApiResponse(responseCode = "200", description = "OK. Установлен новый пароль"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
     }
     )
     @PostMapping("/set_password")
@@ -69,7 +48,6 @@ public class UserController {
             @ApiResponse(
                     responseCode = "200",
                     description = "OK. Данные пользователя получены",
-
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -77,21 +55,9 @@ public class UserController {
                             )
                     }
             ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = {@Content()}
-            )
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
     }
     )
     @GetMapping("/me")
@@ -116,26 +82,10 @@ public class UserController {
                             )
                     }
             ),
-            @ApiResponse(
-                    responseCode = "204",
-                    description = "No Content",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = {@Content()}
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = {@Content()}
-            )
+            @ApiResponse(responseCode = "204", description = "No Content", content = {@Content()}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
     }
     )
     @PatchMapping("/me")
@@ -154,15 +104,13 @@ public class UserController {
                     description = "OK. Изображение пользователя обновлено",
                     content = {@Content()}
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = {@Content()}
-            )
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
     }
     )
     @PatchMapping(value ="/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateUserImage(@RequestBody MultipartFile image) {
+    public ResponseEntity<?> updateUserImage(
+            @Parameter(schema = @Schema(type = "string", format = "binary"))
+            @RequestBody MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 }
