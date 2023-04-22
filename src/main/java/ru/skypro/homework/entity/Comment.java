@@ -4,6 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Класс, описывающий комментарий
+ * @see Ad
+ * @see User
+ */
 @Getter
 @Setter
 @NoArgsConstructor
