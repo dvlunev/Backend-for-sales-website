@@ -2,12 +2,16 @@ package ru.skypro.homework.dto;
 
 import lombok.Data;
 
-
 @Data
 public class AdsDto {
+    //id объявления
     private int id;
-    private int author; //id автора объявления
-    private String image; //ссылка на картинку объявления
+    //id автора объявления
+    private int author;
+    //ссылка на картинку объявления
+    private String image;
+    //цена объявления
     private int price;
+    //заголовок объявления
     private String title;
 }

@@ -3,6 +3,10 @@ package ru.skypro.homework.entity;
 import lombok.*;
 import javax.persistence.*;
 
+/**
+ * Класс, описывающий изображения
+ Содержит аватары для пользователя {@link User} и фото для объявлений {@link Ad}
+ */
 @Getter
 @Setter
 @NoArgsConstructor

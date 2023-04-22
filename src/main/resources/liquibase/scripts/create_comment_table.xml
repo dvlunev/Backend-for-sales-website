@@ -5,7 +5,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="7" author="tamara">
+    <changeSet id="create_comment_table.1" author="tamara">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="comment"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="comment">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -23,14 +29,10 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-
-    <changeSet id="8" author="tamara">
-        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="ad_id" constraintName="fk_comment_ad_id"
-                                 referencedTableName="ad" referencedColumnNames="id"/>
-    </changeSet>
-
-    <changeSet id="9" author="tamara">
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="ad_id"
+                                 constraintName="fk_comment_ad_id"
+                                 referencedTableName="ad" referencedColumnNames="id"
+                                 onDelete="CASCADE" onUpdate="CASCADE"/>
         <addForeignKeyConstraint baseTableName="comment" baseColumnNames="author_id"
                                  constraintName="fk_comment_author_id"
                                  referencedTableName="site_user" referencedColumnNames="id"/>
