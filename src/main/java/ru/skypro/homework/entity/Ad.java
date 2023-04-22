@@ -32,7 +32,7 @@ public class Ad {
     private String description;
 
     @OneToOne
-   @JoinColumn(name = "image_id")
+    @JoinColumn(name = "image_id")
     private Image image;
 
     @Column(nullable = false)
