@@ -15,11 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
 
-//@CrossOrigin(value = "http://localhost:3000")
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Пользователи")
-
 public class UserController {
 
 
@@ -110,7 +109,7 @@ public class UserController {
     @PatchMapping(value ="/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(
             @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestBody MultipartFile image) {
+            @RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 }

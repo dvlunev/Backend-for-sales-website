@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/ads")
 public class AdsController {
@@ -43,7 +45,8 @@ public class AdsController {
             summary = "Добавить объявление",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created", content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AdsDto.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDto.class))
                     }),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
@@ -54,11 +57,11 @@ public class AdsController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(
             @Parameter(required = true)
-            @ModelAttribute CreateAdsDto properties,
+            @RequestPart CreateAdsDto properties,
             @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestBody MultipartFile image) {
+            @RequestPart MultipartFile image) {
         AdsDto ad = new AdsDto();
-        return ResponseEntity.status(201).body(ad);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ad);
     }
 
     @Operation(
@@ -241,7 +244,7 @@ public class AdsController {
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestBody MultipartFile image) {
+            @RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 }

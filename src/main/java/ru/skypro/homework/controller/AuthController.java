@@ -22,8 +22,8 @@ import ru.skypro.homework.service.AuthService;
 
 import static ru.skypro.homework.dto.Role.USER;
 
-@Slf4j
 @CrossOrigin(value = "http://localhost:3000")
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -85,7 +85,7 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterReqDto req) {
         Role role = req.getRole() == null ? USER : req.getRole();
         if (authService.register(req, role)) {
-            return ResponseEntity.status(201).build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
