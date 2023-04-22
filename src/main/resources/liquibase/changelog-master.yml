@@ -1,0 +1,9 @@
+databaseChangeLog:
+   - include:
+        file: liquibase/scripts/create_image_table.xml
+   - include:
+      file: liquibase/scripts/create_user_table.xml
+   - include:
+      file: liquibase/scripts/create_ad_table.xml
+   - include:
+      file: liquibase/scripts/create_comment_table.xml

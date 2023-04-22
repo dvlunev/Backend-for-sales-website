@@ -2,10 +2,17 @@ package ru.skypro.homework.entity;
 
 import lombok.*;
 import ru.skypro.homework.dto.Role;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, описывающий пользователя
+ * @see Image
+ * @see Ad
+ * @see Comment
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,29 +24,29 @@ public class User {
     @Column(nullable = false)
     private int id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 32, nullable = false)
     private String email;
 
-    @Column(name = "first_name", length = 25)
+    @Column(name = "first_name", length = 32)
     private String firstName;
 
-    @Column(name = "last_name", length = 25)
+    @Column(name = "last_name", length = 32)
     private String lastName;
 
-    @Column(length = 15)
+    @Column(length = 16)
     private String phone;
 
-   @OneToOne
-  @JoinColumn(name = "image_id")
-   private Image image;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 32, nullable = false)
     private String password;
 
-    @Column(length = 50, name = "user_name", nullable = false)
+    @Column(length = 32, name = "user_name", nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(length = 5, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -55,7 +62,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-       this.image = image;
+        this.image = image;
         this.password = password;
         this.username = username;
         this.role = role;

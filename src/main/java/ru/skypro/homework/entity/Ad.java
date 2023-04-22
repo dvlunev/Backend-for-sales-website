@@ -5,6 +5,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, описывающий объявление
+ * @see Image
+ * @see User
+ * @see Comment
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,35 +19,34 @@ import java.util.List;
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (nullable = false)
+    @Column(nullable = false)
     private int id;
-
     @ManyToOne
-    @JoinColumn (name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 32, nullable = false)
     private String title;
 
     @Column(length = 500)
     private String description;
 
     @OneToOne
-   @JoinColumn(name = "image_id")
+    @JoinColumn(name = "image_id")
     private Image image;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private int price;
 
     @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments =new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     public Ad(int id, User author, String title, String description, Image image, int price) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.description = description;
-       this.image = image;
+        this.image = image;
         this.price = price;
     }
 }
