@@ -7,6 +7,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, описывающий пользователя
+ * @see Image
+ * @see Ad
+ * @see Comment
+ */
 @Getter
 @Setter
 @NoArgsConstructor
