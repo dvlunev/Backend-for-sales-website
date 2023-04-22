@@ -23,15 +23,12 @@ public class UserMapper {
 
     public User mapToUser(UserDto userDto) {
         User mappedUser = new User();
-        if (userRepository.existsById((long) userDto.getId())) {
-            mappedUser = userRepository.getReferenceById((long) userDto.getId());
-        }
+        mappedUser.setId(userDto.getId());
         mappedUser.setEmail(userDto.getEmail());
         mappedUser.setFirstName(userDto.getFirstName());
         mappedUser.setLastName(userDto.getLastName());
         mappedUser.setPhone(userDto.getPhone());
         mappedUser.getImage().setImageLink(userDto.getImage());
-        userRepository.save(mappedUser);
         return mappedUser;
     }
 }
