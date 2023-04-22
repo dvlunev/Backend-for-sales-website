@@ -1,11 +1,12 @@
-package ru.skypro.homework.mapper;
+package ru.skypro.homework.service.impl;
 
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.service.mapper.AdMapper;
 
-public class AdMapper {
+public class AdMapperImpl implements AdMapper {
 
-    public static AdsDto mapToUserDto(Ad ad) {
+    public AdsDto mapToUserDto(Ad ad) {
 
         AdsDto adsDto = new AdsDto();
 
@@ -17,7 +18,7 @@ public class AdMapper {
         return adsDto;
     }
 
-    public static Ad mapToUserDto(AdsDto adsDto) {
+    public Ad mapToUserDto(AdsDto adsDto) {
         Ad mappedAd = new Ad();
         mappedAd.setId(adsDto.getId());
         mappedAd.getAuthor().setId(adsDto.getAuthor());

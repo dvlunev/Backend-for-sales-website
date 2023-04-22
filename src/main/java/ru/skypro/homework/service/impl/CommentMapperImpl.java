@@ -1,13 +1,13 @@
-package ru.skypro.homework.mapper;
+package ru.skypro.homework.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.repository.CommentRepository;
+import ru.skypro.homework.service.mapper.CommentMapper;
 
-public class CommentMapper {
-    @Autowired
-    public static CommentDto mapToCommentDto(Comment comment){
+public class CommentMapperImpl implements CommentMapper
+{
+    public CommentDto mapToCommentDto(Comment comment){
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setAuthor(comment.getAuthor().getId());
@@ -18,7 +18,7 @@ public class CommentMapper {
         return commentDto;
     }
 
-    public static Comment mapToComment(CommentDto commentDto){
+    public Comment mapToComment(CommentDto commentDto){
         Comment mappedComment = new Comment();
         mappedComment.setId(commentDto.getId());
         mappedComment.getAuthor().setId(commentDto.getAuthor());

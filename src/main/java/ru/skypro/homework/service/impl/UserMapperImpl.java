@@ -1,16 +1,15 @@
-package ru.skypro.homework.mapper;
+package ru.skypro.homework.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.service.mapper.UserMapper;
 
 
-public class UserMapper {
-    @Autowired
-    private static UserRepository userRepository;
+public class UserMapperImpl implements UserMapper {
 
-    public static UserDto mapToUserDto(User user) {
+    public UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
