@@ -6,7 +6,7 @@ import ru.skypro.homework.service.mapper.AdMapper;
 
 public class AdMapperImpl implements AdMapper {
 
-    public AdsDto mapToUserDto(Ad ad) {
+    public AdsDto mapToAdDto(Ad ad) {
 
         AdsDto adsDto = new AdsDto();
 
@@ -18,7 +18,7 @@ public class AdMapperImpl implements AdMapper {
         return adsDto;
     }
 
-    public Ad mapToUserDto(AdsDto adsDto) {
+    public Ad mapToAdDto(AdsDto adsDto) {
         Ad mappedAd = new Ad();
         mappedAd.setId(adsDto.getId());
         mappedAd.getAuthor().setId(adsDto.getAuthor());

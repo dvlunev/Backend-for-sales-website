@@ -5,10 +5,10 @@ import ru.skypro.homework.entity.Ad;
 
 public interface AdMapper {
 
-    AdsDto mapToUserDto(Ad ad);
+    AdsDto mapToAdDto(Ad ad);
 
 
-    Ad mapToUserDto(AdsDto adsDto);
+    Ad mapToAdDto(AdsDto adsDto);
 
 }
 
