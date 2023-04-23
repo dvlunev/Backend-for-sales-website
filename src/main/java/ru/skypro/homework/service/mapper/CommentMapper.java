@@ -4,6 +4,7 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.entity.Comment;
 
 public interface CommentMapper {
-     CommentDto mapToCommentDto(Comment comment);
-    public Comment mapToComment(CommentDto commentDto);
+    CommentDto mapToCommentDto(Comment comment);
+
+    Comment mapToComment(CommentDto commentDto);
 }

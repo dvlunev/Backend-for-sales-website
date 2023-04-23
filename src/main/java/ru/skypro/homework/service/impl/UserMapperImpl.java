@@ -1,22 +1,23 @@
 package ru.skypro.homework.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
-import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.mapper.UserMapper;
 
-
+@Component
 public class UserMapperImpl implements UserMapper {
 
     public UserDto mapToUserDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setPhone(user.getPhone());
-        userDto.setImage(user.getImage().getImageLink());
+        UserDto userDto = new UserDto(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                user.getImage().getImageLink()
+        );
         return userDto;
     }
 
@@ -28,6 +29,19 @@ public class UserMapperImpl implements UserMapper {
         mappedUser.setLastName(userDto.getLastName());
         mappedUser.setPhone(userDto.getPhone());
         mappedUser.getImage().setImageLink(userDto.getImage());
+        return mappedUser;
+    }
+
+    @Override
+    public User mapToUser(RegisterReqDto registerReqDto) {
+        User mappedUser = new User();
+        mappedUser.setUsername(registerReqDto.getUsername());
+        mappedUser.setPassword(registerReqDto.getPassword());
+        mappedUser.setFirstName(registerReqDto.getFirstName());
+        mappedUser.setLastName(registerReqDto.getLastName());
+        mappedUser.setPhone(registerReqDto.getPhone());
+        mappedUser.setRole(registerReqDto.getRole());
+        mappedUser.setEmail("default@gmail.com");
         return mappedUser;
     }
 }
