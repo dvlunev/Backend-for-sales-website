@@ -1,9 +1,11 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.service.mapper.AdMapper;
 
+@Component
 public class AdMapperImpl implements AdMapper {
 
     public AdsDto mapToAdDto(Ad ad) {
