@@ -8,7 +8,7 @@ public interface AdMapper {
     AdsDto mapToAdDto(Ad ad);
 
 
-    Ad mapToAdDto(AdsDto adsDto);
+    Ad mapToAd(AdsDto adsDto);
 
 }
 
