@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
-import ru.skypro.homework.service.impl.AdServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,7 @@ public class AdsController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(@Parameter(required = true) @RequestPart CreateAdsDto properties,
             @Parameter(schema = @Schema(type = "string", format = "binary")) @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(adService.createdAdDto(properties, image));
+        return ResponseEntity.ok(adService.createAdd(properties, image));
     }
 
     @Operation(
@@ -106,40 +105,39 @@ public class AdsController {
 
     @Operation(
             summary = "Получить информацию об объявлении",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FullAdsDto.class))
                     }),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAds(
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
-        FullAdsDto newFullAdsDto = new FullAdsDto();
-        return ResponseEntity.ok().body(newFullAdsDto);
+        return ResponseEntity.ok(adService.getFullAdDto(id));
     }
 
     @Operation(
             summary = "Удалить объявление",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content", content = @Content()),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAd(
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
+        adService.removeAdDto(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Operation(
             summary = "Обновить информацию об объявлении",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AdsDto.class))
@@ -147,17 +145,14 @@ public class AdsController {
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
-            },
-            tags = "Объявления"
-    )
+            })
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(required = true)
             @RequestBody CreateAdsDto createAdsDto) {
-        AdsDto newAdsDto = new AdsDto();
-        return ResponseEntity.ok().body(newAdsDto);
+        return ResponseEntity.ok(adService.updateAdDto(id, createAdsDto));
     }
 
     @Operation(
@@ -204,6 +199,7 @@ public class AdsController {
 
     @Operation(
             summary = "Получить объявления авторизованного пользователя",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -212,9 +208,7 @@ public class AdsController {
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
         List<AdsDto> adsDtoList = new ArrayList<>();

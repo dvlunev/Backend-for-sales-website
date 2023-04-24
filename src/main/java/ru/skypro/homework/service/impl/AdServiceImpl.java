@@ -21,7 +21,6 @@ public class AdServiceImpl implements AdService {
     private final AdRepository adRepository;
     private final UserRepository userRepository;
     private final AdMapper adMapper;
-    private final CommentRepository commentRepository;
 
     public AdServiceImpl(AdRepository adRepository,
                          UserRepository userRepository,
@@ -30,17 +29,16 @@ public class AdServiceImpl implements AdService {
         this.adRepository = adRepository;
         this.userRepository = userRepository;
         this.adMapper = adMapper;
-        this.commentRepository = commentRepository;
     }
 
     @Override
     public ResponseWrapperAdsDto getAllAdsDto() {
-        Collection<AdsDto> adsAll = adMapper.entityToDtoList(adRepository.findAll());
+        Collection<AdsDto> adsAll = adMapper.adEntityToDtoList(adRepository.findAll());
         return new ResponseWrapperAdsDto(adsAll);
     }
 
     @Override
-    public AdsDto createdAdDto(CreateAdsDto adDto, MultipartFile image) {
+    public AdsDto createAdd(CreateAdsDto adDto, MultipartFile image) {
         Ad newAd = adMapper.createdAdsDtoToAd(adDto);
         adRepository.save(newAd);
         // TO DO сделать сохранение картинки
@@ -48,18 +46,25 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public FullAdsDto getFullAdDto(Long id) {
-        return null;
+    public FullAdsDto getFullAdDto(Integer id) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        return adMapper.adEntityToFullAdsDTo(ad);
     }
 
     @Override
-    public boolean removeAdDto(Long id) {
-        return false;
+    public boolean removeAdDto(Integer id) {
+        if(adRepository.existsById(id)) {
+            adRepository.deleteById(id);
+            return true;
+        }
+        throw new RuntimeException();
     }
 
     @Override
-    public AdsDto updateAdDto(Long id, CreateAdsDto adDto) {
-        return null;
+    public AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        ad = adMapper.createdAdsDtoToAd(createAdsDto);
+        return adMapper.mapToAdDto(adRepository.save(ad));
     }
 
     @Override
@@ -68,7 +73,7 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public void updateImageAdDto(Long id, MultipartFile image) {
+    public void updateImageAdDto(Integer id, MultipartFile image) {
 
     }
 }

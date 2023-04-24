@@ -3,6 +3,7 @@ package ru.skypro.homework.service.impl;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateAdsDto;
+import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.service.mapper.AdMapper;
 
@@ -34,12 +35,17 @@ public class AdMapperImpl implements AdMapper {
     }
 
     @Override
+    public FullAdsDto adEntityToFullAdsDTo(Ad ad) {
+        return null;
+    }
+
+    @Override
     public Ad createdAdsDtoToAd(CreateAdsDto createAdsDto) {
         return null;
     }
 
     @Override
-    public Collection<AdsDto> entityToDtoList(Collection<Ad> adCollection) {
+    public Collection<AdsDto> adEntityToDtoList(Collection<Ad> adCollection) {
         return null;
     }
 }
