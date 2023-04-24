@@ -27,7 +27,7 @@ public interface AdService {
      * @return AdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    AdsDto createdAdDto(CreateAdsDto adDto, Image image);
+    AdsDto createdAdDto(CreateAdsDto adDto, MultipartFile image);
 
     /**
      * Метод ищет и возвращает объявление по id

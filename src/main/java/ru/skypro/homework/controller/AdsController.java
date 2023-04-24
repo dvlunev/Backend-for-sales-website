@@ -14,8 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.impl.AdServiceImpl;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,44 +25,42 @@ import java.util.List;
 @RequestMapping("/ads")
 public class AdsController {
 
+    private final AdService adService;
+
+    public AdsController(AdService adService) {
+        this.adService = adService;
+    }
+
     @Operation(
             summary = "Получить все объявления",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapperAdsDto.class))
                     })
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping()
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds() {
-        List<AdsDto> adsDtoList = new ArrayList<>();
-        ResponseWrapperAdsDto responseWrapperAdsDto = new ResponseWrapperAdsDto(adsDtoList);
-        return ResponseEntity.ok().body(responseWrapperAdsDto);
+        return ResponseEntity.ok(adService.getAllAdsDto());
     }
 
     @Operation(
             summary = "Добавить объявление",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDto.class))
                     }),
-                    @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
-            },
-            tags = "Объявления"
-    )
+                    @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
+            })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> addAd(
-            @Parameter(required = true)
-            @RequestPart CreateAdsDto properties,
-            @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestPart MultipartFile image) {
-        AdsDto ad = new AdsDto();
-        return ResponseEntity.status(HttpStatus.CREATED).body(ad);
+    public ResponseEntity<AdsDto> addAd(@Parameter(required = true) @RequestPart CreateAdsDto properties,
+            @Parameter(schema = @Schema(type = "string", format = "binary")) @RequestPart MultipartFile image) {
+        return ResponseEntity.ok(adService.createdAdDto(properties, image));
     }
 
     @Operation(
