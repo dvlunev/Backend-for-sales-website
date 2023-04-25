@@ -2,8 +2,12 @@ package ru.skypro.homework.service.impl;
 
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdsDto;
+import ru.skypro.homework.dto.CreateAdsDto;
+import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.service.mapper.AdMapper;
+
+import java.util.Collection;
 
 @Component
 public class AdMapperImpl implements AdMapper {
@@ -28,5 +32,20 @@ public class AdMapperImpl implements AdMapper {
         mappedAd.getImage().setImageLink(adsDto.getImage());
         mappedAd.setTitle(adsDto.getTitle());
         return mappedAd;
+    }
+
+    @Override
+    public FullAdsDto adEntityToFullAdsDTo(Ad ad) {
+        return null;
+    }
+
+    @Override
+    public Ad createdAdsDtoToAd(CreateAdsDto createAdsDto) {
+        return null;
+    }
+
+    @Override
+    public Collection<AdsDto> adEntityToDtoList(Collection<Ad> adCollection) {
+        return null;
     }
 }
