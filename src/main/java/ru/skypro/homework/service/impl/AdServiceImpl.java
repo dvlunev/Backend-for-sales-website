@@ -64,7 +64,9 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto) {
         Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        ad = adMapper.mapCreatedAdsDtoToAd(createAdsDto);
+        ad.setDescription(createAdsDto.getDescription());
+        ad.setPrice(createAdsDto.getPrice());
+        ad.setTitle(createAdsDto.getTitle());
         return adMapper.mapAdToAdDto(adRepository.save(ad));
     }
 
