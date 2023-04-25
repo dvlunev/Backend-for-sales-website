@@ -7,6 +7,7 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.repository.UserRepository;
@@ -47,7 +48,7 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public FullAdsDto getFullAdDto(Integer id) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         return adMapper.adEntityToFullAdsDTo(ad);
     }
 
@@ -57,12 +58,12 @@ public class AdServiceImpl implements AdService {
             adRepository.deleteById(id);
             return true;
         }
-        throw new RuntimeException();
+        throw new AdsNotFoundException();
     }
 
     @Override
     public AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         ad = adMapper.createdAdsDtoToAd(createAdsDto);
         return adMapper.mapToAdDto(adRepository.save(ad));
     }
