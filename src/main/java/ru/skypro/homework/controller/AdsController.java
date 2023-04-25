@@ -59,7 +59,7 @@ public class AdsController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(@Parameter(required = true) @RequestPart CreateAdsDto properties,
             @Parameter(schema = @Schema(type = "string", format = "binary")) @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(adService.createAdd(properties, image));
+        return ResponseEntity.ok(adService.createAds(properties, image));
     }
 
     @Operation(
