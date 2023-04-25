@@ -33,22 +33,22 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public ResponseWrapperAdsDto getAllAdsDto() {
-        Collection<AdsDto> adsAll = adMapper.adEntityToDtoList(adRepository.findAll());
+        Collection<AdsDto> adsAll = adMapper.mapAdListToAdDtoList(adRepository.findAll());
         return new ResponseWrapperAdsDto(adsAll);
     }
 
     @Override
-    public AdsDto createAdd(CreateAdsDto adDto, MultipartFile image) {
-        Ad newAd = adMapper.createdAdsDtoToAd(adDto);
+    public AdsDto createAds(CreateAdsDto adDto, MultipartFile image) {
+        Ad newAd = adMapper.mapCreatedAdsDtoToAd(adDto);
         adRepository.save(newAd);
         // TO DO сделать сохранение картинки
-        return adMapper.mapToAdDto(newAd);
+        return adMapper.mapAdToAdDto(newAd);
     }
 
     @Override
     public FullAdsDto getFullAdDto(Integer id) {
         Ad ad = adRepository.findById(id).orElse(null);
-        return adMapper.adEntityToFullAdsDTo(ad);
+        return adMapper.mapAdToFullAdsDTo(ad);
     }
 
     @Override
@@ -63,8 +63,8 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto) {
         Ad ad = adRepository.findById(id).orElse(null);
-        ad = adMapper.createdAdsDtoToAd(createAdsDto);
-        return adMapper.mapToAdDto(adRepository.save(ad));
+        ad = adMapper.mapCreatedAdsDtoToAd(createAdsDto);
+        return adMapper.mapAdToAdDto(adRepository.save(ad));
     }
 
     @Override

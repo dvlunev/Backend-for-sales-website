@@ -9,13 +9,11 @@ import java.util.Collection;
 
 public interface AdMapper {
 
-    AdsDto mapToAdDto(Ad ad);
-
-
-    Ad mapToAdDto(AdsDto adsDto);
-    FullAdsDto adEntityToFullAdsDTo(Ad ad);
-    Ad createdAdsDtoToAd(CreateAdsDto createAdsDto);
-    Collection<AdsDto> adEntityToDtoList(Collection<Ad> adCollection);
+    AdsDto mapAdToAdDto(Ad ad);
+    Ad mapAdsDtoToAd(AdsDto adsDto);
+    FullAdsDto mapAdToFullAdsDTo(Ad ad);
+    Ad mapCreatedAdsDtoToAd(CreateAdsDto createAdsDto);
+    Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection);
 
 }
 
