@@ -12,6 +12,7 @@ import java.util.Collection;
 @Component
 public class AdMapperImpl implements AdMapper {
 
+    @Override
     public AdsDto mapAdToAdDto(Ad ad) {
 
         AdsDto adsDto = new AdsDto();
@@ -23,6 +24,7 @@ public class AdMapperImpl implements AdMapper {
         return adsDto;
     }
 
+    @Override
     public Ad mapAdsDtoToAd(AdsDto adsDto) {
         Ad mappedAd = new Ad();
         mappedAd.setId(adsDto.getId());
