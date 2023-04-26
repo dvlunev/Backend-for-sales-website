@@ -6,6 +6,8 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
+import java.util.Collection;
+
 /**
  * Интерфейс сервисного класса AdServiceImpl, содержащий набор CRUD операций над объектом Ad
  * @see ru.skypro.homework.entity.Ad
@@ -54,10 +56,11 @@ public interface AdService {
 
     /**
      * Метод ищет и возвращает список всех объявлений авторизированного пользователя
+     *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    ResponseWrapperAdsDto getAllUserAdsDto();
+    Collection<AdsDto> getAllUserAdsDto();
 
     /**
      * Метод обновляет изображение к объявлению по id

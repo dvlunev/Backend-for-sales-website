@@ -211,33 +211,27 @@ public class AdsController {
             })
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
-        List<AdsDto> adsDtoList = new ArrayList<>();
-        ResponseWrapperAdsDto ads = new ResponseWrapperAdsDto(adsDtoList);
+        ResponseWrapperAdsDto ads = new ResponseWrapperAdsDto(adService.getAllUserAdsDto());
         return ResponseEntity.ok(ads);
     }
 
     @Operation(
             summary = "Обновить картинку объявления",
-            tags = "Объявления"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "OK",
-                    content = {
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                                    array = @ArraySchema(schema = @Schema(type = "string", format = "byte"))
-                            )
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK", content = {
+                            @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+                                    array = @ArraySchema(schema = @Schema(type = "string", format = "byte")))
                     }),
-            //возвращает файл
-            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
-    })
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(
+    public ResponseEntity<byte[]> updateImage (
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(schema = @Schema(type = "string", format = "binary"))
             @RequestPart MultipartFile image) {
+        adService.updateImageAdDto(id, image);
         return ResponseEntity.ok().build();
     }
 }

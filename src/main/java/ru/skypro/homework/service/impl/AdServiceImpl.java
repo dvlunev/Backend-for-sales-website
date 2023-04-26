@@ -9,11 +9,11 @@ import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
-import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -25,8 +25,7 @@ public class AdServiceImpl implements AdService {
 
     public AdServiceImpl(AdRepository adRepository,
                          UserRepository userRepository,
-                         AdMapper adMapper,
-                         CommentRepository commentRepository) {
+                         AdMapper adMapper) {
         this.adRepository = adRepository;
         this.userRepository = userRepository;
         this.adMapper = adMapper;
@@ -71,12 +70,14 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public ResponseWrapperAdsDto getAllUserAdsDto() {
-        return null;
+    public Collection<AdsDto> getAllUserAdsDto() {
+        Collection<Ad> ads = new ArrayList<>();
+        // TO DO сделать поиск объявлений по юзеру
+        return adMapper.mapAdListToAdDtoList(ads);
     }
 
     @Override
     public void updateImageAdDto(Integer id, MultipartFile image) {
-
+        // TO DO сделать обновление картинки в объявлении
     }
 }
