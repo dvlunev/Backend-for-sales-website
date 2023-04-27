@@ -8,19 +8,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.service.UserService;
+
+import java.util.Optional;
 
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Пользователи")
 public class UserController {
+    private final UserService userService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Operation(
             summary = "Обновление пароля",
@@ -44,9 +52,7 @@ public class UserController {
             summary = "Получить информацию об авторизованном пользователе"
     )
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK. Данные пользователя получены",
+            @ApiResponse(responseCode = "200", description = "OK. Данные пользователя получены",
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -61,8 +67,14 @@ public class UserController {
     )
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser() {
-        UserDto user = new UserDto();
-        return ResponseEntity.ok().body(user);
+        Optional<UserDto> currentUserDto = userService.getUserDto();
+        if (currentUserDto.isPresent()) {
+            return ResponseEntity.ok().body(currentUserDto.get());
+        } else return ResponseEntity.notFound().build();
+        //условие для ответа 403 - Нет прав с учетом информации об авторизации
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        //условие для ответа 401 - Пользователь не авторизован с учетом информации об авторизации
+        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Operation(
@@ -71,9 +83,7 @@ public class UserController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
-                    description = "OK. Данные пользователя обновлены",
-
+                    responseCode = "200", description = "OK. Данные пользователя обновлены",
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -88,9 +98,17 @@ public class UserController {
     }
     )
     @PatchMapping("/me")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
-        UserDto newuser = new UserDto();
-        return ResponseEntity.ok().body(newuser);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        //сравниваем текущего авторизованного пользователя и mapToUser(userDto), если равны
+        //return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        Optional<UserDto> newUserDto = userService.updateUserDto(userDto);
+        if (newUserDto.isPresent()) {
+            return ResponseEntity.ok().body(newUserDto.get());
+        } else return ResponseEntity.notFound().build();
+        //условие для ответа 403 - Нет прав с учетом информации об авторизации
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        //условие для ответа 401 - Пользователь не авторизован с учетом информации об авторизации
+        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Operation(
@@ -98,15 +116,11 @@ public class UserController {
             description = "Обновление изображения пользователя из тела запроса"
     )
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK. Изображение пользователя обновлено",
-                    content = {@Content()}
-            ),
+            @ApiResponse(responseCode = "200", description = "OK. Изображение пользователя обновлено", content = {@Content()}),
             @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
     }
     )
-    @PatchMapping(value ="/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(
             @Parameter(schema = @Schema(type = "string", format = "binary"))
             @RequestPart MultipartFile image) {

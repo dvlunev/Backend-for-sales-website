@@ -6,6 +6,7 @@ import ru.skypro.homework.dto.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Класс, описывающий пользователя
@@ -33,7 +34,7 @@ public class User {
     @Column(name = "last_name", length = 32)
     private String lastName;
 
-    @Column(length = 16)
+    @Column(length = 18)
     private String phone;
 
     @OneToOne
@@ -66,5 +67,18 @@ public class User {
         this.password = password;
         this.username = username;
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && Objects.equals(image, user.image) && Objects.equals(password, user.password) && Objects.equals(username, user.username) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, firstName, lastName, phone, image, password, username, role);
     }
 }

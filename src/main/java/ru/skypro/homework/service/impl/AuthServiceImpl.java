@@ -12,11 +12,10 @@ import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
+
 @Service
 public class AuthServiceImpl implements AuthService {
-
     private final UserDetailsManager manager;
-
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -54,6 +53,7 @@ public class AuthServiceImpl implements AuthService {
                         .build()
         );
         ru.skypro.homework.entity.User regUser = userMapper.mapToUser(registerReqDto);
+        regUser.setRole(role);
         userRepository.save(regUser);
         return true;
     }
