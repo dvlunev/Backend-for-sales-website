@@ -41,7 +41,8 @@ public class UserMapperImpl implements UserMapper {
         mappedUser.setLastName(registerReqDto.getLastName());
         mappedUser.setPhone(registerReqDto.getPhone());
         mappedUser.setRole(registerReqDto.getRole());
-        mappedUser.setEmail("default@gmail.com");
+        mappedUser.setEmail(registerReqDto.getUsername());
+        //в форме регистрации username и email одно и тоже
         return mappedUser;
     }
 }
