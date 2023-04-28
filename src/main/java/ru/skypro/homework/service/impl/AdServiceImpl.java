@@ -7,10 +7,13 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
+import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
 import java.util.ArrayList;
@@ -21,13 +24,15 @@ public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final AdMapper adMapper;
 
     public AdServiceImpl(AdRepository adRepository,
                          UserRepository userRepository,
-                         AdMapper adMapper) {
+                         UserService userService, AdMapper adMapper) {
         this.adRepository = adRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
         this.adMapper = adMapper;
     }
 
@@ -40,6 +45,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDto createAds(CreateAdsDto adDto, MultipartFile image) {
         Ad newAd = adMapper.mapCreatedAdsDtoToAd(adDto);
+        newAd.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         adRepository.save(newAd);
         // TO DO сделать сохранение картинки
         return adMapper.mapAdToAdDto(newAd);
