@@ -1,12 +1,11 @@
 package ru.skypro.homework.service.impl;
 
-import liquibase.pro.packaged.O;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
-import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.dto.UserDto;
-import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
@@ -24,14 +23,25 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    //здесь должно быть получение авторизованного пользователь
-   Image currentUserImage = new Image(1, "https://imageLink");
-    User currentUser = new User(1, "user@gmail.com", "Winston", "Smith", "+7(000)000-00-00", currentUserImage, "password", "username", Role.USER);
+    @Override
+    public boolean isAuth() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.isAuthenticated();
+    }
+
+    @Override
+    public Optional<User> findAuthUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        return userRepository.findByEmail(currentPrincipalName);
+    }
+
 
     @Override
     public Optional<UserDto> getUserDto() {
-        if (currentUser != null) {
-            UserDto currentUserDto = userMapper.mapToUserDto(currentUser);
+        Optional<User> currentUser = findAuthUser();
+        if (currentUser.isPresent()) {
+            UserDto currentUserDto = userMapper.mapToUserDto(currentUser.get());
             return Optional.of(currentUserDto);
         } else
             return Optional.empty();
@@ -41,8 +51,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> updateUserDto(UserDto newUserDto) {
-        if (currentUser != null) {
-            User userFromDB  = userRepository.findById(currentUser.getId()).get();
+        Optional<User> currentUser = findAuthUser();
+        if (currentUser.isPresent()) {
+            User userFromDB = userRepository.findById(currentUser.get().getId()).get();
             userFromDB.setFirstName(newUserDto.getFirstName());
             userFromDB.setLastName(newUserDto.getLastName());
             userFromDB.setPhone(newUserDto.getPhone());
@@ -61,12 +72,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public Optional<UserDto> getById(Long id) {
         return Optional.empty();
     }
-
 
 
     @Override
