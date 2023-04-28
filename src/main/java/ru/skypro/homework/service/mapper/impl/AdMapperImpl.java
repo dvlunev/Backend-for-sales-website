@@ -7,7 +7,9 @@ import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.service.mapper.AdMapper;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Component
 public class AdMapperImpl implements AdMapper {
@@ -61,6 +63,12 @@ public class AdMapperImpl implements AdMapper {
 
     @Override
     public Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection) {
-        return null;
+        List<AdsDto> dtoList = new ArrayList<AdsDto>(adCollection.size());
+
+        for (Ad ad : adCollection) {
+            dtoList.add(mapAdToAdDto(ad));
+        }
+
+        return dtoList;
     }
 }
