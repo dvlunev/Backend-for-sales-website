@@ -67,7 +67,7 @@ public class UserController {
     )
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser() {
-        if (userService.isAuth())
+        if (!userService.isAuth())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         //условие для ответа 403 - Нет прав с учетом информации об авторизации
         // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -99,7 +99,7 @@ public class UserController {
     )
     @PatchMapping("/me")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
-        if (userService.isAuth())
+        if (!userService.isAuth())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         //условие для ответа 403 - Нет прав с учетом информации об авторизации
         // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
