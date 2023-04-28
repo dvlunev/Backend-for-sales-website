@@ -11,5 +11,5 @@ import ru.skypro.homework.entity.Comment;
  * @see ru.skypro.homework.service.impl.CommentServiceImpl
  */
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 }
