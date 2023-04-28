@@ -3,7 +3,7 @@ package ru.skypro.homework.service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
-import ru.skypro.homework.entity.Image;
+import ru.skypro.homework.entity.User;
 
 import java.util.Optional;
 
@@ -13,24 +13,32 @@ import java.util.Optional;
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
 public interface UserService {
+
+    /**
+     * Метод проверяет авторизован ли пользователь
+     * @return boolean
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
+    boolean isAuth();
+
+    /**
+     * Метод ищет авторизованного пользователя
+     * @return Optional<User>
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
+    Optional<User> findAuthUser();
+
+
     /**
      * Метод обновляет пароль пользователя
-     * @param currentPassword
-     * @param newPassword
+     * @param newPasswordDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
-    /* часть со сменой пароля возможно нужно перенести в AuthService и оставить один метод из двух */
-    boolean setNewPasswordDto(String currentPassword, String newPassword);
     boolean setNewPasswordDto(NewPasswordDto newPasswordDto);
 
-    /**
-     * Метод определяет уровень доступа пользователя
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
-     */
-    boolean userIsAdmin();
 
     /**
-     * Метод ищет и возвращает пользователя
+     * Метод возвращает Dto авторизованного пользователя
      * @return UserDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
@@ -44,21 +52,15 @@ public interface UserService {
      */
     Optional<UserDto> getById(Long id);
 
-    /**
-     * Метод ищет и возвращает пользователя по userName
-     * @param userName
-     * @return UserDto
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
-     */
-    Optional<UserDto> getByUserName(String userName);
 
     /**
-     * Метод редактирует пользователя
+     * Метод редактирует данные авторизованного пользователя
+     *
      * @param userDto
      * @return UserDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
-    UserDto updateUserDto(UserDto userDto);
+    Optional<UserDto> updateUserDto(UserDto userDto);
 
     /**
      * Метод обновляет аватар пользователя

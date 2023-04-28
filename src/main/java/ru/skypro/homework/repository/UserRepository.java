@@ -13,7 +13,7 @@ import java.util.Optional;
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     /**
      * Метод ищет и возвращает пользователя по его email
      * @param email

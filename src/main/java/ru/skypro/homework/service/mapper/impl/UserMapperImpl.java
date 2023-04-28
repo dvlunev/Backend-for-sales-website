@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.mapper.impl;
 
+import liquibase.pro.packaged.S;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.UserDto;
@@ -10,13 +11,17 @@ import ru.skypro.homework.service.mapper.UserMapper;
 public class UserMapperImpl implements UserMapper {
 
     public UserDto mapToUserDto(User user) {
+        String image = new String();
+        if (user.getImage()!=null){
+            image = user.getImage().getImageLink();
+        }
         UserDto userDto = new UserDto(
                 user.getId(),
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhone(),
-                user.getImage().getImageLink()
+                image
         );
         return userDto;
     }
@@ -41,7 +46,8 @@ public class UserMapperImpl implements UserMapper {
         mappedUser.setLastName(registerReqDto.getLastName());
         mappedUser.setPhone(registerReqDto.getPhone());
         mappedUser.setRole(registerReqDto.getRole());
-        mappedUser.setEmail("default@gmail.com");
+        mappedUser.setEmail(registerReqDto.getUsername());
+        //в форме регистрации username и email одно и тоже
         return mappedUser;
     }
 }
