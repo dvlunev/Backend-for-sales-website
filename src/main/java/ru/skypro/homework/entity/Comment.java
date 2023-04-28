@@ -3,6 +3,7 @@ package ru.skypro.homework.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Класс, описывающий комментарий
@@ -29,8 +30,8 @@ public class Comment {
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
-    @Column(name = "ad_date", length = 20, nullable = false)
-    private String createdAt; //дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
+    @Column(name = "add_date", length = 20, nullable = false)
+    private LocalDateTime createdAt; //дата и время создания комментария
 
     @Column(length = 1000, nullable = false)
     private String text;
