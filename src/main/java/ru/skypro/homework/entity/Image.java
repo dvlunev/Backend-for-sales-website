@@ -21,4 +21,5 @@ public class Image {
 
     @Column(name = "image_link", length = 200, nullable = false)
     private String imageLink;
+    //путь к картинке в файловой системе
 }

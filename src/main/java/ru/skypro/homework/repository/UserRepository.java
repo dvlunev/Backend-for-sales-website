@@ -14,5 +14,11 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
+    /**
+     * Метод ищет и возвращает пользователя по его email
+     * @param email
+     * @return User
+     * @see ru.skypro.homework.entity.User
+     */
+    Optional<User> findByEmail(String email);
 }

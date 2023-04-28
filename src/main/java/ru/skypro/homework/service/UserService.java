@@ -3,6 +3,7 @@ package ru.skypro.homework.service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.entity.User;
 
 import java.util.Optional;
 
@@ -12,6 +13,22 @@ import java.util.Optional;
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
 public interface UserService {
+
+    /**
+     * Метод проверяет авторизован ли пользователь
+     * @return boolean
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
+    boolean isAuth();
+
+    /**
+     * Метод ищет авторизованного пользователя
+     * @return Optional<User>
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
+    Optional<User> findAuthUser();
+
+
     /**
      * Метод обновляет пароль пользователя
      * @param newPasswordDto
@@ -20,10 +37,8 @@ public interface UserService {
     boolean setNewPasswordDto(NewPasswordDto newPasswordDto);
 
 
-
     /**
-     * Метод ищет и возвращает авторизованного пользователя
-     *
+     * Метод возвращает Dto авторизованного пользователя
      * @return UserDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */

@@ -74,11 +74,6 @@
             <artifactId>lombok-mapstruct-binding</artifactId>
             <version>${lombok-mapstruct-binding.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.aspose</groupId>
-            <artifactId>aspose-ocr</artifactId>
-            <version>20.5</version>
-        </dependency>
     </dependencies>
     <repositories>
         <repository>

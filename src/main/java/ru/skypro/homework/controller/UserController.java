@@ -67,14 +67,14 @@ public class UserController {
     )
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser() {
+        if (userService.isAuth())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        //условие для ответа 403 - Нет прав с учетом информации об авторизации
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         Optional<UserDto> currentUserDto = userService.getUserDto();
         if (currentUserDto.isPresent()) {
             return ResponseEntity.ok().body(currentUserDto.get());
         } else return ResponseEntity.notFound().build();
-        //условие для ответа 403 - Нет прав с учетом информации об авторизации
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        //условие для ответа 401 - Пользователь не авторизован с учетом информации об авторизации
-        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Operation(
@@ -99,16 +99,18 @@ public class UserController {
     )
     @PatchMapping("/me")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
-        //сравниваем текущего авторизованного пользователя и mapToUser(userDto), если равны
-        //return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        if (userService.isAuth())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        //условие для ответа 403 - Нет прав с учетом информации об авторизации
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        Optional<UserDto> currentUserDto = userService.getUserDto();
+        //сравниваем текущего авторизованного пользователя и userDto
+        if (currentUserDto.equals(Optional.of(userDto)))
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         Optional<UserDto> newUserDto = userService.updateUserDto(userDto);
         if (newUserDto.isPresent()) {
             return ResponseEntity.ok().body(newUserDto.get());
         } else return ResponseEntity.notFound().build();
-        //условие для ответа 403 - Нет прав с учетом информации об авторизации
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        //условие для ответа 401 - Пользователь не авторизован с учетом информации об авторизации
-        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Operation(
