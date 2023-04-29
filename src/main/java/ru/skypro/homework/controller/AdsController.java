@@ -210,8 +210,7 @@ public class AdsController {
             })
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
-        ResponseWrapperAdsDto ads = new ResponseWrapperAdsDto(adService.getAllUserAdsDto());
-        return ResponseEntity.ok(ads);
+        return ResponseEntity.ok(adService.getAllUserAdsDto());
     }
 
     @Operation(

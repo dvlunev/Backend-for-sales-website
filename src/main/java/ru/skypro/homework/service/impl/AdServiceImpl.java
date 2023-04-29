@@ -77,11 +77,11 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Collection<AdsDto> getAllUserAdsDto() {
+    public ResponseWrapperAdsDto getAllUserAdsDto() {
         User user = userService.findAuthUser().orElseThrow(UserNotFoundException::new);
         Collection<Ad> allAds = adRepository.findAll();
         Collection<Ad> userAds = allAds.stream().filter(x -> x.getAuthor().equals(user)).collect(Collectors.toList());
-        return adMapper.mapAdListToAdDtoList(userAds);
+        return new ResponseWrapperAdsDto(adMapper.mapAdListToAdDtoList(userAds));
     }
 
     @Override

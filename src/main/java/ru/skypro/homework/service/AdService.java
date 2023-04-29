@@ -60,7 +60,7 @@ public interface AdService {
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    Collection<AdsDto> getAllUserAdsDto();
+    ResponseWrapperAdsDto getAllUserAdsDto();
 
     /**
      * Метод обновляет изображение к объявлению по id
