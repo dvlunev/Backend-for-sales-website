@@ -57,8 +57,7 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
             })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> addAd(@Parameter(required = true) @RequestPart CreateAdsDto properties,
-            @Parameter(schema = @Schema(type = "string", format = "binary")) @RequestPart MultipartFile image) {
+    public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
         return ResponseEntity.ok(adService.createAds(properties, image));
     }
 

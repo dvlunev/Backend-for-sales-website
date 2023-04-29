@@ -18,6 +18,7 @@ import ru.skypro.homework.service.mapper.AdMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class AdServiceImpl implements AdService {
@@ -77,9 +78,10 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public Collection<AdsDto> getAllUserAdsDto() {
-        Collection<Ad> ads = new ArrayList<>();
-        // TO DO сделать поиск объявлений по юзеру
-        return adMapper.mapAdListToAdDtoList(ads);
+        User user = userService.findAuthUser().orElseThrow(UserNotFoundException::new);
+        Collection<Ad> allAds = adRepository.findAll();
+        Collection<Ad> userAds = allAds.stream().filter(x -> x.getAuthor().equals(user)).collect(Collectors.toList());
+        return adMapper.mapAdListToAdDtoList(userAds);
     }
 
     @Override
