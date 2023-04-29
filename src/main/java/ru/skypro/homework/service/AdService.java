@@ -5,7 +5,8 @@ import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
-import ru.skypro.homework.entity.Image;
+
+import java.util.Collection;
 
 /**
  * Интерфейс сервисного класса AdServiceImpl, содержащий набор CRUD операций над объектом Ad
@@ -27,7 +28,7 @@ public interface AdService {
      * @return AdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    AdsDto createdAdDto(CreateAdsDto adDto, Image image);
+    AdsDto createAds(CreateAdsDto adDto, MultipartFile image);
 
     /**
      * Метод ищет и возвращает объявление по id
@@ -35,14 +36,14 @@ public interface AdService {
      * @return FullAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    FullAdsDto getFullAdDto(Long id);
+    FullAdsDto getFullAdDto(Integer id);
 
     /**
      * Метод удаляет объявление по id
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    boolean removeAdDto(Long id);
+    boolean removeAdDto(Integer id);
 
     /**
      * Метод редактирует объявление по id
@@ -51,10 +52,11 @@ public interface AdService {
      * @return AdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    AdsDto updateAdDto(Long id, CreateAdsDto adDto);
+    AdsDto updateAdDto(Integer id, CreateAdsDto adDto);
 
     /**
      * Метод ищет и возвращает список всех объявлений авторизированного пользователя
+     *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
@@ -66,5 +68,5 @@ public interface AdService {
      * @param image
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    void updateImageAdDto(Long id, MultipartFile image);
+    void updateImageAdDto(Integer id, MultipartFile image);
 }

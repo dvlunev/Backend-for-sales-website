@@ -11,5 +11,5 @@ import ru.skypro.homework.entity.Ad;
  * @see ru.skypro.homework.service.impl.AdServiceImpl
  */
 @Repository
-public interface AdRepository extends JpaRepository<Ad, Long> {
+public interface AdRepository extends JpaRepository<Ad, Integer> {
 }

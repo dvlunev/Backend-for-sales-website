@@ -1,4 +1,4 @@
-package ru.skypro.homework.service.impl;
+package ru.skypro.homework.service.mapper.impl;
 
 import liquibase.pro.packaged.S;
 import org.springframework.stereotype.Component;
