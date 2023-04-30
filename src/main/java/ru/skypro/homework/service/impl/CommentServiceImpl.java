@@ -6,6 +6,7 @@ import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.entity.User;
+import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Класс - сервис, содержащий реализацию интерфейса CommentService
+ * Класс - сервис, содержащий реализацию интерфейса CommentService
  * @see ru.skypro.homework.entity.Comment
  * @see ru.skypro.homework.service.CommentService
  * @see ru.skypro.homework.repository.CommentRepository
@@ -68,31 +69,29 @@ public class CommentServiceImpl implements CommentService {
      * @param adId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException если объявление по указанному id не найдено
      * @see CommentService
      */
     @Override
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
-        /*int author = commentDto.getAuthor();
-        User user = userRepository.findById(author).orElseThrow(NullPointerException::new);*/
+        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentMapper.mapToComment(commentDto);
         comment.setAd(ad);
         commentRepository.save(comment);
-        return  commentMapper.mapToCommentDto(comment);
+        return commentMapper.mapToCommentDto(comment);
     }
 
     /**
      * Метод удаляет комментарий к объявлению по id объявления
      * @param adId
      * @param commentId
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */
     @Override
     public boolean removeCommentDto(Integer adId, Integer commentId) {
-        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
+        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment commentBD = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         List<Comment> comments = ad.getComments();
         for (Comment comment : comments) {
@@ -111,13 +110,13 @@ public class CommentServiceImpl implements CommentService {
      * @param commentId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */
     @Override
     public CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
+        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment commentBD = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         List<Comment> comments = ad.getComments();
         for (Comment comment : comments) {
@@ -127,9 +126,8 @@ public class CommentServiceImpl implements CommentService {
                 return commentMapper.mapToCommentDto(comment);
             }
         }
-        commentBD.setText(commentDto.getText());//?
+        commentBD.setText(commentDto.getText());
         commentRepository.save(commentBD);
         return commentMapper.mapToCommentDto(commentBD);
-        //return createCommentDto(adId, commentDto);
     }
 }
