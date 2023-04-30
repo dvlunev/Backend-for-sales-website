@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CommentDto {
     //id комментария
-    private int id;
+    private int pk;
     //id автора комментария
     private int author;
     //ссылка на аватар автора комментария

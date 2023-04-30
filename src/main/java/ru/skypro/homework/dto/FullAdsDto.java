@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class FullAdsDto {
     //id объявления
-    private int id;
+    private int pk;
     //имя автора объявления
     private String authorFirstName;
     //фамилия автора объявления

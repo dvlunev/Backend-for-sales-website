@@ -18,10 +18,10 @@ public class AdMapperImpl implements AdMapper {
     public AdsDto mapAdToAdDto(Ad ad) {
 
         AdsDto adsDto = new AdsDto();
-        adsDto.setId(ad.getId());
+        adsDto.setPk(ad.getId());
         adsDto.setAuthor(ad.getAuthor().getId());
         adsDto.setPrice(ad.getPrice());
-        adsDto.setImage(ad.getImage().getImageLink());
+        adsDto.setImage(ad.getImage().getImagePath());
         adsDto.setTitle(ad.getTitle());
         return adsDto;
     }
@@ -29,10 +29,10 @@ public class AdMapperImpl implements AdMapper {
     @Override
     public Ad mapAdsDtoToAd(AdsDto adsDto) {
         Ad mappedAd = new Ad();
-        mappedAd.setId(adsDto.getId());
+        mappedAd.setId(adsDto.getPk());
         mappedAd.getAuthor().setId(adsDto.getAuthor());
         mappedAd.setPrice(adsDto.getPrice());
-        mappedAd.getImage().setImageLink(adsDto.getImage());
+        mappedAd.getImage().setImagePath(adsDto.getImage());
         mappedAd.setTitle(adsDto.getTitle());
         return mappedAd;
     }
@@ -40,14 +40,14 @@ public class AdMapperImpl implements AdMapper {
     @Override
     public FullAdsDto mapAdToFullAdsDTo(Ad ad) {
         FullAdsDto fullAdsDto = new FullAdsDto();
-        fullAdsDto.setId(ad.getId());
+        fullAdsDto.setPk(ad.getId());
         fullAdsDto.setAuthorFirstName(ad.getAuthor().getFirstName());
         fullAdsDto.setAuthorLastName(ad.getAuthor().getLastName());
         fullAdsDto.setEmail(ad.getAuthor().getEmail());
         fullAdsDto.setPhone(ad.getAuthor().getPhone());
         fullAdsDto.setTitle(ad.getTitle());
         fullAdsDto.setDescription(ad.getDescription());
-        fullAdsDto.setImage(ad.getImage().getImageLink());
+        fullAdsDto.setImage(ad.getImage().getImagePath());
         fullAdsDto.setPrice(ad.getPrice());
         return fullAdsDto;
     }
