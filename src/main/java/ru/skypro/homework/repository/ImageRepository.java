@@ -11,5 +11,5 @@ import ru.skypro.homework.entity.Image;
  * @see ru.skypro.homework.service.impl.ImageServiceImpl
  */
 @Repository
-public interface ImageRepository extends JpaRepository<Image, Long> {
+public interface ImageRepository extends JpaRepository<Image, Integer> {
 }

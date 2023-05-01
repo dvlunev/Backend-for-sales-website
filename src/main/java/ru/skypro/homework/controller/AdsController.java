@@ -14,8 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.CommentService;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,44 +25,43 @@ import java.util.List;
 @RequestMapping("/ads")
 public class AdsController {
 
+    private final AdService adService;
+    private final CommentService commentService;
+
+    public AdsController(AdService adService, CommentService commentService) {
+        this.adService = adService;
+        this.commentService = commentService;
+    }
+
     @Operation(
             summary = "Получить все объявления",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapperAdsDto.class))
                     })
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping()
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds() {
-        List<AdsDto> adsDtoList = new ArrayList<>();
-        ResponseWrapperAdsDto responseWrapperAdsDto = new ResponseWrapperAdsDto(adsDtoList);
-        return ResponseEntity.ok().body(responseWrapperAdsDto);
+        return ResponseEntity.ok(adService.getAllAdsDto());
     }
 
     @Operation(
             summary = "Добавить объявление",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDto.class))
                     }),
-                    @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
-            },
-            tags = "Объявления"
-    )
+                    @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
+            })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> addAd(
-            @Parameter(required = true)
-            @RequestPart CreateAdsDto properties,
-            @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestPart MultipartFile image) {
-        AdsDto ad = new AdsDto();
-        return ResponseEntity.status(HttpStatus.CREATED).body(ad);
+    public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
+        return ResponseEntity.ok(adService.createAds(properties, image));
     }
 
     @Operation(
@@ -77,10 +77,10 @@ public class AdsController {
     )
     @GetMapping("/{id}/comments")
     public ResponseEntity<ResponseWrapperCommentDto> getComments(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
-        List<CommentDto> commentsList = new ArrayList<>();
-        ResponseWrapperCommentDto comments = new ResponseWrapperCommentDto(commentsList);
+        ResponseWrapperCommentDto comments = commentService.getCommentsDto(id);
         return ResponseEntity.ok().body(comments);
     }
 
@@ -88,7 +88,8 @@ public class AdsController {
             summary = "Добавить комментарий к объявлению",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CommentDto.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = CommentDto.class))
                     }),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
@@ -98,67 +99,69 @@ public class AdsController {
     )
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDto> addComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @RequestBody CommentDto commentDto) {
-        CommentDto newCommentDto = new CommentDto();
+        CommentDto newCommentDto = commentService.createCommentDto(id, commentDto);
         return ResponseEntity.ok().body(newCommentDto);
     }
 
     @Operation(
             summary = "Получить информацию об объявлении",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FullAdsDto.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = FullAdsDto.class))
                     }),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAds(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
-        FullAdsDto newFullAdsDto = new FullAdsDto();
-        return ResponseEntity.ok().body(newFullAdsDto);
+        return ResponseEntity.ok(adService.getFullAdDto(id));
     }
 
     @Operation(
             summary = "Удалить объявление",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content", content = @Content()),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAd(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
+        adService.removeAdDto(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Operation(
             summary = "Обновить информацию об объявлении",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AdsDto.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDto.class))
                     }),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
-            },
-            tags = "Объявления"
-    )
+            })
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(required = true)
             @RequestBody CreateAdsDto createAdsDto) {
-        AdsDto newAdsDto = new AdsDto();
-        return ResponseEntity.ok().body(newAdsDto);
+        return ResponseEntity.ok(adService.updateAdDto(id, createAdsDto));
     }
 
     @Operation(
@@ -173,18 +176,24 @@ public class AdsController {
     )
     @DeleteMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer adId,
-            @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer commentId) {
-        return ResponseEntity.status(HttpStatus.OK).build();
+        if (commentService.removeCommentDto(adId, commentId)) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(
             summary = "Обновить комментарий",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CommentDto.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = CommentDto.class))
                     }),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
@@ -194,17 +203,20 @@ public class AdsController {
     )
     @PatchMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer adId,
-            @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH,
+                    schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer commentId,
             @RequestBody CommentDto commentDto) {
-        CommentDto newCommentDto = new CommentDto();
+        CommentDto newCommentDto = commentService.updateCommentDto(adId, commentId, commentDto);
         return ResponseEntity.ok().body(newCommentDto);
     }
 
     @Operation(
             summary = "Получить объявления авторизованного пользователя",
+            tags = "Объявления",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -213,38 +225,29 @@ public class AdsController {
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
-            },
-            tags = "Объявления"
-    )
+            })
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
-        List<AdsDto> adsDtoList = new ArrayList<>();
-        ResponseWrapperAdsDto ads = new ResponseWrapperAdsDto(adsDtoList);
-        return ResponseEntity.ok(ads);
+        return ResponseEntity.ok(adService.getAllUserAdsDto());
     }
 
     @Operation(
             summary = "Обновить картинку объявления",
-            tags = "Объявления"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "OK",
-                    content = {
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                                    array = @ArraySchema(schema = @Schema(type = "string", format = "byte"))
-                            )
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK", content = {
+                            @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+                                    array = @ArraySchema(schema = @Schema(type = "string", format = "byte")))
                     }),
-            //возвращает файл
-            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
-    })
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(
+    public ResponseEntity<byte[]> updateImage (
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(schema = @Schema(type = "string", format = "binary"))
             @RequestPart MultipartFile image) {
+        adService.updateImageAdDto(id, image);
         return ResponseEntity.ok().build();
     }
 }

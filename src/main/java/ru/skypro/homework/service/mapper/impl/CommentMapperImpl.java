@@ -1,6 +1,5 @@
-package ru.skypro.homework.service.impl;
+package ru.skypro.homework.service.mapper.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.entity.Comment;
@@ -15,9 +14,9 @@ import java.time.ZoneOffset;
 public class CommentMapperImpl implements CommentMapper {
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
-        commentDto.setId(comment.getId());
+        commentDto.setPk(comment.getId());
         commentDto.setAuthor(comment.getAuthor().getId());
-        commentDto.setAuthorImage(comment.getAuthor().getImage().getImageLink());
+        commentDto.setAuthorImage(comment.getAuthor().getImage().getImagePath());
         commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
         commentDto.setCreatedAt(comment.getCreatedAt().toInstant((ZoneOffset) ZoneId.systemDefault()).toEpochMilli());
         commentDto.setText(comment.getText());
@@ -26,9 +25,9 @@ public class CommentMapperImpl implements CommentMapper {
 
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
-        mappedComment.setId(commentDto.getId());
+        mappedComment.setId(commentDto.getPk());
         mappedComment.getAuthor().setId(commentDto.getAuthor());
-        mappedComment.getAuthor().getImage().setImageLink(commentDto.getAuthorImage());
+        mappedComment.getAuthor().getImage().setImagePath(commentDto.getAuthorImage());
         mappedComment.getAuthor().setFirstName(commentDto.getAuthorFirstName());
         mappedComment.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(commentDto.getCreatedAt()), ZoneId.systemDefault()));
         mappedComment.setText(commentDto.getText());

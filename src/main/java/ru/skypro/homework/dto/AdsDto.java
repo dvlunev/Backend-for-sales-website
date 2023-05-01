@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AdsDto {
     //id объявления
-    private int id;
+    private int pk;
     //id автора объявления
     private int author;
     //ссылка на картинку объявления

@@ -3,8 +3,6 @@ package ru.skypro.homework.service;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 
-import java.util.Optional;
-
 /**
  * Интерфейс сервисного класса CommentServiceImpl, содержащий набор CRUD операций над объектом Comment
  * @see ru.skypro.homework.entity.Comment
@@ -14,28 +12,27 @@ public interface CommentService {
     /**
      * Метод ищет и возвращает список всех комментариев к объявлению по id объявления
      * @param adId
-     * @return ResponseWrapperCommentDto
+     * @return {@link ResponseWrapperCommentDto}
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
-    ResponseWrapperCommentDto getCommentsDto(Long adId);
+    ResponseWrapperCommentDto getCommentsDto(Integer adId);
 
     /**
      * Метод ищет и возвращает комментарий к объявлению по id
-     * @param adId
      * @param commentId
-     * @return ResponseWrapperCommentDto
+     * @return {@link CommentDto}
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
-    Optional<CommentDto> getCommentDtoById(Long adId, Long commentId);
+    /*CommentDto getCommentDtoById(Integer commentId);*/
 
     /**
      * Метод создает комментарий к объявлению по id объявления
      * @param adId
      * @param commentDto
-     * @return CommentDto
+     * @return {@link CommentDto}
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
-    CommentDto createCommentDto(Long adId, CommentDto commentDto);
+    CommentDto createCommentDto(Integer adId, CommentDto commentDto);
 
     /**
      * Метод удаляет комментарий к объявлению по id объявления
@@ -43,14 +40,14 @@ public interface CommentService {
      * @param commentId
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
-    boolean removeCommentDto(Long adId, Long commentId);
+    boolean removeCommentDto(Integer adId, Integer commentId);
 
     /**
      * Метод редактирует комментарий к объявлению по id
      * @param adId
      * @param commentId
-     * @return CommentDto
+     * @return {@link CommentDto}
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
-    CommentDto updateCommentDto(Long adId, Long commentId, CommentDto commentDto);
+    CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto);
 }
