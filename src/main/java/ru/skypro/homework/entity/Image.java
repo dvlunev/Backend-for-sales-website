@@ -33,7 +33,7 @@ public class Image {
         if (id != 0)
             return id == image.id;
         else
-        return Objects.equals(imageLink, image.imageLink);
+        return Objects.equals(imagePath, image.imagePath);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class Image {
         if (id != 0)
             return Objects.hash(id);
         else
-        return Objects.hash(imageLink);
+        return Objects.hash(imagePath);
     }
 }
