@@ -5,6 +5,7 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
@@ -90,7 +91,6 @@ public class CommentServiceImpl implements CommentService {
      * Метод удаляет комментарий к объявлению по id объявления
      * @param adId
      * @param commentId
-     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */
@@ -109,7 +109,6 @@ public class CommentServiceImpl implements CommentService {
      * @param commentId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}
-     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */
