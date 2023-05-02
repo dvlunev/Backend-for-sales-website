@@ -2,6 +2,7 @@ package ru.skypro.homework.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Класс, описывающий изображения
@@ -22,4 +23,24 @@ public class Image {
     @Column(name = "image_path", length = 200, nullable = false)
     private String imagePath;
     //путь к картинке в файловой системе
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image = (Image) o;
+        if (id != 0)
+            return id == image.id;
+        else
+        return Objects.equals(imagePath, image.imagePath);
+    }
+
+    @Override
+    public int hashCode() {
+        if (id != 0)
+            return Objects.hash(id);
+        else
+        return Objects.hash(imagePath);
+    }
 }

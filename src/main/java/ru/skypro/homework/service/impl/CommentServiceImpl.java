@@ -5,6 +5,8 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.entity.User;
+import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Класс - сервис, содержащий реализацию интерфейса CommentService
+ * Класс - сервис, содержащий реализацию интерфейса CommentService
  * @see ru.skypro.homework.entity.Comment
  * @see ru.skypro.homework.service.CommentService
  * @see ru.skypro.homework.repository.CommentRepository
@@ -72,25 +74,25 @@ public class CommentServiceImpl implements CommentService {
      * @param adId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException если объявление по указанному id не найдено
      * @see CommentService
      */
     @Override
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
+        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentMapper.mapToComment(commentDto);
         comment.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         comment.setAd(ad);
         comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
-        return  commentMapper.mapToCommentDto(comment);
+        return commentMapper.mapToCommentDto(comment);
     }
 
     /**
      * Метод удаляет комментарий к объявлению по id объявления
      * @param adId
      * @param commentId
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */
@@ -109,7 +111,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}
-     * @throws NullPointerException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException     если объявление по указанному id не найдено
      * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
      * @see CommentService
      */

@@ -4,6 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Класс, описывающий объявление
@@ -48,5 +49,24 @@ public class Ad {
         this.description = description;
         this.image = image;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ad ad = (Ad) o;
+        if (id != 0) {
+            return id == ad.id;
+        } else
+        return price == ad.price && Objects.equals(author, ad.author) && Objects.equals(title, ad.title) && Objects.equals(description, ad.description) && Objects.equals(image, ad.image) && Objects.equals(comments, ad.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        if (id != 0)
+            return Objects.hash(id);
+        else
+        return Objects.hash(author, title, description, image, price, comments);
     }
 }
