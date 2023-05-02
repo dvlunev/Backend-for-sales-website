@@ -5,7 +5,6 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
@@ -79,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
+        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentMapper.mapToComment(commentDto);
         comment.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         comment.setAd(ad);
