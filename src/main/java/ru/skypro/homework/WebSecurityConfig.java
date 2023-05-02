@@ -2,16 +2,30 @@ package ru.skypro.homework;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import ru.skypro.homework.service.CustomUserDetailsService;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    //возможно, наследование не нужно
+    CustomUserDetailsService customUserDetailsService;
+
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(customUserDetailsService);
+    } //не уверена, что это нужно
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -38,7 +52,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((authz) ->
                         authz
                                 .mvcMatchers(AUTH_WHITELIST).permitAll()
-//                                .mvcMatchers("/ads/**", "/users/**").authenticated()
+                                .mvcMatchers("/ads/**", "/users/**").authenticated()
 
                 )
                 .cors().and()

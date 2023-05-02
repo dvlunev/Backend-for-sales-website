@@ -6,11 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.mapper.UserMapper;
+
+import java.util.Optional;
 
 
 @Service
@@ -19,6 +22,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
 
     public AuthServiceImpl(UserDetailsManager manager,
                            UserRepository userRepository,
@@ -31,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean login(String userName, String password) {
-        if (!manager.userExists(userName)) {
+        if (!userRepository.findByEmail(userName).isPresent()) {
             return false;
         }
         UserDetails userDetails = manager.loadUserByUsername(userName);
@@ -57,4 +61,7 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(regUser);
         return true;
     }
+
+
+
 }
