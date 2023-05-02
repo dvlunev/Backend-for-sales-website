@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
+        Ad ad = adRepository.findById(adId).orElseThrow(NullPointerException::new);
         Comment comment = commentMapper.mapToComment(commentDto);
         comment.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         comment.setAd(ad);
