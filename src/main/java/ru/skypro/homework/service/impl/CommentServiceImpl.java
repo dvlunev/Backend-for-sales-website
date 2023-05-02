@@ -5,15 +5,16 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.entity.User;
-import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
+import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.CommentService;
+import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.CommentMapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +30,15 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
     private final AdRepository adRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper,
-                              AdRepository adRepository, UserRepository userRepository) {
+                              AdRepository adRepository, UserRepository userRepository, UserService userService) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
         this.adRepository = adRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     /**
@@ -76,7 +79,9 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
         Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentMapper.mapToComment(commentDto);
+        comment.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         comment.setAd(ad);
+        comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
         return commentMapper.mapToCommentDto(comment);
     }
@@ -91,17 +96,11 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public boolean removeCommentDto(Integer adId, Integer commentId) {
-        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
-        Comment commentBD = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
-        List<Comment> comments = ad.getComments();
-        for (Comment comment : comments) {
-            if (commentBD.equals(comment)) {
-                comments.remove(comment);
-                commentRepository.delete(commentBD);
-                return true;
-            }
+        if(commentRepository.existsById(commentId)) {
+            commentRepository.deleteById(commentId);
+            return true;
         }
-        return false;
+        throw new CommentNotFoundException();
     }
 
     /**
@@ -116,18 +115,8 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto) {
-        Ad ad = adRepository.findById(adId).orElseThrow(AdsNotFoundException::new);
-        Comment commentBD = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
-        List<Comment> comments = ad.getComments();
-        for (Comment comment : comments) {
-            if (commentBD.equals(comment)) {
-                comment.setText(commentDto.getText());
-                commentRepository.save(comment);
-                return commentMapper.mapToCommentDto(comment);
-            }
-        }
-        commentBD.setText(commentDto.getText());
-        commentRepository.save(commentBD);
-        return commentMapper.mapToCommentDto(commentBD);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
+        comment.setText(commentDto.getText());
+        return commentMapper.mapToCommentDto(commentRepository.save(comment));
     }
 }
