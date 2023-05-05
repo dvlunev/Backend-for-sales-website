@@ -248,7 +248,11 @@ public class AdsController {
 
     @Operation(
             summary = "Получить картинку объявления",
-            tags = "Объявления")
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(imageService.getImagePathByAdId(id));
