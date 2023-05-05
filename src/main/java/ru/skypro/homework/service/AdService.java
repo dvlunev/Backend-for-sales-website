@@ -6,6 +6,7 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.CommentService;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.skypro.homework.service.ImageService;
 
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -27,10 +24,12 @@ public class AdsController {
 
     private final AdService adService;
     private final CommentService commentService;
+    private final ImageService imageService;
 
-    public AdsController(AdService adService, CommentService commentService) {
+    public AdsController(AdService adService, CommentService commentService, ImageService imageService) {
         this.adService = adService;
         this.commentService = commentService;
+        this.imageService = imageService;
     }
 
     @Operation(
@@ -242,12 +241,16 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
             })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage (
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
-            @PathVariable Integer id,
-            @Parameter(schema = @Schema(type = "string", format = "binary"))
-            @RequestPart MultipartFile image) {
+    public ResponseEntity<byte[]> updateImage (@PathVariable Integer id, @RequestPart MultipartFile image) {
         adService.updateImageAdDto(id, image);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Получить картинку объявления",
+            tags = "Объявления")
+    @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(imageService.getImagePathByAdId(id));
     }
 }

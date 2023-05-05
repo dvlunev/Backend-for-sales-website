@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.entity.Image;
 
+import java.util.Optional;
+
 /**
  * Интерфейс, содержащий методы для работы с базой данных изображений
  * @see ru.skypro.homework.entity.Image
@@ -11,5 +13,5 @@ import ru.skypro.homework.entity.Image;
  * @see ru.skypro.homework.service.impl.ImageServiceImpl
  */
 @Repository
-public interface ImageRepository extends JpaRepository<Image, Integer> {
+public interface ImageRepository extends JpaRepository<Image, String> {
 }
