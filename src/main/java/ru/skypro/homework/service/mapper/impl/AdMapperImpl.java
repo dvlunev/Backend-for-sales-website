@@ -16,12 +16,11 @@ public class AdMapperImpl implements AdMapper {
 
     @Override
     public AdsDto mapAdToAdDto(Ad ad) {
-
         AdsDto adsDto = new AdsDto();
         adsDto.setPk(ad.getId());
         adsDto.setAuthor(ad.getAuthor().getId());
         adsDto.setPrice(ad.getPrice());
-        adsDto.setImage(ad.getImage().getImagePath());
+        adsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         adsDto.setTitle(ad.getTitle());
         return adsDto;
     }
@@ -32,7 +31,7 @@ public class AdMapperImpl implements AdMapper {
         mappedAd.setId(adsDto.getPk());
         mappedAd.getAuthor().setId(adsDto.getAuthor());
         mappedAd.setPrice(adsDto.getPrice());
-        mappedAd.getImage().setImagePath(adsDto.getImage());
+        mappedAd.getImage().setId(adsDto.getImage());
         mappedAd.setTitle(adsDto.getTitle());
         return mappedAd;
     }
@@ -47,7 +46,7 @@ public class AdMapperImpl implements AdMapper {
         fullAdsDto.setPhone(ad.getAuthor().getPhone());
         fullAdsDto.setTitle(ad.getTitle());
         fullAdsDto.setDescription(ad.getDescription());
-        fullAdsDto.setImage(ad.getImage().getImagePath());
+        fullAdsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         fullAdsDto.setPrice(ad.getPrice());
         return fullAdsDto;
     }

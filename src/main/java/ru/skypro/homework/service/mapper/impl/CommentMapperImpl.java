@@ -13,7 +13,7 @@ public class CommentMapperImpl implements CommentMapper {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
         commentDto.setAuthor(comment.getAuthor().getId());
-        commentDto.setAuthorImage(comment.getAuthor().getImage().getImagePath());
+        commentDto.setAuthorImage(comment.getAuthor().getImage().getId());
         commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
         commentDto.setCreatedAt(comment.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         commentDto.setText(comment.getText());

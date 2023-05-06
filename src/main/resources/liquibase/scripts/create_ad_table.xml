@@ -23,7 +23,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="varchar(500)"/>
-            <column name="image_id" type="int"/>
+            <column name="image_id" type="varchar(255)"/>
             <column name="price" type="int">
                 <constraints nullable="false"/>
             </column>
