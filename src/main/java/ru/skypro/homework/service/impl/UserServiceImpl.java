@@ -7,23 +7,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
+import ru.skypro.homework.exception.UserNotFoundException;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
+import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private final UserDetailsManager manager;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, UserDetailsManager manager) {
+    public UserServiceImpl(UserMapper userMapper,
+                           UserRepository userRepository,
+                           ImageRepository imageRepository,
+                           UserDetailsManager manager) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.imageRepository = imageRepository;
         this.manager = manager;
     }
 
@@ -63,25 +73,11 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-
-    @Override
-    public UserDto getUserDto() {
-        Optional<User> currentUser = findAuthUser();
-        UserDto currentUserDto = new UserDto();
-        if (currentUser.isPresent()) {
-            currentUserDto = userMapper.mapToUserDto(currentUser.get());
-        }
-        return currentUserDto;
-    }
-
     @Override
     public UserDto getUserDto(Authentication authentication) {
-        UserDto currentUserDto = new UserDto();
-        Optional<User> currentUser = userRepository.findByEmail(authentication.getName());
-        if (currentUser.isPresent()) {
-            currentUserDto = userMapper.mapToUserDto(currentUser.get());
-        }
-        return currentUserDto;
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).get();
+        return userMapper.mapToUserDto(user);
     }
 
     @Override
@@ -123,5 +119,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserImage(MultipartFile image) {
+        User user = findAuthUser().orElseThrow(UserNotFoundException::new);
+        Image oldImage = user.getImage();
+        if (oldImage == null) {
+            Image newImage = new Image();
+            try {
+                byte[] bytes = image.getBytes();
+                newImage.setImagePath(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            newImage.setId(UUID.randomUUID().toString());
+            Image savedImage = imageRepository.saveAndFlush(newImage);
+            user.setImage(savedImage);
+        } else {
+            try {
+                byte[] bytes = image.getBytes();
+                oldImage.setImagePath(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Image savedImage = imageRepository.saveAndFlush(oldImage);
+            user.setImage(savedImage);
+        }
+        userRepository.save(user);
     }
 }

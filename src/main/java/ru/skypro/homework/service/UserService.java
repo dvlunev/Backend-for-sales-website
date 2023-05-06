@@ -52,14 +52,6 @@ public interface UserService {
     void changePassword(NewPasswordDto newPasswordDto, String email);
 
     /**
-     * Метод возвращает Dto авторизованного пользователя
-     *
-     * @return UserDto
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
-     */
-    UserDto getUserDto();
-
-    /**
      * Метод ищет и возвращает пользователя по id
      * @param id
      * @return UserDto
@@ -68,6 +60,12 @@ public interface UserService {
     Optional<UserDto> getById(Long id);
 
 
+    /**
+     * Метод возвращает Dto авторизованного пользователя
+     *
+     * @return UserDto
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
     UserDto getUserDto(Authentication authentication);
 
     /**
