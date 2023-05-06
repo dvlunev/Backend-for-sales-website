@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserDto(Authentication authentication) {
         String email = authentication.getName();
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         return userMapper.mapToUserDto(user);
     }
 
