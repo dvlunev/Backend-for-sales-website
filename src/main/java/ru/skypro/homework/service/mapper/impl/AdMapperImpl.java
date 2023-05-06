@@ -20,7 +20,7 @@ public class AdMapperImpl implements AdMapper {
         adsDto.setPk(ad.getId());
         adsDto.setAuthor(ad.getAuthor().getId());
         adsDto.setPrice(ad.getPrice());
-        adsDto.setImage(ad.getImage().getId());
+        adsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         adsDto.setTitle(ad.getTitle());
         return adsDto;
     }
@@ -46,7 +46,7 @@ public class AdMapperImpl implements AdMapper {
         fullAdsDto.setPhone(ad.getAuthor().getPhone());
         fullAdsDto.setTitle(ad.getTitle());
         fullAdsDto.setDescription(ad.getDescription());
-        fullAdsDto.setImage(ad.getImage().getId());
+        fullAdsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         fullAdsDto.setPrice(ad.getPrice());
         return fullAdsDto;
     }

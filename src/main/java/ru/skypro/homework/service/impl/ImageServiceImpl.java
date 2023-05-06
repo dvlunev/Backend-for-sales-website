@@ -25,10 +25,4 @@ public class ImageServiceImpl implements ImageService {
         Image image = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
         return image.getImagePath();
     }
-
-    @Override
-    public byte[] getImagePathByAdId(Integer id) {
-        Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        return ad.getImage().getImagePath();
-    }
 }

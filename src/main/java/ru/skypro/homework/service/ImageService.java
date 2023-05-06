@@ -7,5 +7,4 @@ package ru.skypro.homework.service;
  */
 public interface ImageService {
     byte[] getImagePathById(String id);
-    byte[] getImagePathByAdId(Integer id);
 }
