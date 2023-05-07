@@ -6,6 +6,7 @@ import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.service.mapper.CommentMapper;
 
 import java.time.ZoneId;
+import java.util.Optional;
 
 @Component
 public class CommentMapperImpl implements CommentMapper {
@@ -13,7 +14,7 @@ public class CommentMapperImpl implements CommentMapper {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
         commentDto.setAuthor(comment.getAuthor().getId());
-        commentDto.setAuthorImage(comment.getAuthor().getImage().getImagePath());
+        Optional.ofNullable(comment.getAuthor().getImage()).ifPresent(image -> commentDto.setAuthorImage(image.getImagePath()));
         commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
         commentDto.setCreatedAt(comment.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         commentDto.setText(comment.getText());

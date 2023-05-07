@@ -10,18 +10,18 @@ import ru.skypro.homework.service.mapper.AdMapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AdMapperImpl implements AdMapper {
 
     @Override
     public AdsDto mapAdToAdDto(Ad ad) {
-
         AdsDto adsDto = new AdsDto();
         adsDto.setPk(ad.getId());
         adsDto.setAuthor(ad.getAuthor().getId());
         adsDto.setPrice(ad.getPrice());
-        adsDto.setImage(ad.getImage().getImagePath());
+        Optional.ofNullable(ad.getImage()).ifPresent(image -> adsDto.setImage(image.getImagePath()));
         adsDto.setTitle(ad.getTitle());
         return adsDto;
     }
@@ -47,7 +47,7 @@ public class AdMapperImpl implements AdMapper {
         fullAdsDto.setPhone(ad.getAuthor().getPhone());
         fullAdsDto.setTitle(ad.getTitle());
         fullAdsDto.setDescription(ad.getDescription());
-        fullAdsDto.setImage(ad.getImage().getImagePath());
+        Optional.ofNullable(ad.getImage()).ifPresent(image -> fullAdsDto.setImage(image.getImagePath()));
         fullAdsDto.setPrice(ad.getPrice());
         return fullAdsDto;
     }
@@ -64,11 +64,9 @@ public class AdMapperImpl implements AdMapper {
     @Override
     public Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection) {
         List<AdsDto> dtoList = new ArrayList<AdsDto>(adCollection.size());
-
         for (Ad ad : adCollection) {
             dtoList.add(mapAdToAdDto(ad));
         }
-
         return dtoList;
     }
 }

@@ -5,8 +5,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * Класс, описывающий изображения
- Содержит аватары для пользователя {@link User} и фото для объявлений {@link Ad}
+ * Класс, описывающий изображения - аватары для пользователя {@link User} и фото для объявлений {@link Ad}
  */
 @Getter
 @Setter
@@ -24,23 +23,24 @@ public class Image {
     private String imagePath;
     //путь к картинке в файловой системе
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Image image = (Image) o;
-        if (id != 0)
+        if (id != 0) {
             return id == image.id;
-        else
-        return Objects.equals(imagePath, image.imagePath);
+        } else {
+            return Objects.equals(imagePath, image.imagePath);
+        }
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
+        if (id != 0) {
             return Objects.hash(id);
-        else
-        return Objects.hash(imagePath);
+        } else {
+            return Objects.hash(imagePath);
+        }
     }
 }
