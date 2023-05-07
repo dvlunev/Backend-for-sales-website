@@ -1,5 +1,6 @@
 package ru.skypro.homework.service;
 
+import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
 
@@ -11,4 +12,12 @@ import ru.skypro.homework.dto.Role;
 public interface AuthService {
     boolean login(String userName, String password);
     boolean register(RegisterReqDto registerReqDto, Role role);
+
+    /**
+     * Метод обновляет пароль пользователя
+     * @param newPasswordDto
+     * @param email e-mail авторизованного пользователя
+     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     */
+    void changePassword(NewPasswordDto newPasswordDto, String email);
 }

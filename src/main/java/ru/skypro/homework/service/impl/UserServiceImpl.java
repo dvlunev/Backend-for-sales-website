@@ -2,7 +2,9 @@ package ru.skypro.homework.service.impl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
@@ -15,16 +17,20 @@ import ru.skypro.homework.service.mapper.UserMapper;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final UserDetailsManager manager;
 
-
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, UserDetailsManager manager) {
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
-        this.manager = manager;
+    }
+
+    @Override
+    //@Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username).orElseThrow(() ->
+                new UsernameNotFoundException("User with username " + username + " doesn't exists"));
     }
 
     @Override
@@ -44,25 +50,17 @@ public class UserServiceImpl implements UserService {
         String currentPrincipalName = authentication.getName();
         return userRepository.findByEmail(currentPrincipalName);
     }
+
     @Override
     public boolean isCurrentPassTrue(NewPasswordDto newPasswordDto, String email) {
-        Optional<User> currentUser = userRepository.findByEmail(email);
+//        Optional<User> currentUser = userRepository.findByEmail(email);
+        Optional<User> currentUser = findAuthUser();
         if (currentUser.isPresent()) {
             User currentUserValue = currentUser.get();
             return (currentUserValue.getPassword().equals(newPasswordDto.getCurrentPassword()));
         }
         return false;
     }
-
-    @Override
-    public void changePassword(NewPasswordDto newPasswordDto, String email) {
-        Optional<User> userFromDB = userRepository.findByEmail(email);
-        userFromDB.ifPresent(user -> {
-            user.setPassword(newPasswordDto.getNewPassword());
-            userRepository.save(user);
-        });
-    }
-
 
     @Override
     public UserDto getUserDto() {
@@ -113,7 +111,6 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.mapToUserDto(newCurrentUser);
     }
-
 
     @Override
     public Optional<UserDto> getById(Long id) {

@@ -44,14 +44,6 @@ public interface UserService {
     boolean isCurrentPassTrue(NewPasswordDto newPasswordDto, String email);
 
     /**
-     * Метод обновляет пароль пользователя
-     * @param newPasswordDto
-     * @param email e-mail авторизованного пользователя
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
-     */
-    void changePassword(NewPasswordDto newPasswordDto, String email);
-
-    /**
      * Метод возвращает Dto авторизованного пользователя
      *
      * @return UserDto
@@ -85,5 +77,4 @@ public interface UserService {
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
     void updateUserImage(MultipartFile image);
-
 }
