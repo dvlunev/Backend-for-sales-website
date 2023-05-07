@@ -8,8 +8,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * Класс, описывающий изображения
- Содержит аватары для пользователя {@link User} и фото для объявлений {@link Ad}
+ * Класс, описывающий изображения - аватары для пользователя {@link User} и фото для объявлений {@link Ad}
  */
 @Getter
 @Setter

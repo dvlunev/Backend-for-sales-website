@@ -1,8 +1,10 @@
 package ru.skypro.homework.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
+import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.entity.User;
@@ -11,7 +13,6 @@ import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
-import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.CommentMapper;
@@ -19,6 +20,7 @@ import ru.skypro.homework.service.mapper.CommentMapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Класс - сервис, содержащий реализацию интерфейса CommentService
@@ -27,20 +29,28 @@ import java.util.List;
  * @see ru.skypro.homework.repository.CommentRepository
  */
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+
+    private final Role role = Role.ADMIN;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final AdRepository adRepository;
-    private final UserRepository userRepository;
     private final UserService userService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper,
-                              AdRepository adRepository, UserRepository userRepository, UserService userService) {
-        this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
-        this.adRepository = adRepository;
-        this.userRepository = userRepository;
-        this.userService = userService;
+    /**
+     * Метод проверяет наличие доступа к комментарию по id
+     * @param id
+     * @see ru.skypro.homework.service.impl.CommentServiceImpl
+     */
+    @Override
+    public boolean checkAccess(Integer id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        Optional<User> user = userService.findAuthUser();
+        User notOptionalUser = user.get();
+        String currentPrincipalName = notOptionalUser.getUsername();
+        return comment.getAuthor().getUsername().equals(currentPrincipalName)
+                || notOptionalUser.getAuthorities().contains(role);
     }
 
     /**
@@ -51,8 +61,6 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public ResponseWrapperCommentDto getCommentsDto(Integer adId) {
-        /*Ad ad = adRepository.findById(adId).orElseThrow(CommentNotFoundException::new);
-        List<Comment> comments = ad.getComments();*/
         List<Comment> commentList = commentRepository.findAll();
         List<CommentDto> commentDtoList = new ArrayList<>();
         for (Comment comment : commentList) {
@@ -62,12 +70,6 @@ public class CommentServiceImpl implements CommentService {
         }
         return new ResponseWrapperCommentDto(commentDtoList);
     }
-
-    /*@Override
-    public CommentDto getCommentDtoById(Integer commentId) {
-        Comment comment = commentRepository.findById(Long.valueOf(commentId)).orElseThrow(CommentNotFoundException::new);
-        return commentMapper.mapToCommentDto(comment);
-    }*/
 
     /**
      * Метод создает комментарий к объявлению по id объявления
@@ -97,7 +99,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public boolean removeCommentDto(Integer adId, Integer commentId) {
-        if(commentRepository.existsById(commentId)) {
+        if (checkAccess(commentId) && commentRepository.existsById(commentId)) {
             commentRepository.deleteById(commentId);
             return true;
         }
@@ -116,7 +118,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
-        comment.setText(commentDto.getText());
+        if (checkAccess(commentId)) {
+            comment.setText(commentDto.getText());
+            return commentMapper.mapToCommentDto(commentRepository.save(comment));
+        }
         return commentMapper.mapToCommentDto(commentRepository.save(comment));
     }
 }

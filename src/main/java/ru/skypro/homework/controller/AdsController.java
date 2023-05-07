@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,12 @@ import ru.skypro.homework.service.ImageService;
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/ads")
+@RequiredArgsConstructor
 public class AdsController {
 
     private final AdService adService;
     private final CommentService commentService;
     private final ImageService imageService;
-
-    public AdsController(AdService adService, CommentService commentService, ImageService imageService) {
-        this.adService = adService;
-        this.commentService = commentService;
-        this.imageService = imageService;
-    }
 
     @Operation(
             summary = "Получить все объявления",
@@ -241,7 +237,11 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
             })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage (@PathVariable Integer id, @RequestPart MultipartFile image) {
+    public ResponseEntity<byte[]> updateImage (
+            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @PathVariable Integer id,
+            @Parameter(schema = @Schema(type = "string", format = "binary"))
+            @RequestPart MultipartFile image) {
         adService.updateImageAdDto(id, image);
         return ResponseEntity.ok().build();
     }

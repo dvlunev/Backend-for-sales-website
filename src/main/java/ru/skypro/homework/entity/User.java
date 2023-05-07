@@ -1,16 +1,15 @@
 package ru.skypro.homework.entity;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.skypro.homework.dto.Role;
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Класс, описывающий пользователя
- *
  * @see Image
  * @see Ad
  * @see Comment
@@ -20,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "site_user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -42,7 +41,7 @@ public class User {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @Column(length = 32, nullable = false)
+    @Column(length = 250, nullable = false)
     private String password;
 
     @Column(length = 32, name = "user_name", nullable = false)
@@ -58,7 +57,35 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    public User(int id, String email, String firstName, String lastName, String phone, Image image, String password, String username, Role role) {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Role> roles = new HashSet<>();
+        roles.add(this.role);
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public User(int id, String email, String firstName, String lastName, String phone, Image image, String password,
+                String username, Role role) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -75,17 +102,22 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        if (id != 0)
+        if (id != 0) {
             return id == user.id;
-        else
-            return Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && Objects.equals(image, user.image) && Objects.equals(password, user.password) && Objects.equals(username, user.username) && role == user.role;
+        } else {
+            return Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName)
+                    && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone)
+                    && Objects.equals(image, user.image) && Objects.equals(password, user.password)
+                    && Objects.equals(username, user.username) && role == user.role;
+        }
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
+        if (id != 0) {
             return Objects.hash(id);
-        else
+        } else {
             return Objects.hash(email, firstName, lastName, phone, image, password, username, role);
+        }
     }
 }

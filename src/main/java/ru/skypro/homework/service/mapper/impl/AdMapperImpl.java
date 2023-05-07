@@ -63,11 +63,9 @@ public class AdMapperImpl implements AdMapper {
     @Override
     public Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection) {
         List<AdsDto> dtoList = new ArrayList<AdsDto>(adCollection.size());
-
         for (Ad ad : adCollection) {
             dtoList.add(mapAdToAdDto(ad));
         }
-
         return dtoList;
     }
 }
