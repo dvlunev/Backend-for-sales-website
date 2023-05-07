@@ -75,9 +75,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserDto(Authentication authentication) {
-        String email = authentication.getName();
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        return userMapper.mapToUserDto(user);
+        UserDto currentUserDto = new UserDto();
+        Optional<User> currentUser = userRepository.findByEmail(authentication.getName());
+        if (currentUser.isPresent()) {
+            currentUserDto = userMapper.mapToUserDto(currentUser.get());
+        }
+        return currentUserDto;
     }
 
     @Override
