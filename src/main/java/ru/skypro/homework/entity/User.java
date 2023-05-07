@@ -10,7 +10,6 @@ import java.util.*;
 
 /**
  * Класс, описывающий пользователя
- *
  * @see Image
  * @see Ad
  * @see Comment
@@ -103,20 +102,22 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        if (id != 0)
+        if (id != 0) {
             return id == user.id;
-        else
+        } else {
             return Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName)
                     && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone)
                     && Objects.equals(image, user.image) && Objects.equals(password, user.password)
                     && Objects.equals(username, user.username) && role == user.role;
+        }
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
+        if (id != 0) {
             return Objects.hash(id);
-        else
+        } else {
             return Objects.hash(email, firstName, lastName, phone, image, password, username, role);
+        }
     }
 }

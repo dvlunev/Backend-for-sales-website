@@ -18,14 +18,6 @@ public interface CommentService {
     ResponseWrapperCommentDto getCommentsDto(Integer adId);
 
     /**
-     * Метод ищет и возвращает комментарий к объявлению по id
-     * @param commentId
-     * @return {@link CommentDto}
-     * @see ru.skypro.homework.service.impl.CommentServiceImpl
-     */
-    /*CommentDto getCommentDtoById(Integer commentId);*/
-
-    /**
      * Метод создает комментарий к объявлению по id объявления
      * @param adId
      * @param commentDto
@@ -50,4 +42,11 @@ public interface CommentService {
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
     CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto);
+
+    /**
+     * Метод проверяет наличие доступа к комментарию по id
+     * @param id
+     * @see ru.skypro.homework.service.impl.CommentServiceImpl
+     */
+    boolean checkAccess(Integer id);
 }

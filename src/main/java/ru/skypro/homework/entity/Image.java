@@ -1,12 +1,13 @@
 package ru.skypro.homework.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * Класс, описывающий изображения
- Содержит аватары для пользователя {@link User} и фото для объявлений {@link Ad}
+ * Класс, описывающий изображения - аватары для пользователя {@link User} и фото для объявлений {@link Ad}
  */
 @Getter
 @Setter
@@ -16,31 +17,22 @@ import java.util.Objects;
 @Table(name = "image")
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private int id;
+    private String id;
 
-    @Column(name = "image_path", length = 200, nullable = false)
-    private String imagePath;
-    //путь к картинке в файловой системе
-
+    @Lob
+    @Column(name = "image_path")
+    private byte[] imagePath;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Image image = (Image) o;
-        if (id != 0)
-            return id == image.id;
-        else
-        return Objects.equals(imagePath, image.imagePath);
+        return id != null && Objects.equals(id, image.id);
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
-            return Objects.hash(id);
-        else
-        return Objects.hash(imagePath);
+        return getClass().hashCode();
     }
 }

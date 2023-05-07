@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,17 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.CommentService;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.skypro.homework.service.ImageService;
 
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/ads")
+@RequiredArgsConstructor
 public class AdsController {
 
     private final AdService adService;
     private final CommentService commentService;
-
-    public AdsController(AdService adService, CommentService commentService) {
-        this.adService = adService;
-        this.commentService = commentService;
-    }
+    private final ImageService imageService;
 
     @Operation(
             summary = "Получить все объявления",
@@ -249,5 +244,17 @@ public class AdsController {
             @RequestPart MultipartFile image) {
         adService.updateImageAdDto(id, image);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Получить картинку объявления",
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
+    @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
+        return ResponseEntity.ok(imageService.getImagePathById(id));
     }
 }

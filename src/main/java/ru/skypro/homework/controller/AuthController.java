@@ -26,7 +26,6 @@ import static ru.skypro.homework.dto.Role.USER;
 @Slf4j
 @RestController
 public class AuthController {
-
     private final AuthService authService;
 
     public AuthController(AuthService authService) {

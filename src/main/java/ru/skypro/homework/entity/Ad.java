@@ -58,15 +58,19 @@ public class Ad {
         Ad ad = (Ad) o;
         if (id != 0) {
             return id == ad.id;
-        } else
-        return price == ad.price && Objects.equals(author, ad.author) && Objects.equals(title, ad.title) && Objects.equals(description, ad.description) && Objects.equals(image, ad.image) && Objects.equals(comments, ad.comments);
+        } else {
+            return price == ad.price && Objects.equals(author, ad.author) && Objects.equals(title, ad.title)
+                    && Objects.equals(description, ad.description) && Objects.equals(image, ad.image)
+                    && Objects.equals(comments, ad.comments);
+        }
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
+        if (id != 0) {
             return Objects.hash(id);
-        else
-        return Objects.hash(author, title, description, image, price, comments);
+        } else {
+            return Objects.hash(author, title, description, image, price, comments);
+        }
     }
 }

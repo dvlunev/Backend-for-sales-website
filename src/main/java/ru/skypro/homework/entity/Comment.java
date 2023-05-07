@@ -42,17 +42,20 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        if (id != 0)
+        if (id != 0) {
             return id == comment.id;
-        else
-        return Objects.equals(ad, comment.ad) && Objects.equals(author, comment.author) && Objects.equals(createdAt, comment.createdAt) && Objects.equals(text, comment.text);
+        } else {
+            return Objects.equals(ad, comment.ad) && Objects.equals(author, comment.author)
+                    && Objects.equals(createdAt, comment.createdAt) && Objects.equals(text, comment.text);
+        }
     }
 
     @Override
     public int hashCode() {
-        if (id != 0)
+        if (id != 0) {
             return Objects.hash(id);
-        else
-        return Objects.hash(ad, author, createdAt, text);
+        } else {
+            return Objects.hash(ad, author, createdAt, text);
+        }
     }
 }

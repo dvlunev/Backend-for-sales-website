@@ -11,8 +11,8 @@ public class UserMapperImpl implements UserMapper {
 
     public UserDto mapToUserDto(User user) {
         String image = new String();
-        if (user.getImage()!=null){
-            image = user.getImage().getImagePath();
+        if (user.getImage() != null){
+            image = user.getImage().getId();
         }
         UserDto userDto = new UserDto(
                 user.getId(),
@@ -32,7 +32,7 @@ public class UserMapperImpl implements UserMapper {
         mappedUser.setFirstName(userDto.getFirstName());
         mappedUser.setLastName(userDto.getLastName());
         mappedUser.setPhone(userDto.getPhone());
-        mappedUser.getImage().setImagePath(userDto.getImage());
+        mappedUser.getImage().setId(userDto.getImage());
         return mappedUser;
     }
 
