@@ -6,22 +6,20 @@ import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.service.mapper.UserMapper;
 
+import java.util.Optional;
+
 @Component
 public class UserMapperImpl implements UserMapper {
 
     public UserDto mapToUserDto(User user) {
-        String image = new String();
-        if (user.getImage() != null){
-            image = user.getImage().getId();
-        }
-        UserDto userDto = new UserDto(
-                user.getId(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getPhone(),
-                image
-        );
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setPhone(user.getPhone());
+        Optional.ofNullable(user.getImage()).ifPresent(image -> userDto.setImage(
+                "/users/" + user.getImage().getId() + "/image"));
         return userDto;
     }
 

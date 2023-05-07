@@ -21,7 +21,8 @@ public class WebSecurityConfig
             "/v3/api-docs",
             "/webjars/**",
             "/login", "/register",
-            "/ads", "/ads/*/image"
+            "/ads", "/ads/*/image",
+            "/users", "/users/*/image"
     };
 
     private final UserServiceImpl userService;
