@@ -11,13 +11,14 @@
                 <tableExists tableName="image"/>
             </not>
         </preConditions>
+
         <createTable tableName="image">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true"/>
             </column>
-            <column name="image_path" type="varchar(200)">
-                <constraints nullable="false"/>
+            <column name="image_path" type="blob">
             </column>
         </createTable>
+
     </changeSet>
 </databaseChangeLog>

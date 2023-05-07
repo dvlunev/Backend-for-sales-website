@@ -10,7 +10,6 @@ import ru.skypro.homework.service.mapper.AdMapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class AdMapperImpl implements AdMapper {
@@ -21,7 +20,7 @@ public class AdMapperImpl implements AdMapper {
         adsDto.setPk(ad.getId());
         adsDto.setAuthor(ad.getAuthor().getId());
         adsDto.setPrice(ad.getPrice());
-        Optional.ofNullable(ad.getImage()).ifPresent(image -> adsDto.setImage(image.getImagePath()));
+        adsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         adsDto.setTitle(ad.getTitle());
         return adsDto;
     }
@@ -32,7 +31,7 @@ public class AdMapperImpl implements AdMapper {
         mappedAd.setId(adsDto.getPk());
         mappedAd.getAuthor().setId(adsDto.getAuthor());
         mappedAd.setPrice(adsDto.getPrice());
-        mappedAd.getImage().setImagePath(adsDto.getImage());
+        mappedAd.getImage().setId(adsDto.getImage());
         mappedAd.setTitle(adsDto.getTitle());
         return mappedAd;
     }
@@ -47,7 +46,7 @@ public class AdMapperImpl implements AdMapper {
         fullAdsDto.setPhone(ad.getAuthor().getPhone());
         fullAdsDto.setTitle(ad.getTitle());
         fullAdsDto.setDescription(ad.getDescription());
-        Optional.ofNullable(ad.getImage()).ifPresent(image -> fullAdsDto.setImage(image.getImagePath()));
+        fullAdsDto.setImage("/ads/" + ad.getImage().getId() + "/image");
         fullAdsDto.setPrice(ad.getPrice());
         return fullAdsDto;
     }

@@ -5,15 +5,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
+import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.UUID;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,6 +28,7 @@ public class AdServiceImpl implements AdService {
 
     private final Role role = Role.ADMIN;
     private final AdRepository adRepository;
+    private final ImageRepository imageRepository;
     private final UserService userService;
     private final AdMapper adMapper;
 
@@ -51,8 +57,17 @@ public class AdServiceImpl implements AdService {
     public AdsDto createAds(CreateAdsDto adDto, MultipartFile image) {
         Ad newAd = adMapper.mapCreatedAdsDtoToAd(adDto);
         newAd.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
+        Image newImage = new Image();
+        try {
+            byte[] bytes = image.getBytes();
+            newImage.setImagePath(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        newImage.setId(UUID.randomUUID().toString());
+        Image savedImage = imageRepository.saveAndFlush(newImage);
+        newAd.setImage(savedImage);
         adRepository.save(newAd);
-        // TO DO сделать сохранение картинки
         return adMapper.mapAdToAdDto(newAd);
     }
 
@@ -93,6 +108,16 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public void updateImageAdDto(Integer id, MultipartFile image) {
-        // TO DO сделать обновление картинки в объявлении
+        Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
+        Image oldImage = ad.getImage();
+        try {
+            byte[] bytes = image.getBytes();
+            oldImage.setImagePath(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Image savedImage = imageRepository.saveAndFlush(oldImage);
+        ad.setImage(savedImage);
+        adRepository.save(ad);
     }
 }

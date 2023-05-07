@@ -6,6 +6,9 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
+import java.io.IOException;
+import java.util.Collection;
+
 /**
  * Интерфейс сервисного класса AdServiceImpl, содержащий набор CRUD операций над объектом Ad
  * @see ru.skypro.homework.entity.Ad
