@@ -2,6 +2,7 @@ package ru.skypro.homework.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class Image {
 
     @Lob
     @Column(name = "image_path")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] imagePath;
 
     @Override
