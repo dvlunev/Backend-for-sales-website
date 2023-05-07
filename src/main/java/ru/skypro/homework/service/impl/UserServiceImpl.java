@@ -30,12 +30,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final ImageRepository imageRepository;
 
     @Override
-    public boolean isAuth() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.isAuthenticated();
-    }
-
-    @Override
     //@Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow(() ->
