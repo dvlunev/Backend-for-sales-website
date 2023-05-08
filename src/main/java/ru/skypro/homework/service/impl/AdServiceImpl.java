@@ -9,6 +9,7 @@ import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.ImageNotFoundException;
+import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.ImageRepository;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
 
-    private final Role role = Role.ADMIN;
     private final AdRepository adRepository;
     private final ImageRepository imageRepository;
     private final UserService userService;
@@ -39,6 +39,7 @@ public class AdServiceImpl implements AdService {
      */
     @Override
     public boolean checkAccess(Integer id) {
+        Role role = Role.ADMIN;
         Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         Optional<User> user = userService.findAuthUser();
         User notOptionalUser = user.get();
@@ -79,11 +80,11 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public boolean removeAdDto(Integer id) {
-        if (checkAccess(id) && adRepository.existsById(id)) {
+        if (checkAccess(id)) {
             adRepository.deleteById(id);
             return true;
         }
-        throw new AdsNotFoundException();
+        throw new UserForbiddenException();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class AdServiceImpl implements AdService {
             ad.setTitle(createAdsDto.getTitle());
             return adMapper.mapAdToAdDto(adRepository.save(ad));
         }
-        return adMapper.mapAdToAdDto(adRepository.save(ad));
+        throw new UserForbiddenException();
     }
 
     @Override

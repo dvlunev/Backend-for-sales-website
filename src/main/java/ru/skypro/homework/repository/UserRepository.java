@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * Интерфейс, содержащий методы для работы с базой данных пользователей
- * @see ru.skypro.homework.entity.User
+ * @see User
  * @see ru.skypro.homework.service.UserService
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * Метод ищет и возвращает пользователя по его email
      * @param email
      * @return User
-     * @see ru.skypro.homework.entity.User
+     * @see User
      */
     Optional<User> findByEmail(String email);
 }

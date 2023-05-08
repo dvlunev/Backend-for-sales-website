@@ -10,6 +10,7 @@ import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.CommentNotFoundException;
+import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
@@ -23,16 +24,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс - сервис, содержащий реализацию интерфейса CommentService
- * @see ru.skypro.homework.entity.Comment
- * @see ru.skypro.homework.service.CommentService
- * @see ru.skypro.homework.repository.CommentRepository
+ * Класс - сервис, содержащий реализацию интерфейса {@link CommentService}
+ * @see Comment
+ * @see CommentRepository
  */
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    private final Role role = Role.ADMIN;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final AdRepository adRepository;
@@ -41,10 +40,12 @@ public class CommentServiceImpl implements CommentService {
     /**
      * Метод проверяет наличие доступа к комментарию по id
      * @param id
-     * @see ru.skypro.homework.service.impl.CommentServiceImpl
+     * @throws CommentNotFoundException если комментарий не найден
+     * @see UserService
      */
     @Override
     public boolean checkAccess(Integer id) {
+        Role role = Role.ADMIN;
         Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
         Optional<User> user = userService.findAuthUser();
         User notOptionalUser = user.get();
@@ -54,10 +55,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Метод ищет и возвращает список всех комментариев к объявлению по id объявления
+     * Метод ищет и возвращает список всех комментариев {@link ResponseWrapperCommentDto} к объявлению по id объявления
      * @param adId
-     * @return {@link CommentRepository#findAll()}
-     * @see CommentService
+     * @return {@link CommentRepository#findAll()}, {@link CommentMapper#mapToCommentDto(Comment)},
+     * @see CommentMapper
      */
     @Override
     public ResponseWrapperCommentDto getCommentsDto(Integer adId) {
@@ -75,9 +76,10 @@ public class CommentServiceImpl implements CommentService {
      * Метод создает комментарий к объявлению по id объявления
      * @param adId
      * @param commentDto
-     * @return {@link CommentRepository#save(Object)}
+     * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
      * @throws AdsNotFoundException если объявление по указанному id не найдено
-     * @see CommentService
+     * @throws UserNotFoundException если пользователь не найден
+     * @see CommentMapper
      */
     @Override
     public CommentDto createCommentDto(Integer adId, CommentDto commentDto) {
@@ -94,16 +96,16 @@ public class CommentServiceImpl implements CommentService {
      * Метод удаляет комментарий к объявлению по id объявления
      * @param adId
      * @param commentId
-     * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
-     * @see CommentService
+     * @return {@link CommentRepository#delete(Object)}
+     * @throws UserForbiddenException если нет прав на удаление комментария
      */
     @Override
     public boolean removeCommentDto(Integer adId, Integer commentId) {
-        if (checkAccess(commentId) && commentRepository.existsById(commentId)) {
+        if (checkAccess(commentId)) {
             commentRepository.deleteById(commentId);
             return true;
         }
-        throw new CommentNotFoundException();
+        throw new UserForbiddenException();
     }
 
     /**
@@ -111,9 +113,10 @@ public class CommentServiceImpl implements CommentService {
      * @param adId
      * @param commentId
      * @param commentDto
-     * @return {@link CommentRepository#save(Object)}
-     * @throws CommentNotFoundException если комментарий с указанным id объявления не найден
-     * @see CommentService
+     * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
+     * @throws CommentNotFoundException если комментарий не найден
+     * @throws UserForbiddenException если нет прав на обновление комментария
+     * @see CommentMapper
      */
     @Override
     public CommentDto updateCommentDto(Integer adId, Integer commentId, CommentDto commentDto) {
@@ -122,6 +125,6 @@ public class CommentServiceImpl implements CommentService {
             comment.setText(commentDto.getText());
             return commentMapper.mapToCommentDto(commentRepository.save(comment));
         }
-        return commentMapper.mapToCommentDto(commentRepository.save(comment));
+        throw new UserForbiddenException();
     }
 }
