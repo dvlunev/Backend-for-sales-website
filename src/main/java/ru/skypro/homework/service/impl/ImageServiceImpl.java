@@ -1,9 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
-import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.ImageRepository;
@@ -23,6 +21,6 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public byte[] getImagePathById(String id) {
         Image image = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
-        return image.getImagePath();
+        return image.getImage();
     }
 }

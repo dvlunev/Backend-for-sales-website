@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             Image newImage = new Image();
             try {
                 byte[] bytes = image.getBytes();
-                newImage.setImagePath(bytes);
+                newImage.setImage(bytes);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             try {
                 byte[] bytes = image.getBytes();
-                oldImage.setImagePath(bytes);
+                oldImage.setImage(bytes);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

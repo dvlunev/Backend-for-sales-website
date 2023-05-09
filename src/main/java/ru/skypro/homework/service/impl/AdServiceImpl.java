@@ -8,7 +8,6 @@ import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
-import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
@@ -61,7 +60,7 @@ public class AdServiceImpl implements AdService {
         Image newImage = new Image();
         try {
             byte[] bytes = image.getBytes();
-            newImage.setImagePath(bytes);
+            newImage.setImage(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -113,7 +112,7 @@ public class AdServiceImpl implements AdService {
         Image oldImage = ad.getImage();
         try {
             byte[] bytes = image.getBytes();
-            oldImage.setImagePath(bytes);
+            oldImage.setImage(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
