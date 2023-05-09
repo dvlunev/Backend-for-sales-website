@@ -65,7 +65,6 @@ public class AuthServiceImpl implements AuthService {
     /**
      * Метод меняет пароль {@link PasswordEncoder#encode(CharSequence)}
      * @param newPasswordDto
-     * @return {@link UserRepository#save(Object)}
      * @throws UserNotFoundException если пользователь не найден
      * @throws UserUnauthorizedException если пользователь не аутентифицирован и поэтому не имеет права доступа к ресурсу
      */
@@ -76,11 +75,13 @@ public class AuthServiceImpl implements AuthService {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String currentEmail = principal.getUsername();
         User user = userRepository.findByEmail(currentEmail).orElseThrow(UserNotFoundException::new);
-        User userBD = userRepository.findByEmail(newPasswordDto.getCurrentPassword()).get();
-        if (user.equals(userBD)) {
+        UserDetails userDetails = manager.loadUserByUsername(user.getUsername());
+        String encryptedPassword = userDetails.getPassword();
+        if (encoder.matches(newPasswordDto.getCurrentPassword(), encryptedPassword)) {
             user.setPassword(encoder.encode(newPasswordDto.getNewPassword()));
             userRepository.save(user);
+        } else {
+            throw new UserUnauthorizedException();
         }
-        throw new UserUnauthorizedException();
     }
 }
