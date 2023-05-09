@@ -6,7 +6,7 @@ import ru.skypro.homework.entity.Comment;
 
 /**
  * Интерфейс, содержащий методы для работы с базой данных комментариев
- * @see ru.skypro.homework.entity.Comment
+ * @see Comment
  * @see ru.skypro.homework.service.CommentService
  * @see ru.skypro.homework.service.impl.CommentServiceImpl
  */

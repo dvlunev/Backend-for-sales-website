@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.skypro.homework.service.impl.UserServiceImpl;
+import ru.skypro.homework.service.UserService;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -25,9 +25,9 @@ public class WebSecurityConfig
             "/users", "/users/*/image"
     };
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
-    public WebSecurityConfig(UserServiceImpl userService) {
+    public WebSecurityConfig(UserService userService) {
         this.userService = userService;
     }
 
