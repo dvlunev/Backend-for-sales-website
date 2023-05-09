@@ -5,20 +5,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="create_image_table.1" author="tamara">
+    <changeSet id="rename_imagePath_column.2" author="tamara">
         <preConditions onFail="MARK_RAN">
+            <tableExists tableName="image"/>
+            <columnExists tableName="image" columnName="imagePath"/>
             <not>
-                <tableExists tableName="image"/>
+                <columnExists tableName="image" columnName="image"/>
             </not>
         </preConditions>
 
-        <createTable tableName="image">
-            <column name="id" type="varchar(255)">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="imagePath" type="bytea">
-            </column>
-        </createTable>
+        <renameColumn tableName="image" oldColumnName="imagePath" newColumnName="image"/>
 
     </changeSet>
 </databaseChangeLog>
+
