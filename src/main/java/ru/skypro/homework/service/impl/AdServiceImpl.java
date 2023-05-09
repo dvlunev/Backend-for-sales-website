@@ -11,15 +11,12 @@ import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
-import java.io.IOException;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,7 +25,6 @@ import java.util.stream.Collectors;
 public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
-    private final ImageRepository imageRepository;
     private final UserService userService;
     private final ImageService imageService;
     private final AdMapper adMapper;
