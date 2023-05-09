@@ -16,7 +16,7 @@
             <column name="id" type="varchar(255)">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="imagePath" type="bytea">
+            <column name="image_path" type="bytea">
             </column>
         </createTable>
 

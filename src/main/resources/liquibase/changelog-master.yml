@@ -14,4 +14,4 @@ databaseChangeLog:
    - include:
         file: liquibase/scripts/change_column_type_user_password.xml
    - include:
-        file: liquibase/scripts/change_column_rename_imagePath.xml
+        file: liquibase/scripts/change_column_rename_image_path.xml
