@@ -14,12 +14,11 @@ import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
-import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Класс - сервис, содержащий реализацию интерфейса {@link UserService} и {@link UserDetailsService}
@@ -30,8 +29,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserMapper userMapper;
+    private final ImageService imageService;
     private final UserRepository userRepository;
-    private final ImageRepository imageRepository;
 
     /**
      * Метод находит пользователя по email и возвращает его данные: имя пользователя и пароль
@@ -107,25 +106,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = findAuthUser().orElseThrow(UserNotFoundException::new);
         Image oldImage = user.getImage();
         if (oldImage == null) {
-            Image newImage = new Image();
-            try {
-                byte[] bytes = image.getBytes();
-                newImage.setImagePath(bytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            newImage.setId(UUID.randomUUID().toString());
-            Image savedImage = imageRepository.saveAndFlush(newImage);
-            user.setImage(savedImage);
+            Image newImage = imageService.saveImage(image);
+            user.setImage(newImage);
         } else {
-            try {
-                byte[] bytes = image.getBytes();
-                oldImage.setImagePath(bytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Image savedImage = imageRepository.saveAndFlush(oldImage);
-            user.setImage(savedImage);
+            Image updatedImage = imageService.updateImage(image, oldImage);
+            user.setImage(updatedImage);
         }
         userRepository.save(user);
     }

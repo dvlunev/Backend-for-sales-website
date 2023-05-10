@@ -26,7 +26,7 @@ public class CommentMapperImpl implements CommentMapper {
         Comment mappedComment = new Comment();
         mappedComment.setId(commentDto.getPk());
 //        mappedComment.getAuthor().setId(commentDto.getAuthor());
-//        mappedComment.getAuthor().getImage().setImagePath(commentDto.getAuthorImage());
+//        mappedComment.getAuthor().getImage().setImage(commentDto.getAuthorImage());
 //        mappedComment.getAuthor().setFirstName(commentDto.getAuthorFirstName());
 //        mappedComment.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(commentDto.getCreatedAt()), ZoneId.systemDefault()));
         mappedComment.setText(commentDto.getText());
