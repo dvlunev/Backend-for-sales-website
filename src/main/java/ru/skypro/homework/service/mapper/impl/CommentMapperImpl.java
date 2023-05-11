@@ -3,13 +3,23 @@ package ru.skypro.homework.service.mapper.impl;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.service.mapper.AdMapper;
 import ru.skypro.homework.service.mapper.CommentMapper;
 
 import java.time.ZoneId;
 import java.util.Optional;
 
+/**
+ * Класс - сервис-маппер, содержащий реализацию интерфейса {@link CommentMapper}
+ */
 @Component
 public class CommentMapperImpl implements CommentMapper {
+    /**
+     * Метод, преобразующий объект класса Comment в объект класса CommentDto.
+     *
+     * @param comment
+     * @return CommentDto
+     */
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
@@ -22,13 +32,15 @@ public class CommentMapperImpl implements CommentMapper {
         return commentDto;
     }
 
+    /**
+     * Метод, преобразующий объект класса CommentDto в объект класса Comment.
+     *
+     * @param commentDto
+     * @return Comment
+     */
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
         mappedComment.setId(commentDto.getPk());
-//        mappedComment.getAuthor().setId(commentDto.getAuthor());
-//        mappedComment.getAuthor().getImage().setImage(commentDto.getAuthorImage());
-//        mappedComment.getAuthor().setFirstName(commentDto.getAuthorFirstName());
-//        mappedComment.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(commentDto.getCreatedAt()), ZoneId.systemDefault()));
         mappedComment.setText(commentDto.getText());
         return mappedComment;
     }

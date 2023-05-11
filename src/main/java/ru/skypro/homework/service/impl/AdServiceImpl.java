@@ -31,6 +31,7 @@ public class AdServiceImpl implements AdService {
 
     /**
      * Метод проверяет наличие доступа к объявлению по id
+     *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */

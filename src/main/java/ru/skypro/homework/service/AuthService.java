@@ -6,12 +6,14 @@ import ru.skypro.homework.dto.Role;
 
 /**
  * Интерфейс сервисного класса AuthServiceImpl
+ *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.AuthServiceImpl
  */
 public interface AuthService {
     /**
      * Метод авторизует пользователя в системе
+     *
      * @param userName
      * @param password
      * @see ru.skypro.homework.service.impl.UserServiceImpl
@@ -20,6 +22,7 @@ public interface AuthService {
 
     /**
      * Метод регистрирует пользователя в системе
+     *
      * @param registerReqDto
      * @param role
      * @see ru.skypro.homework.service.impl.UserServiceImpl
@@ -28,6 +31,7 @@ public interface AuthService {
 
     /**
      * Метод обновляет пароль пользователя
+     *
      * @param newPasswordDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
