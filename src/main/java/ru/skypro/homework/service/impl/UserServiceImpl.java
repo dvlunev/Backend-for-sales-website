@@ -103,9 +103,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @throws UsernameNotFoundException если пользователь не найден
      */
     @Override
-    public void updateUserImage(MultipartFile image) {
+    public Image updateUserImage(MultipartFile image) {
         User user = findAuthUser().orElseThrow(UserNotFoundException::new);
         Image oldImage = user.getImage();
+        Image savedImage;
         if (oldImage == null) {
             Image newImage = new Image();
             try {
@@ -115,7 +116,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 throw new RuntimeException(e);
             }
             newImage.setId(UUID.randomUUID().toString());
-            Image savedImage = imageRepository.saveAndFlush(newImage);
+            savedImage = imageRepository.saveAndFlush(newImage);
             user.setImage(savedImage);
         } else {
             try {
@@ -124,9 +125,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Image savedImage = imageRepository.saveAndFlush(oldImage);
+            savedImage = imageRepository.saveAndFlush(oldImage);
             user.setImage(savedImage);
         }
         userRepository.save(user);
+        return savedImage;
     }
 }

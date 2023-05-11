@@ -2,6 +2,7 @@ package ru.skypro.homework.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
 import java.util.Optional;
@@ -39,5 +40,5 @@ public interface UserService {
      * @param image
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
-    void updateUserImage(MultipartFile image);
+    Image updateUserImage(MultipartFile image);
 }
