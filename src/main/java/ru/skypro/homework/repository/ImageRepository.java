@@ -6,6 +6,7 @@ import ru.skypro.homework.entity.Image;
 
 /**
  * Интерфейс, содержащий методы для работы с базой данных изображений
+ *
  * @see Image
  * @see ru.skypro.homework.service.ImageService
  * @see ru.skypro.homework.service.impl.ImageServiceImpl

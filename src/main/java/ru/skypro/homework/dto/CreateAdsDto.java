@@ -2,6 +2,9 @@ package ru.skypro.homework.dto;
 
 import lombok.Data;
 
+/**
+ * Класс DTO для передачи информации об объявлении при создании или изменении
+ */
 @Data
 public class CreateAdsDto {
     //описание объявления

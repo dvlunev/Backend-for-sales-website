@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Класс - исключение, описывающий ситуацию, когда изображение не найдено
+ *
  * @see ru.skypro.homework.entity.Image
  * @see ru.skypro.homework.service.impl.ImageServiceImpl
  */

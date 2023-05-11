@@ -23,6 +23,7 @@ import java.util.UUID;
 
 /**
  * Класс - сервис, содержащий реализацию интерфейса {@link UserService} и {@link UserDetailsService}
+ *
  * @see User
  */
 @Service
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * Метод находит пользователя по email и возвращает его данные: имя пользователя и пароль
+     *
      * @param username
      * @return {@link UserDetails}
      * @throws UsernameNotFoundException если пользователь не найден
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * Метод ищет авторизованного пользователя
+     *
      * @return {@link UserRepository#findByEmail(String)}
      */
     @Override
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * Метод достает пользователя из базы данных {@link UserService#findAuthUser()} и
      * конвертирует его в {@link UserDto}
+     *
      * @return {@link UserMapper#mapToUser(UserDto)}
      * @see UserMapper
      */
@@ -76,6 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
      * редактирует данные и сохраняет в базе
+     *
      * @param newUserDto
      * @return {@link UserRepository#save(Object)}, {@link UserMapper#mapToUser(UserDto)}
      * @see UserMapper
@@ -99,6 +104,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
      * устанавливает или обновляет его аватар, затем сохраняет изменения в базе данных:
      * {@link ImageRepository#saveAndFlush(Object)}, {@link UserRepository#save(Object)}
+     *
      * @param image
      * @throws UsernameNotFoundException если пользователь не найден
      */

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Класс - исключение, описывающий ситуацию, когда комментарий не найден
+ *
  * @see ru.skypro.homework.entity.Comment
  * @see ru.skypro.homework.service.impl.CommentServiceImpl
  */

@@ -5,12 +5,14 @@ import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 
 /**
  * Интерфейс сервисного класса CommentServiceImpl, содержащий набор CRUD операций над объектом Comment
+ *
  * @see ru.skypro.homework.entity.Comment
  * @see ru.skypro.homework.service.impl.CommentServiceImpl
  */
 public interface CommentService {
     /**
      * Метод ищет и возвращает список всех комментариев к объявлению по id объявления
+     *
      * @param adId
      * @return {@link ResponseWrapperCommentDto}
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
@@ -19,6 +21,7 @@ public interface CommentService {
 
     /**
      * Метод создает комментарий к объявлению по id объявления
+     *
      * @param adId
      * @param commentDto
      * @return {@link CommentDto}
@@ -28,6 +31,7 @@ public interface CommentService {
 
     /**
      * Метод удаляет комментарий к объявлению по id объявления
+     *
      * @param adId
      * @param commentId
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
@@ -36,6 +40,7 @@ public interface CommentService {
 
     /**
      * Метод редактирует комментарий к объявлению по id
+     *
      * @param adId
      * @param commentId
      * @return {@link CommentDto}
@@ -45,6 +50,7 @@ public interface CommentService {
 
     /**
      * Метод проверяет наличие доступа к комментарию по id
+     *
      * @param id
      * @see ru.skypro.homework.service.impl.CommentServiceImpl
      */
