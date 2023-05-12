@@ -99,6 +99,12 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public User(String password, String username, Role role) {
+        this.password = password;
+        this.username = username;
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
