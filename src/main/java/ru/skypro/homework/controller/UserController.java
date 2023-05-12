@@ -22,7 +22,13 @@ import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
-
+/**
+ * Класс - контроллер для работы с авторезированным пользователем и его данными, содержащий набор API endpoints
+ *
+ * @see UserService
+ * @see AuthService
+ * @see ImageService
+ */
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")

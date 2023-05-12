@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Класс - исключение, описывающий ситуацию, когда пользователь не найден
+ *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */

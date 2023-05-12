@@ -18,6 +18,13 @@ import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.ImageService;
 
+/**
+ * Класс - контроллер для работы с объявлениями и комментариями, содержащий набор API endpoints
+ *
+ * @see AdService
+ * @see CommentService
+ * @see ImageService
+ */
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/ads")
@@ -237,7 +244,7 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
             })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage (
+    public ResponseEntity<byte[]> updateImage(
             @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(schema = @Schema(type = "string", format = "binary"))

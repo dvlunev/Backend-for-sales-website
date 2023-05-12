@@ -9,12 +9,14 @@ import java.util.Optional;
 
 /**
  * Интерфейс сервисного класса UserServiceImpl, содержащий набор CRUD операций над объектом User
+ *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
 public interface UserService {
     /**
      * Метод ищет авторизованного пользователя
+     *
      * @return Optional<User>
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
@@ -22,6 +24,7 @@ public interface UserService {
 
     /**
      * Метод возвращает Dto авторизованного пользователя
+     *
      * @return UserDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */
@@ -29,6 +32,7 @@ public interface UserService {
 
     /**
      * Метод редактирует данные авторизованного пользователя
+     *
      * @param userDto
      * @return UserDto
      * @see ru.skypro.homework.service.impl.UserServiceImpl
@@ -37,6 +41,7 @@ public interface UserService {
 
     /**
      * Метод обновляет аватар пользователя
+     *
      * @param image
      * @see ru.skypro.homework.service.impl.UserServiceImpl
      */

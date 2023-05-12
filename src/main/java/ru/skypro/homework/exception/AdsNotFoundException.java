@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Класс - исключение, описывающий ситуацию, когда объявление не найдено
+ *
  * @see ru.skypro.homework.entity.Ad
  * @see ru.skypro.homework.service.impl.AdServiceImpl
  */

@@ -8,18 +8,15 @@ import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
-import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.repository.AdRepository;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
-import java.io.IOException;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,12 +25,13 @@ import java.util.stream.Collectors;
 public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
-    private final ImageRepository imageRepository;
     private final UserService userService;
+    private final ImageService imageService;
     private final AdMapper adMapper;
 
     /**
      * Метод проверяет наличие доступа к объявлению по id
+     *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
@@ -58,16 +56,8 @@ public class AdServiceImpl implements AdService {
     public AdsDto createAds(CreateAdsDto adDto, MultipartFile image) {
         Ad newAd = adMapper.mapCreatedAdsDtoToAd(adDto);
         newAd.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
-        Image newImage = new Image();
-        try {
-            byte[] bytes = image.getBytes();
-            newImage.setImagePath(bytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        newImage.setId(UUID.randomUUID().toString());
-        Image savedImage = imageRepository.saveAndFlush(newImage);
-        newAd.setImage(savedImage);
+        Image newImage = imageService.saveImage(image);
+        newAd.setImage(newImage);
         adRepository.save(newAd);
         return adMapper.mapAdToAdDto(newAd);
     }
@@ -110,15 +100,8 @@ public class AdServiceImpl implements AdService {
     @Override
     public void updateImageAdDto(Integer id, MultipartFile image) {
         Ad ad = adRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        Image oldImage = ad.getImage();
-        try {
-            byte[] bytes = image.getBytes();
-            oldImage.setImagePath(bytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Image savedImage = imageRepository.saveAndFlush(oldImage);
-        ad.setImage(savedImage);
+        Image updatedImage = imageService.updateImage(image, ad.getImage());
+        ad.setImage(updatedImage);
         adRepository.save(ad);
     }
 }
