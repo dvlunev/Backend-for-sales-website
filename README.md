@@ -8,7 +8,7 @@ Back-end часть проекта платформы по продаже вещ
 
 ## Демонстрация работы
 
-https://github.com/MoXuT0/graduate-work/assets/34478337/bfe7f74f-ce12-4cfe-8287-40d1879ccac6
+https://github.com/MoXuT0/graduate-work/assets/34478337/a7538d6d-5c05-4f65-842d-6ee23e012511
 
 ---
 
