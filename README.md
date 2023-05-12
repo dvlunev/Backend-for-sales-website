@@ -6,7 +6,13 @@ Back-end часть проекта платформы по продаже вещ
 
 ---
 
-## Реализованный фунцкионал
+## Демонстрация работы
+
+https://github.com/MoXuT0/graduate-work/assets/34478337/bfe7f74f-ce12-4cfe-8287-40d1879ccac6
+
+---
+
+## Реализованный функционал
 
 * Авторизация и аутентификация пользователей.
 * CRUD методы для размещения объявлений на сайте.
@@ -39,9 +45,3 @@ Back-end часть проекта платформы по продаже вещ
 - [sofibesedina444](https://github.com/sofibesedina444)<br>
 - [LeoRoA](https://github.com/LeoRoA)<br>
 - [MoXuT0](https://github.com/MoXuT0)<br>
-
----
-
-## Демонстрация работы
-
-https://github.com/MoXuT0/graduate-work/assets/34478337/209aede3-6cd6-4cfa-85c9-1ee5829192af
