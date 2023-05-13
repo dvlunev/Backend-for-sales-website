@@ -3,7 +3,6 @@ package ru.skypro.homework.service;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
-import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
@@ -52,5 +51,5 @@ public interface UserService {
      * @param image
      * @throws UsernameNotFoundException если пользователь не найден
      */
-    Image updateUserImage(MultipartFile image);
+    void updateUserImage(MultipartFile image);
 }
