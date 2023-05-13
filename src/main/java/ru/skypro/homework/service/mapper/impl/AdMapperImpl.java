@@ -16,6 +16,12 @@ import java.util.List;
  */
 @Component
 public class AdMapperImpl implements AdMapper {
+    /**
+     * Метод, преобразующий объект класса Ad в объект класса AdsDto.
+     *
+     * @param ad
+     * @return AdsDto
+     */
     @Override
     public AdsDto mapAdToAdDto(Ad ad) {
         AdsDto adsDto = new AdsDto();
@@ -27,6 +33,12 @@ public class AdMapperImpl implements AdMapper {
         return adsDto;
     }
 
+    /**
+     * Метод, преобразующий объект класса AdsDto в объект класса Ad.
+     *
+     * @param adsDto
+     * @return Ad
+     */
     @Override
     public Ad mapAdsDtoToAd(AdsDto adsDto) {
         Ad mappedAd = new Ad();
@@ -38,6 +50,12 @@ public class AdMapperImpl implements AdMapper {
         return mappedAd;
     }
 
+    /**
+     * Метод, преобразующий объект класса Ad в объект класса FullAdsDto.
+     *
+     * @param ad
+     * @return FullAdsDto
+     */
     @Override
     public FullAdsDto mapAdToFullAdsDTo(Ad ad) {
         FullAdsDto fullAdsDto = new FullAdsDto();
@@ -53,6 +71,12 @@ public class AdMapperImpl implements AdMapper {
         return fullAdsDto;
     }
 
+    /**
+     * Метод, преобразующий объект класса CreateAdsDto в объект класса Ad.
+     *
+     * @param createAdsDto
+     * @return Ad
+     */
     @Override
     public Ad mapCreatedAdsDtoToAd(CreateAdsDto createAdsDto) {
         Ad ad = new Ad();
@@ -62,6 +86,12 @@ public class AdMapperImpl implements AdMapper {
         return ad;
     }
 
+    /**
+     * Метод, преобразующий объект класса Collection<Ad> в объект класса Collection<AdsDto>.
+     *
+     * @param adCollection
+     * @return Collection<AdsDto>
+     */
     @Override
     public Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection) {
         List<AdsDto> dtoList = new ArrayList<AdsDto>(adCollection.size());

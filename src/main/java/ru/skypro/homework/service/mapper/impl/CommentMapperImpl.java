@@ -13,6 +13,12 @@ import java.util.Optional;
  */
 @Component
 public class CommentMapperImpl implements CommentMapper {
+    /**
+     * Метод, преобразующий объект класса Comment в объект класса CommentDto.
+     *
+     * @param comment
+     * @return CommentDto
+     */
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
@@ -25,6 +31,12 @@ public class CommentMapperImpl implements CommentMapper {
         return commentDto;
     }
 
+    /**
+     * Метод, преобразующий объект класса CommentDto в объект класса Comment.
+     *
+     * @param commentDto
+     * @return Comment
+     */
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
         mappedComment.setId(commentDto.getPk());
