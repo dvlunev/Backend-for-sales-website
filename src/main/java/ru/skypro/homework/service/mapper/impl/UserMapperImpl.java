@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
-import ru.skypro.homework.service.mapper.CommentMapper;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 import java.util.Optional;
@@ -14,6 +13,7 @@ import java.util.Optional;
  */
 @Component
 public class UserMapperImpl implements UserMapper {
+
     /**
      * Метод, преобразующий объект класса User в объект класса UserDto.
      *

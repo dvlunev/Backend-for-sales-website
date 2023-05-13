@@ -3,7 +3,6 @@ package ru.skypro.homework.service.mapper.impl;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.service.mapper.AdMapper;
 import ru.skypro.homework.service.mapper.CommentMapper;
 
 import java.time.ZoneId;

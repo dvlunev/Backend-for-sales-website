@@ -1,8 +1,12 @@
 package ru.skypro.homework.service;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
+import ru.skypro.homework.repository.ImageRepository;
+import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.service.mapper.UserMapper;
 
 import java.util.Optional;
 
@@ -16,33 +20,36 @@ public interface UserService {
     /**
      * Метод ищет авторизованного пользователя
      *
-     * @return Optional<User>
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     * @return {@link UserRepository#findByEmail(String)}
      */
     Optional<User> findAuthUser();
 
     /**
-     * Метод возвращает Dto авторизованного пользователя
+     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()} и
+     * конвертирует его в {@link UserDto}
      *
-     * @return UserDto
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     * @return {@link UserMapper#mapToUser(UserDto)}
+     * @see UserMapper
      */
     UserDto getUserDto();
 
     /**
-     * Метод редактирует данные авторизованного пользователя
+     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
+     * редактирует данные и сохраняет в базе
      *
-     * @param userDto
-     * @return UserDto
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     * @param newUserDto
+     * @return {@link UserRepository#save(Object)}, {@link UserMapper#mapToUser(UserDto)}
+     * @see UserMapper
      */
-    UserDto updateUserDto(UserDto userDto);
+    UserDto updateUserDto(UserDto newUserDto);
 
     /**
-     * Метод обновляет аватар пользователя
+     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
+     * устанавливает или обновляет его аватар, затем сохраняет изменения в базе данных:
+     * {@link ImageRepository#saveAndFlush(Object)}, {@link UserRepository#save(Object)}
      *
      * @param image
-     * @see ru.skypro.homework.service.impl.UserServiceImpl
+     * @throws UsernameNotFoundException если пользователь не найден
      */
     void updateUserImage(MultipartFile image);
 }
