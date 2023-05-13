@@ -25,6 +25,7 @@ import java.util.Optional;
 
 /**
  * Класс - сервис, содержащий реализацию интерфейса {@link CommentService}
+ *
  * @see Comment
  * @see CommentRepository
  */
@@ -39,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Метод проверяет наличие доступа к комментарию по id
+     *
      * @param id
      * @throws CommentNotFoundException если комментарий не найден
      * @see UserService
@@ -56,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Метод ищет и возвращает список всех комментариев {@link ResponseWrapperCommentDto} к объявлению по id объявления
+     *
      * @param adId
      * @return {@link CommentRepository#findAll()}, {@link CommentMapper#mapToCommentDto(Comment)},
      * @see CommentMapper
@@ -74,10 +77,11 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Метод создает комментарий к объявлению по id объявления
+     *
      * @param adId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
-     * @throws AdsNotFoundException если объявление по указанному id не найдено
+     * @throws AdsNotFoundException  если объявление по указанному id не найдено
      * @throws UserNotFoundException если пользователь не найден
      * @see CommentMapper
      */
@@ -94,6 +98,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Метод удаляет комментарий к объявлению по id объявления
+     *
      * @param adId
      * @param commentId
      * @return {@link CommentRepository#delete(Object)}
@@ -110,12 +115,13 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Метод редактирует комментарий к объявлению по id
+     *
      * @param adId
      * @param commentId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
      * @throws CommentNotFoundException если комментарий не найден
-     * @throws UserForbiddenException если нет прав на обновление комментария
+     * @throws UserForbiddenException   если нет прав на обновление комментария
      * @see CommentMapper
      */
     @Override
