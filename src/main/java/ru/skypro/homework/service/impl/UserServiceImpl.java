@@ -105,11 +105,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * {@link ImageRepository#saveAndFlush(Object)}, {@link UserRepository#save(Object)}
      *
      * @param image
-     * @return
      * @throws UsernameNotFoundException если пользователь не найден
      */
     @Override
-    public Image updateUserImage(MultipartFile image) {
+    public void updateUserImage(MultipartFile image) {
         User user = findAuthUser().orElseThrow(UserNotFoundException::new);
         Image oldImage = user.getImage();
         if (oldImage == null) {
@@ -120,6 +119,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setImage(updatedImage);
         }
         userRepository.save(user);
-        return user.getImage();
     }
 }
