@@ -56,7 +56,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-
     @Operation(
             summary = "Получить информацию об авторизованном пользователе"
     )

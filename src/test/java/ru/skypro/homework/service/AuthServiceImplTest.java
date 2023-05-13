@@ -1,5 +1,6 @@
 package ru.skypro.homework.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,100 +42,93 @@ public class AuthServiceImplTest {
     private UserRepository userRepository;
     @Mock
     private UserMapper userMapper;
-    private final String username = "testUser";
-    private final String password = "testPassword";
-    private final String encryptedPassword = "encryptedPassword";
+    private final String USERNAME = "testUser";
+    private final String PASSWORD = "testPassword";
+    private final String NEW_PASSWORD = "newPassword";
+    private final String ENCRYPTED_PASSWORD = "encryptedPassword";
     private final Role role = Role.USER;
+    private final ru.skypro.homework.entity.User user = new ru.skypro.homework.entity.User();
+    private final RegisterReqDto registerReqDto = new RegisterReqDto();
+    private final NewPasswordDto newPasswordDto = new NewPasswordDto();
+
+    @BeforeEach
+    public void setUp() {
+        user.setUsername(USERNAME);
+        user.setPassword(ENCRYPTED_PASSWORD);
+
+        registerReqDto.setUsername(USERNAME);
+        registerReqDto.setPassword(PASSWORD);
+
+        newPasswordDto.setCurrentPassword(PASSWORD);
+        newPasswordDto.setNewPassword(NEW_PASSWORD);
+    }
 
     @Test
     @DisplayName("Проверка авторизации, когда учетные данные действительны")
     public void loginValidCredentialsTrueTest() {
-        ru.skypro.homework.entity.User user = new ru.skypro.homework.entity.User();
-        user.setUsername(username);
-        user.setPassword(encryptedPassword);
-
-        when(userService.loadUserByUsername(username))
+        when(userService.loadUserByUsername(USERNAME))
                 .thenReturn(new org.springframework.security.core.userdetails.User(
-                username, encryptedPassword, new ArrayList<>()));
-        when(encoder.matches(password, encryptedPassword)).thenReturn(true);
+                USERNAME, ENCRYPTED_PASSWORD, new ArrayList<>()));
+        when(encoder.matches(PASSWORD, ENCRYPTED_PASSWORD)).thenReturn(true);
 
-        boolean result = authService.login(username, password);
+        boolean result = authService.login(USERNAME, PASSWORD);
 
         assertTrue(result);
 
-        verify(userService, times(1)).loadUserByUsername(username);
-        verify(encoder, times(1)).matches(password, encryptedPassword);
+        verify(userService, times(1)).loadUserByUsername(USERNAME);
+        verify(encoder, times(1)).matches(PASSWORD, ENCRYPTED_PASSWORD);
     }
 
     @Test
     @DisplayName("Проверка авторизации, когда учетные данные не действительны")
     public void loginInvalidCredentialsFalseTest() {
-        ru.skypro.homework.entity.User user = new ru.skypro.homework.entity.User();
-        user.setUsername(username);
-        user.setPassword(encryptedPassword);
-
-        when(userService.loadUserByUsername(username))
+        when(userService.loadUserByUsername(USERNAME))
                 .thenReturn(new org.springframework.security.core.userdetails.User(
-                username, encryptedPassword, new ArrayList<>()));
-        when(encoder.matches(password, encryptedPassword)).thenReturn(false);
+                        USERNAME, ENCRYPTED_PASSWORD, new ArrayList<>()));
+        when(encoder.matches(PASSWORD, ENCRYPTED_PASSWORD)).thenReturn(false);
 
-        boolean result = authService.login(username, password);
+        boolean result = authService.login(USERNAME, PASSWORD);
 
         assertFalse(result);
 
-        verify(userService, times(1)).loadUserByUsername(username);
-        verify(encoder, times(1)).matches(password, encryptedPassword);
+        verify(userService, times(1)).loadUserByUsername(USERNAME);
+        verify(encoder, times(1)).matches(PASSWORD, ENCRYPTED_PASSWORD);
     }
 
     @Test
     @DisplayName("Проверка успешности регистрации")
     void registerSuccessfulTest() {
-        RegisterReqDto registerReqDto = new RegisterReqDto();
-        registerReqDto.setUsername(username);
-        registerReqDto.setPassword(password);
+        user.setPassword(PASSWORD);
+        user.setRole(role);
 
-        ru.skypro.homework.entity.User regUser = new ru.skypro.homework.entity.User();
-        regUser.setEmail(username);
-        regUser.setPassword(password);
-        regUser.setRole(role);
-
-        when(userRepository.findByEmail(username)).thenReturn(Optional.empty());
-        when(userMapper.mapToUser(registerReqDto)).thenReturn(regUser);
-        when(encoder.encode(password)).thenReturn(encryptedPassword);
+        when(userRepository.findByEmail(USERNAME)).thenReturn(Optional.empty());
+        when(userMapper.mapToUser(registerReqDto)).thenReturn(user);
+        when(encoder.encode(PASSWORD)).thenReturn(ENCRYPTED_PASSWORD);
 
         assertTrue(authService.register(registerReqDto, role));
 
-        verify(userRepository, times(1)).findByEmail(username);
+        verify(userRepository, times(1)).findByEmail(USERNAME);
         verify(userMapper, times(1)).mapToUser(registerReqDto);
-        verify(encoder, times(1)).encode(password);
+        verify(encoder, times(1)).encode(PASSWORD);
     }
 
     @Test
     @DisplayName("Проверка невозможности регистрации, когда пользователь уже зарегистрирован")
     void registerUserAlreadyExistsTest() {
-        RegisterReqDto registerReqDto = new RegisterReqDto();
-        registerReqDto.setUsername(username);
-        registerReqDto.setPassword(password);
-
         ru.skypro.homework.entity.User existingUser = new ru.skypro.homework.entity.User();
-        existingUser.setEmail(username);
+        existingUser.setUsername(USERNAME);
 
-        when(userRepository.findByEmail(username)).thenReturn(Optional.of(existingUser));
+        when(userRepository.findByEmail(USERNAME)).thenReturn(Optional.of(existingUser));
 
         assertFalse(authService.register(registerReqDto, role));
 
-        verify(userRepository, times(1)).findByEmail(username);
+        verify(userRepository, times(1)).findByEmail(USERNAME);
     }
 
     @Test
     @DisplayName("Проверка смены пароля, когда пароль из базы данных совпадает с паролем из токена")
     void changePasswordTest() {
-        String newPassword = "newPassword";
-        NewPasswordDto newPasswordDto = new NewPasswordDto();
-        newPasswordDto.setCurrentPassword(password);
-        newPasswordDto.setNewPassword(newPassword);
-
-        UserDetails userDetails = new User(username, password, new ArrayList<>());
+        UserDetails userDetails = new User(USERNAME, PASSWORD, new ArrayList<>());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
@@ -142,29 +136,24 @@ public class AuthServiceImplTest {
         String pas = userDetails.getPassword();
 
         ru.skypro.homework.entity.User user = new ru.skypro.homework.entity.User();
-        user.setUsername(username);
+        user.setUsername(USERNAME);
 
         when(userRepository.findByEmail(user.getUsername())).thenReturn(Optional.of(user));
         when(userService.loadUserByUsername(name)).thenReturn(userDetails);
 
-        when(encoder.matches(password, pas)).thenReturn(true);
+        when(encoder.matches(PASSWORD, pas)).thenReturn(true);
 
         authService.changePassword(newPasswordDto);
 
         verify(userRepository, times(1)).findByEmail(user.getUsername());
         verify(userService, times(1)).loadUserByUsername(name);
-        verify(encoder, times(1)).matches(password, pas);
+        verify(encoder, times(1)).matches(PASSWORD, pas);
     }
 
     @Test
     @DisplayName("Проверка невозможности смены пароля, когда пароль из базы данных не совпадает с паролем из токена")
     void changePasswordWhenPasswordsNotEqualsTest() {
-        String newPassword = "newPassword";
-        NewPasswordDto newPasswordDto = new NewPasswordDto();
-        newPasswordDto.setCurrentPassword(password);
-        newPasswordDto.setNewPassword(newPassword);
-
-        UserDetails userDetails = new User(username, password, new ArrayList<>());
+        UserDetails userDetails = new User(USERNAME, PASSWORD, new ArrayList<>());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
@@ -172,17 +161,17 @@ public class AuthServiceImplTest {
         String pas = userDetails.getPassword();
 
         ru.skypro.homework.entity.User user = new ru.skypro.homework.entity.User();
-        user.setUsername(username);
+        user.setUsername(USERNAME);
 
         when(userRepository.findByEmail(user.getUsername())).thenReturn(Optional.of(user));
         when(userService.loadUserByUsername(name)).thenReturn(userDetails);
 
-        when(encoder.matches(password, pas)).thenReturn(false);
+        when(encoder.matches(PASSWORD, pas)).thenReturn(false);
 
         assertThrows(UserUnauthorizedException.class, () -> authService.changePassword(newPasswordDto));
 
         verify(userRepository, times(1)).findByEmail(user.getUsername());
         verify(userService, times(1)).loadUserByUsername(name);
-        verify(encoder, times(1)).matches(password, pas);
+        verify(encoder, times(1)).matches(PASSWORD, pas);
     }
 }

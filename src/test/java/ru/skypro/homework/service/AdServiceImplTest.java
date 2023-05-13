@@ -32,16 +32,15 @@ import static org.mockito.Mockito.*;
 public class AdServiceImplTest {
 
     @InjectMocks
-    AdServiceImpl adService;
+    private AdServiceImpl adService;
     @Mock
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
     @Mock
-    AdRepository adRepository;
+    private AdRepository adRepository;
     @Mock
-    ImageService imageService;
+    private ImageService imageService;
     @Mock
-    AdMapper adMapper;
-
+    private AdMapper adMapper;
     private final String USERNAME = "testUser";
     private final String DIF_USERNAME = "differentUser@mail.com";
     private final String PASSWORD = "testPassword";

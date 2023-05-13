@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.LoginReqDto;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
-import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.AuthService;
-import ru.skypro.homework.service.CommentService;
-import ru.skypro.homework.service.ImageService;
 
 import static ru.skypro.homework.dto.Role.USER;
 
@@ -33,12 +30,9 @@ import static ru.skypro.homework.dto.Role.USER;
 @CrossOrigin(value = "http://localhost:3000")
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @Operation(
             summary = "Авторизация пользователя",
