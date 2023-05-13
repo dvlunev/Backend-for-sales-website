@@ -39,24 +39,6 @@ public class CommentServiceImpl implements CommentService {
     private final UserService userService;
 
     /**
-     * Метод проверяет наличие доступа к комментарию по id
-     *
-     * @param id
-     * @throws CommentNotFoundException если комментарий не найден
-     * @see UserService
-     */
-    @Override
-    public boolean checkAccess(Integer id) {
-        Role role = Role.ADMIN;
-        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
-        Optional<User> user = userService.findAuthUser();
-        User notOptionalUser = user.get();
-        String currentPrincipalName = notOptionalUser.getUsername();
-        return comment.getAuthor().getUsername().equals(currentPrincipalName)
-                || notOptionalUser.getAuthorities().contains(role);
-    }
-
-    /**
      * Метод ищет и возвращает список всех комментариев {@link ResponseWrapperCommentDto} к объявлению по id объявления
      *
      * @param adId
@@ -132,5 +114,23 @@ public class CommentServiceImpl implements CommentService {
             return commentMapper.mapToCommentDto(commentRepository.save(comment));
         }
         throw new UserForbiddenException();
+    }
+
+    /**
+     * Метод проверяет наличие доступа к комментарию по id
+     *
+     * @param id
+     * @throws CommentNotFoundException если комментарий не найден
+     * @see UserService
+     */
+    @Override
+    public boolean checkAccess(Integer id) {
+        Role role = Role.ADMIN;
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        Optional<User> user = userService.findAuthUser();
+        User notOptionalUser = user.get();
+        String currentPrincipalName = notOptionalUser.getUsername();
+        return comment.getAuthor().getUsername().equals(currentPrincipalName)
+                || notOptionalUser.getAuthorities().contains(role);
     }
 }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
-import ru.skypro.homework.service.mapper.CommentMapper;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 import java.util.Optional;
@@ -14,12 +13,6 @@ import java.util.Optional;
  */
 @Component
 public class UserMapperImpl implements UserMapper {
-    /**
-     * Метод, преобразующий объект класса User в объект класса UserDto.
-     *
-     * @param user
-     * @return UserDto
-     */
     public UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -32,12 +25,6 @@ public class UserMapperImpl implements UserMapper {
         return userDto;
     }
 
-    /**
-     * Метод, преобразующий объект класса UserDto в объект класса User.
-     *
-     * @param userDto
-     * @return User
-     */
     public User mapToUser(UserDto userDto) {
         User mappedUser = new User();
         mappedUser.setId(userDto.getId());
@@ -49,12 +36,6 @@ public class UserMapperImpl implements UserMapper {
         return mappedUser;
     }
 
-    /**
-     * Метод, преобразующий объект класса RegisterReqDto в объект класса User.
-     *
-     * @param registerReqDto
-     * @return User
-     */
     @Override
     public User mapToUser(RegisterReqDto registerReqDto) {
         User mappedUser = new User();

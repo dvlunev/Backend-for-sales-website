@@ -6,8 +6,6 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * Интерфейс сервисного класса AdServiceImpl, содержащий набор CRUD операций над объектом Ad
@@ -55,11 +53,11 @@ public interface AdService {
      * Метод редактирует объявление по id
      *
      * @param id
-     * @param adDto
+     * @param createAdsDto
      * @return AdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
      */
-    AdsDto updateAdDto(Integer id, CreateAdsDto adDto);
+    AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto);
 
     /**
      * Метод ищет и возвращает список всех объявлений авторизированного пользователя

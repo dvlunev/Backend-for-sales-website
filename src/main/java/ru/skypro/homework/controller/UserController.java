@@ -1,7 +1,6 @@
 package ru.skypro.homework.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,11 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
@@ -23,7 +19,7 @@ import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
 /**
- * Класс - контроллер для работы с авторезированным пользователем и его данными, содержащий набор API endpoints
+ * Класс - контроллер для работы с авторизированным пользователем и его данными, содержащий набор API endpoints
  *
  * @see UserService
  * @see AuthService
@@ -122,6 +118,6 @@ public class UserController {
             })
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
-        return ResponseEntity.ok(imageService.getImagePathById(id));
+        return ResponseEntity.ok(imageService.getImageById(id));
     }
 }

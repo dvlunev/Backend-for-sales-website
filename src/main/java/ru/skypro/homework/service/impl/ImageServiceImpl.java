@@ -11,12 +11,24 @@ import ru.skypro.homework.service.ImageService;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * Класс - сервис, содержащий реализацию интерфейса {@link ImageService}
+ *
+ * @see Image
+ * @see ImageRepository
+ */
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
 
+    /**
+     * Метод сохраняет картинку в базу данных
+     *
+     * @param image
+     * @return {@link ru.skypro.homework.repository.ImageRepository#saveAndFlush(Object)}
+     */
     @Override
     public Image saveImage(MultipartFile image) {
         Image newImage = new Image();
@@ -30,6 +42,13 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.saveAndFlush(newImage);
     }
 
+    /**
+     * Метод обновляет картинку в базе данных
+     *
+     * @param newImage
+     * @param oldImage
+     * @return {@link ru.skypro.homework.repository.ImageRepository#saveAndFlush(Object)}
+     */
     @Override
     public Image updateImage(MultipartFile newImage, Image oldImage) {
         try {
@@ -41,8 +60,15 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.saveAndFlush(oldImage);
     }
 
+    /**
+     * Метод достает картинку из базы данных по ее id {@link ru.skypro.homework.repository.ImageRepository#findById(Object)}
+     *
+     * @param id
+     * @throws ru.skypro.homework.exception.ImageNotFoundException
+     * @return {@link Image#getImage()}
+     */
     @Override
-    public byte[] getImagePathById(String id) {
+    public byte[] getImageById(String id) {
         Image image = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
         return image.getImage();
     }

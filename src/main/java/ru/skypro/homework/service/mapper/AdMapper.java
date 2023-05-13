@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 public interface AdMapper {
     /**
-     * Метод для маппинга объекта типа Ad на объект типа AdDto.
+     * Метод, преобразующий объект класса Ad в объект класса AdsDto.
      *
      * @param ad
      * @return AdsDto
@@ -25,7 +25,7 @@ public interface AdMapper {
     AdsDto mapAdToAdDto(Ad ad);
 
     /**
-     * Метод для маппинга объекта типа AdsDto на объект типа Ad.
+     * Метод, преобразующий объект класса AdsDto в объект класса Ad.
      *
      * @param adsDto
      * @return Ad
@@ -33,7 +33,7 @@ public interface AdMapper {
     Ad mapAdsDtoToAd(AdsDto adsDto);
 
     /**
-     * Метод для маппинга объекта типа Ad на объект типа FullAdsDto.
+     * Метод, преобразующий объект класса Ad в объект класса FullAdsDto.
      *
      * @param ad
      * @return FullAdsDto
@@ -41,7 +41,7 @@ public interface AdMapper {
     FullAdsDto mapAdToFullAdsDTo(Ad ad);
 
     /**
-     * Метод для маппинга объекта типа CreateAdsDto на объект типа Ad.
+     * Метод, преобразующий объект класса CreateAdsDto в объект класса Ad.
      *
      * @param createAdsDto
      * @return Ad
@@ -49,7 +49,7 @@ public interface AdMapper {
     Ad mapCreatedAdsDtoToAd(CreateAdsDto createAdsDto);
 
     /**
-     * Метод для маппинга объекта типа Collection<Ad> на объект типа Collection<AdsDto>.
+     * Метод, преобразующий объект класса Collection<Ad> в объект класса Collection<AdsDto>.
      *
      * @param adCollection
      * @return Collection<AdsDto>
