@@ -1,9 +1,7 @@
-package ru.skypro.homework.controller;
-
+package ru.skypro.homework.security;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.skypro.homework.service.AuthService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

@@ -14,7 +14,7 @@ import ru.skypro.homework.entity.User;
  */
 public interface UserMapper {
     /**
-     * Метод для маппинга объекта типа User на объект типа UserDto.
+     * Метод, преобразующий объект класса User в объект класса UserDto.
      *
      * @param user
      * @return UserDto
@@ -22,7 +22,7 @@ public interface UserMapper {
     UserDto mapToUserDto(User user);
 
     /**
-     * Метод для маппинга объекта типа UserDto на объект типа User.
+     * Метод, преобразующий объект класса UserDto в объект класса User.
      *
      * @param userDto
      * @return User
@@ -30,7 +30,7 @@ public interface UserMapper {
     User mapToUser(UserDto userDto);
 
     /**
-     * Метод для маппинга объекта типа RegisterReqDto на объект типа User.
+     * Метод, преобразующий объект класса RegisterReqDto в объект класса User.
      *
      * @param registerReqDto
      * @return User

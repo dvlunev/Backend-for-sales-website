@@ -12,7 +12,7 @@ import ru.skypro.homework.entity.Comment;
  */
 public interface CommentMapper {
     /**
-     * Метод для маппинга объекта типа Comment на объект типа CommentDto.
+     * Метод, преобразующий объект класса Comment в объект класса CommentDto.
      *
      * @param comment
      * @return CommentDto
@@ -20,7 +20,7 @@ public interface CommentMapper {
     CommentDto mapToCommentDto(Comment comment);
 
     /**
-     * Метод для маппинга объекта типа CommentDto на объект типа Comment.
+     * Метод, преобразующий объект класса CommentDto в объект класса Comment.
      *
      * @param commentDto
      * @return Comment
