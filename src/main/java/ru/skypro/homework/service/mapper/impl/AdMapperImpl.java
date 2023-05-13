@@ -1,13 +1,10 @@
 package ru.skypro.homework.service.mapper.impl;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
-import ru.skypro.homework.service.AuthService;
-import ru.skypro.homework.service.impl.UserServiceImpl;
 import ru.skypro.homework.service.mapper.AdMapper;
 
 import java.util.ArrayList;

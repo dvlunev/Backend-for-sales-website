@@ -262,6 +262,6 @@ public class AdsController {
             })
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
-        return ResponseEntity.ok(imageService.getImagePathById(id));
+        return ResponseEntity.ok(imageService.getImageById(id));
     }
 }
