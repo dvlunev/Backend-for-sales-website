@@ -1,4 +1,4 @@
-package ru.skypro.homework.service;
+package ru.skypro.homework.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +19,6 @@ import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.exception.UserUnauthorizedException;
 import ru.skypro.homework.repository.UserRepository;
-import ru.skypro.homework.service.impl.AuthServiceImpl;
-import ru.skypro.homework.service.impl.UserServiceImpl;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 import java.util.ArrayList;

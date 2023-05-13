@@ -94,7 +94,7 @@ public class UserControllerTest {
     public void getUserImageTest() {
         byte[] byteData = "test data".getBytes();
 
-        when(imageService.getImagePathById("id")).thenReturn(byteData);
+        when(imageService.getImageById("id")).thenReturn(byteData);
 
         ResponseEntity<byte[]> responseEntity = userController.getImage("id");
 
