@@ -129,7 +129,8 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         if (checkAccess(commentId)) {
             comment.setText(commentDto.getText());
-            return commentMapper.mapToCommentDto(commentRepository.save(comment));
+            commentRepository.save(comment);
+            return commentMapper.mapToCommentDto(comment);
         }
         throw new UserForbiddenException();
     }
