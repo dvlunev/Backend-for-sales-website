@@ -126,6 +126,5 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).save(expectedUser);
         assertEquals(imageNew, expectedUser.getImage());
     }
-
 }
 
