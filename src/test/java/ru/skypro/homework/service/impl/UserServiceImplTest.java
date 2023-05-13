@@ -21,7 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static ru.skypro.homework.service.UserServiceTestConstants.*;
+import static ru.skypro.homework.service.impl.UserServiceTestConstants.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {

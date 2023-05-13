@@ -1,4 +1,4 @@
-package ru.skypro.homework.service;
+package ru.skypro.homework.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +17,7 @@ import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.UserForbiddenException;
 import ru.skypro.homework.repository.AdRepository;
-import ru.skypro.homework.service.impl.AdServiceImpl;
-import ru.skypro.homework.service.impl.UserServiceImpl;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.mapper.AdMapper;
 
 import java.util.Collections;

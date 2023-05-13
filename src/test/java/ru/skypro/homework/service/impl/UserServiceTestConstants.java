@@ -1,4 +1,4 @@
-package ru.skypro.homework.service;
+package ru.skypro.homework.service.impl;
 
 public class UserServiceTestConstants {
     public final static String USERNAME = "user@mail.com";
