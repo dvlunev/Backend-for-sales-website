@@ -47,8 +47,8 @@ public class UserControllerTest {
 
         ResponseEntity<?> responseEntity = userController.setPassword(passwordDto);
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(authService).changePassword(passwordDto);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
@@ -57,11 +57,11 @@ public class UserControllerTest {
 
         ResponseEntity<UserDto> responseEntity = userController.getUser();
 
+        verify(userService).getUserDto();
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
         assertEquals(USERNAME, responseEntity.getBody().getEmail());
-
-        verify(userService).getUserDto();
     }
 
     @Test
@@ -70,11 +70,11 @@ public class UserControllerTest {
 
         ResponseEntity<UserDto> responseEntity = userController.updateUser(userDto);
 
+        verify(userService).updateUserDto(userDto);
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
         assertEquals(USERNAME, responseEntity.getBody().getEmail());
-
-        verify(userService).updateUserDto(userDto);
     }
 
     @Test
@@ -86,8 +86,8 @@ public class UserControllerTest {
 
         ResponseEntity<byte[]> responseEntity = userController.updateUserImage(image);
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(userService).updateUserImage(image);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
@@ -97,6 +97,8 @@ public class UserControllerTest {
         when(imageService.getImageById("id")).thenReturn(byteData);
 
         ResponseEntity<byte[]> responseEntity = userController.getImage("id");
+
+        verify(imageService).getImageById("id");
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
