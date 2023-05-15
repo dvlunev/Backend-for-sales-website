@@ -1,6 +1,7 @@
 package ru.skypro.homework.controller;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.skypro.homework.controller.AuthController;
 import ru.skypro.homework.dto.LoginReqDto;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
@@ -40,42 +40,46 @@ public class AuthControllerTest {
     }
 
     @Test
+    @DisplayName("Проверка успешного входа в учетную запись")
     public void loginSuccessTest() {
         when(authService.login(req.getUsername(), req.getPassword())).thenReturn(true);
 
         ResponseEntity<?> responseEntity = authController.login(req);
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(authService).login(req.getUsername(), req.getPassword());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
+    @DisplayName("Проверка невозможности входа в учетную запись")
     void loginFailureTest() {
         when(authService.login(req.getUsername(), req.getPassword())).thenReturn(false);
 
         ResponseEntity<?> responseEntity = authController.login(req);
 
-        assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
         verify(authService).login(req.getUsername(), req.getPassword());
+        assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
     }
 
     @Test
+    @DisplayName("Проверка успешности регистрации на сайте")
     public void registerSuccessTest() {
         when(authService.register(reqReg, userRole)).thenReturn(true);
 
         ResponseEntity<?> response = authController.register(reqReg);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(authService).register(reqReg, userRole);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
+    @DisplayName("Проверка провальной регистрации на сайте")
     void registerFailureTest() {
         when(authService.register(reqReg, userRole)).thenReturn(false);
 
         ResponseEntity<?> response = authController.register(reqReg);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         verify(authService).register(reqReg, userRole);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
