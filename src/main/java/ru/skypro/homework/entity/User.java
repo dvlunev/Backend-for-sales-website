@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Column(length = 18)
     private String phone;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "image_id")
     private Image image;
 

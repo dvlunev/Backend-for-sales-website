@@ -34,7 +34,7 @@ public class Ad {
     @Column(length = 500)
     private String description;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "image_id")
     private Image image;
 
