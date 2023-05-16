@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,12 +30,9 @@ import static ru.skypro.homework.dto.Role.USER;
 @CrossOrigin(value = "http://localhost:3000")
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @Operation(
             summary = "Авторизация пользователя",
