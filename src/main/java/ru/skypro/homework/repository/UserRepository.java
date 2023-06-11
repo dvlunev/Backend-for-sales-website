@@ -7,7 +7,7 @@ import ru.skypro.homework.entity.User;
 import java.util.Optional;
 
 /**
- * Интерфейс, содержащий методы для работы с базой данных пользователей
+ * Interface containing methods for working with the user database
  *
  * @see User
  * @see ru.skypro.homework.service.UserService
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     /**
-     * Метод ищет и возвращает пользователя по его email
+     * The method searches and returns the user by his email
      *
      * @param email
      * @return User

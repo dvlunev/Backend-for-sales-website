@@ -21,7 +21,7 @@ import ru.skypro.homework.service.mapper.UserMapper;
 import java.util.Optional;
 
 /**
- * Класс - сервис, содержащий реализацию интерфейса {@link UserService} и {@link UserDetailsService}
+ * The service class containing the implementation of the interface {@link UserService} и {@link UserDetailsService}
  *
  * @see User
  */
@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
 
     /**
-     * Метод находит пользователя по email и возвращает его данные: имя пользователя и пароль
+     * The method searches a user by email and returns his data: username and password
      *
      * @param username
      * @return {@link UserDetails}
-     * @throws UsernameNotFoundException если пользователь не найден
+     * @throws UsernameNotFoundException if the user is not found
      * @see UserDetailsService
      */
     @Override
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * Метод ищет авторизованного пользователя
+     * The method searches for an authorized user
      *
      * @return {@link UserRepository#findByEmail(String)}
      */
@@ -60,8 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()} и
-     * конвертирует его в {@link UserDto}
+     * The method gets the user from the database {@link UserService#findAuthUser()} and converts it to {@link UserDto}
      *
      * @return {@link UserMapper#mapToUser(UserDto)}
      * @see UserMapper
@@ -77,8 +76,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
-     * редактирует данные и сохраняет в базе
+     * The method gets the user from the database {@link UserService#findAuthUser()},
+     * edits a data and saves in the database
      *
      * @param newUserDto
      * @return {@link UserRepository#save(Object)}, {@link UserMapper#mapToUser(UserDto)}
@@ -100,12 +99,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
-     * устанавливает или обновляет его аватар, затем сохраняет изменения в базе данных:
+     * The method gets the user from the database {@link UserService#findAuthUser()},
+     * sets or updates his image, than saves the changes to the database:
      * {@link ImageRepository#saveAndFlush(Object)}, {@link UserRepository#save(Object)}
      *
      * @param image
-     * @throws UsernameNotFoundException если пользователь не найден
+     * @throws UsernameNotFoundException if the user is not found
      */
     @Override
     public void updateUserImage(MultipartFile image) {

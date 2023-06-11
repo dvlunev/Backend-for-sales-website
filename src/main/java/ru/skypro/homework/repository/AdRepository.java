@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.entity.Ad;
 
 /**
- * Интерфейс, содержащий методы для работы с базой данных объявлений
+ * Interface containing methods for working with the ad database
  *
  * @see Ad
  * @see ru.skypro.homework.service.AdService

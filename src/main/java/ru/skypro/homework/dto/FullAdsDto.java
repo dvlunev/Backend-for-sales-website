@@ -3,27 +3,27 @@ package ru.skypro.homework.dto;
 import lombok.Data;
 
 /**
- * Класс DTO для передачи полной информации об объявлении
+ * DTO class for passing full information about an ad
  */
 @Data
 public class FullAdsDto {
-    //id объявления
+    //ad id
     private int pk;
-    //имя автора объявления
+    //author`s ad name
     private String authorFirstName;
-    //фамилия автора объявления
+    //author`s ad surname
     private String authorLastName;
-    //логин автора объявления
+    //author`s ad login
     private String email;
-    //телефон автора объявления
+    //author`s ad phone
     private String phone;
-    //заголовок объявления
+    //ad header
     private String title;
-    //описание объявления
+    //ad description
     private String description;
-    //ссылка на картинку объявления
+    //image link
     private String image;
-    //цена объявления
+    //ad price
     private int price;
 
 }

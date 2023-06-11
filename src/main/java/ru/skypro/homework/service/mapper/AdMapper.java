@@ -8,7 +8,7 @@ import ru.skypro.homework.entity.Ad;
 import java.util.Collection;
 
 /**
- * Интерфейс сервисного класса-маппера AdMapperImpl, для маппинга объектов Ad, AdsDto и CreateAdsDto
+ * AdMapperImpl service class interface for mapping Ad, AdsDto and CreateAdsDto objects
  *
  * @see ru.skypro.homework.entity.Ad
  * @see ru.skypro.homework.dto.AdsDto
@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 public interface AdMapper {
     /**
-     * Метод, преобразующий объект класса Ad в объект класса AdsDto.
+     * The method that converts an object of the Ad class into an object of the AdsDto class.
      *
      * @param ad
      * @return AdsDto
@@ -25,7 +25,7 @@ public interface AdMapper {
     AdsDto mapAdToAdDto(Ad ad);
 
     /**
-     * Метод, преобразующий объект класса AdsDto в объект класса Ad.
+     * The method that converts an object of the AdsDto class into an object of the Ad class.
      *
      * @param adsDto
      * @return Ad
@@ -33,7 +33,7 @@ public interface AdMapper {
     Ad mapAdsDtoToAd(AdsDto adsDto);
 
     /**
-     * Метод, преобразующий объект класса Ad в объект класса FullAdsDto.
+     * The method that converts an object of the Ad class into an object of the FullAdsDto class.
      *
      * @param ad
      * @return FullAdsDto
@@ -41,7 +41,7 @@ public interface AdMapper {
     FullAdsDto mapAdToFullAdsDTo(Ad ad);
 
     /**
-     * Метод, преобразующий объект класса CreateAdsDto в объект класса Ad.
+     * The method that converts an object of the CreateAdsDto class into an object of the Ad class.
      *
      * @param createAdsDto
      * @return Ad
@@ -49,7 +49,7 @@ public interface AdMapper {
     Ad mapCreatedAdsDtoToAd(CreateAdsDto createAdsDto);
 
     /**
-     * Метод, преобразующий объект класса Collection<Ad> в объект класса Collection<AdsDto>.
+     * The method that converts a Collection of the Ad classes into a Collection of the AdsDto classes.
      *
      * @param adCollection
      * @return Collection<AdsDto>

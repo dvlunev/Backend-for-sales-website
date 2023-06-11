@@ -5,7 +5,7 @@ import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 
 /**
- * Интерфейс сервисного класса-маппера UserMapperImpl, для маппинга объектов RegisterReqDto, UserDto и User
+ * UserMapperImpl service class interface for mapping User, UserDto and RegisterReqDto objects
  *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.dto.UserDto
@@ -14,7 +14,7 @@ import ru.skypro.homework.entity.User;
  */
 public interface UserMapper {
     /**
-     * Метод, преобразующий объект класса User в объект класса UserDto.
+     * The method that converts an object of the User class into an object of the UserDto class.
      *
      * @param user
      * @return UserDto
@@ -22,7 +22,7 @@ public interface UserMapper {
     UserDto mapToUserDto(User user);
 
     /**
-     * Метод, преобразующий объект класса UserDto в объект класса User.
+     * The method that converts an object of the UserDto class into an object of the User class.
      *
      * @param userDto
      * @return User
@@ -30,7 +30,7 @@ public interface UserMapper {
     User mapToUser(UserDto userDto);
 
     /**
-     * Метод, преобразующий объект класса RegisterReqDto в объект класса User.
+     * The method that converts an object of the RegisterReqDto class into an object of the User class.
      *
      * @param registerReqDto
      * @return User

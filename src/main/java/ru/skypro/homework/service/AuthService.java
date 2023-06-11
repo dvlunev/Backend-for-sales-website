@@ -12,14 +12,14 @@ import ru.skypro.homework.service.impl.UserServiceImpl;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 /**
- * Интерфейс сервисного класса AuthServiceImpl
+ * Service class interface AuthServiceImpl
  *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.AuthServiceImpl
  */
 public interface AuthService {
     /**
-     * Метод производит авторизацию пользователя в системе {@link UserServiceImpl#findAuthUser()}
+     * The method authorizes the user in the system  {@link UserServiceImpl#findAuthUser()}
      *
      * @param userName
      * @param password
@@ -28,7 +28,7 @@ public interface AuthService {
     boolean login(String userName, String password);
 
     /**
-     * Метод регистрирует пользователя в системе:
+     * The method registers the user in the system:
      * {@link UserMapper#mapToUser(UserDto)}, {@link PasswordEncoder#encode(CharSequence)}
      *
      * @param registerReqDto
@@ -39,11 +39,11 @@ public interface AuthService {
     boolean register(RegisterReqDto registerReqDto, Role role);
 
     /**
-     * Метод меняет пароль {@link PasswordEncoder#encode(CharSequence)}
+     * The method changes the password {@link PasswordEncoder#encode(CharSequence)}
      *
      * @param newPasswordDto
-     * @throws UserNotFoundException     если пользователь не найден
-     * @throws UserUnauthorizedException если пользователь не аутентифицирован и поэтому не имеет права доступа к ресурсу
+     * @throws UserNotFoundException     if the uses is not found
+     * @throws UserUnauthorizedException if the user is not authenticated and therefore does not have the access to the resource
      */
     void changePassword(NewPasswordDto newPasswordDto);
 }

@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Класс является компонентом и фильтром для обработки запросов.
- * Он наследуется от класса OncePerRequestFilter и реализует один метод doFilterInternal().
- * Он используется для обеспечения доступа к ресурсам с других источников (CORS) и авторизации.
+ * The class is a component and a filter for handling requests.
+ *   * It extends from the OncePerRequestFilter class and implements one doFilterInternal() method.
+ *   * It is used to provide access to resources from other sources (CORS) and authorization.
  *
  * @see OncePerRequestFilter
  */

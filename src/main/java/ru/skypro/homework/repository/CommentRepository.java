@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.entity.Comment;
 
 /**
- * Интерфейс, содержащий методы для работы с базой данных комментариев
+ * Interface containing methods for working with the comment database
  *
  * @see Comment
  * @see ru.skypro.homework.service.CommentService

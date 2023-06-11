@@ -11,22 +11,22 @@ import ru.skypro.homework.service.mapper.UserMapper;
 import java.util.Optional;
 
 /**
- * Интерфейс сервисного класса UserServiceImpl, содержащий набор CRUD операций над объектом User
+ * Service class interface UserServiceImpl containing a set of CRUD operations with the User object
  *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.UserServiceImpl
  */
 public interface UserService {
     /**
-     * Метод ищет авторизованного пользователя
+     * The method looks for an authorized User
      *
      * @return {@link UserRepository#findByEmail(String)}
      */
     Optional<User> findAuthUser();
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()} и
-     * конвертирует его в {@link UserDto}
+     * The method gets a User from the database {@link UserService#findAuthUser()}
+     * and converts it to {@link UserDto}
      *
      * @return {@link UserMapper#mapToUser(UserDto)}
      * @see UserMapper
@@ -34,8 +34,8 @@ public interface UserService {
     UserDto getUserDto();
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
-     * редактирует данные и сохраняет в базе
+     * The method gets a User from the database {@link UserService#findAuthUser()},
+     * edits the data and saves in the database
      *
      * @param newUserDto
      * @return {@link UserRepository#save(Object)}, {@link UserMapper#mapToUser(UserDto)}
@@ -44,12 +44,12 @@ public interface UserService {
     UserDto updateUserDto(UserDto newUserDto);
 
     /**
-     * Метод достает пользователя из базы данных {@link UserService#findAuthUser()},
-     * устанавливает или обновляет его аватар, затем сохраняет изменения в базе данных:
+     * The method gets a User from the database {@link UserService#findAuthUser()},
+     * sets or updates his image, then saves the changes in the database:
      * {@link ImageRepository#saveAndFlush(Object)}, {@link UserRepository#save(Object)}
      *
      * @param image
-     * @throws UsernameNotFoundException если пользователь не найден
+     * @throws UsernameNotFoundException if the User is not found
      */
     void updateUserImage(MultipartFile image);
 }

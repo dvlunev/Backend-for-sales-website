@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * Класс, описывающий комментарий
+ * The class describes a comment
  *
  * @see Ad
  * @see User

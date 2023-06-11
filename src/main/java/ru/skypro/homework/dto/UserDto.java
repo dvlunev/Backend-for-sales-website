@@ -5,22 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Класс DTO для передачи полной информации о пользователе
+ * DTO class for passing full information about the user
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    //id пользователя
+    //user id
     private int id;
-    //логин пользователя
+    //user login
     private String email;
-    //имя пользователя
+    //username
     private String firstName;
-    //фамилия пользователя
+    //user`s surname
     private String lastName;
-    //телефон пользователя
+    //user`s phone
     private String phone;
-    //ссылка на аватар пользователя
+    //user`s image link
     private String image;
 }

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Класс - исключение, описывающий ситуацию, когда комментарий не найден
+ * The class is an exception that describes the situation when a comment is not found
  *
  * @see ru.skypro.homework.entity.Comment
  * @see ru.skypro.homework.service.impl.CommentServiceImpl

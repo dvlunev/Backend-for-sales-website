@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.Collection;
 
 /**
- * Класс DTO для передачи списка комментариев к объявлению
+ * DTO class for passing a list of comments of the ad
  */
 @Data
 public class ResponseWrapperCommentDto {
-    //общее количество комментариев
+    //total comments count
     private int count;
     private Collection<CommentDto> results;
 

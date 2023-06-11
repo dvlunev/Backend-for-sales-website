@@ -3,14 +3,14 @@ package ru.skypro.homework.dto;
 import lombok.Data;
 
 /**
- * Класс DTO для передачи информации об объявлении при создании или изменении
+ * DTO class for passing information about an ad when creating or modifying
  */
 @Data
 public class CreateAdsDto {
-    //описание объявления
+    //ad description
     private String description;
-    //цена объявления
+    //ad price
     private int price;
-    //заголовок объявления
+    //ad header
     private String title;
 }

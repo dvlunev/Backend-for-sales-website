@@ -19,7 +19,7 @@ import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
 /**
- * Класс - контроллер для работы с авторизированным пользователем и его данными, содержащий набор API endpoints
+ * Class - controller for working with an authorized user and his data, containing a set of API endpoints
  *
  * @see UserService
  * @see AuthService
@@ -28,7 +28,7 @@ import ru.skypro.homework.service.UserService;
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
-@Tag(name = "Пользователи")
+@Tag(name = "Users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -37,11 +37,11 @@ public class UserController {
     private final ImageService imageService;
 
     @Operation(
-            summary = "Обновление пароля",
-            description = "Изменение пароля пользователя из тела запроса"
+            summary = "Password update",
+            description = "Changing the user's password from the request body"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK. Установлен новый пароль"),
+            @ApiResponse(responseCode = "200", description = "OK. New password set"),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
     }
@@ -53,10 +53,10 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Получить информацию об авторизованном пользователе"
+            summary = "Get information about an authorized user"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK. Данные пользователя получены",
+            @ApiResponse(responseCode = "200", description = "OK. User data received",
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -74,12 +74,12 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Обновить информацию об авторизованном пользователе",
-            description = "Обновление данных пользователя из тела запроса"
+            summary = "Update authorized user information",
+            description = "Updating user data from the request body"
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200", description = "OK. Данные пользователя обновлены",
+                    responseCode = "200", description = "OK. User data updated",
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -97,11 +97,11 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Обновить аватар авторизованного пользователя",
-            description = "Обновление изображения пользователя из тела запроса"
+            summary = "Update authorized user image",
+            description = "Updating the user image from the request body"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK. Изображение пользователя обновлено", content = {@Content()}),
+            @ApiResponse(responseCode = "200", description = "OK. User image updated", content = {@Content()}),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()})
     })
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Получить аватар пользователя",
+            summary = "Get user image",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())

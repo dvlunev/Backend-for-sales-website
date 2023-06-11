@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Image;
 
 /**
- * Интерфейс сервисного класса ImageServiceImpl, содержащий набор CRUD операций над объектом Image
+ * Service class interface ImageServiceImpl containing a set of CRUD operations on the Image object
  *
  * @see ru.skypro.homework.entity.Image
  * @see ru.skypro.homework.service.impl.ImageServiceImpl
@@ -12,7 +12,7 @@ import ru.skypro.homework.entity.Image;
 public interface ImageService {
 
     /**
-     * Метод сохраняет картинку в базу данных
+     * The method saves the image to the database
      *
      * @param image
      * @return {@link ru.skypro.homework.repository.ImageRepository#saveAndFlush(Object)}
@@ -20,7 +20,7 @@ public interface ImageService {
     Image saveImage(MultipartFile image);
 
     /**
-     * Метод обновляет картинку в базе данных
+     * The method updates the image in the database
      *
      * @param newImage
      * @param oldImage
@@ -29,7 +29,7 @@ public interface ImageService {
     Image updateImage(MultipartFile newImage, Image oldImage);
 
     /**
-     * Метод достает картинку из базы данных по ее id {@link ru.skypro.homework.repository.ImageRepository#findById(Object)}
+     * The method gets the image from the database by id {@link ru.skypro.homework.repository.ImageRepository#findById(Object)}
      *
      * @param id
      * @throws ru.skypro.homework.exception.ImageNotFoundException

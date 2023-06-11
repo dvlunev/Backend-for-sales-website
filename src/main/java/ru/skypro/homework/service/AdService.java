@@ -8,14 +8,14 @@ import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
 
 /**
- * Интерфейс сервисного класса AdServiceImpl, содержащий набор CRUD операций над объектом Ad
+ * Service class interface AdServiceImpl containing a set of CRUD operations on the Ad object
  *
  * @see ru.skypro.homework.entity.Ad
  * @see ru.skypro.homework.service.impl.AdServiceImpl
  */
 public interface AdService {
     /**
-     * Метод ищет и возвращает список всех объявлений
+     * The method searches and returns the list of all ads
      *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -23,7 +23,7 @@ public interface AdService {
     ResponseWrapperAdsDto getAllAdsDto();
 
     /**
-     * Метод создает объявление
+     * The method creates an ad
      *
      * @param adDto
      * @param image
@@ -33,7 +33,7 @@ public interface AdService {
     AdsDto createAds(CreateAdsDto adDto, MultipartFile image);
 
     /**
-     * Метод ищет и возвращает объявление по id
+     * The method searches and returns the ad by id
      *
      * @param id
      * @return FullAdsDto
@@ -42,7 +42,7 @@ public interface AdService {
     FullAdsDto getFullAdDto(Integer id);
 
     /**
-     * Метод удаляет объявление по id
+     * The method removes the ad by id
      *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -50,7 +50,7 @@ public interface AdService {
     boolean removeAdDto(Integer id);
 
     /**
-     * Метод редактирует объявление по id
+     * The method edits the ad by id
      *
      * @param id
      * @param createAdsDto
@@ -60,7 +60,7 @@ public interface AdService {
     AdsDto updateAdDto(Integer id, CreateAdsDto createAdsDto);
 
     /**
-     * Метод ищет и возвращает список всех объявлений авторизированного пользователя
+     * The method searches and returns the list of all the authorised user`s ads
      *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -68,7 +68,7 @@ public interface AdService {
     ResponseWrapperAdsDto getAllUserAdsDto();
 
     /**
-     * Метод обновляет изображение к объявлению по id
+     * The method updates the ad`s image by id
      *
      * @param id
      * @param image
@@ -77,7 +77,7 @@ public interface AdService {
     void updateImageAdDto(Integer id, MultipartFile image);
 
     /**
-     * Метод проверяет наличие доступа к объявлению по id
+     * The method checks for access to the ad by id
      *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl

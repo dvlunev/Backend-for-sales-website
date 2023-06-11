@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Класс - исключение, описывающий ситуацию,
- * когда пользователь не прошел аутентификацию и поэтому не имеет права доступа к ресурсу
+ * The class is an exception that describes the situation,
+ * when the user is not authenticated and therefore does not have the right to access the resource
  *
  * @see ru.skypro.homework.entity.User
  * @see ru.skypro.homework.service.impl.UserServiceImpl

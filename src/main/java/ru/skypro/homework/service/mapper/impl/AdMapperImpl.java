@@ -12,10 +12,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Класс - сервис-маппер, содержащий реализацию интерфейса {@link AdMapper}
+ * Service-mapper class containing the implementation of the interface {@link AdMapper}
  */
 @Component
 public class AdMapperImpl implements AdMapper {
+
+    /**
+     * The method that converts an object of the Ad class into an object of the AdDto class.
+     *
+     * @param ad
+     * @return AdsDto
+     */
     @Override
     public AdsDto mapAdToAdDto(Ad ad) {
         AdsDto adsDto = new AdsDto();
@@ -27,6 +34,12 @@ public class AdMapperImpl implements AdMapper {
         return adsDto;
     }
 
+    /**
+     * The method that converts an object of the AdsDto class into an object of the Ad class.
+     *
+     * @param adsDto
+     * @return Ad
+     */
     @Override
     public Ad mapAdsDtoToAd(AdsDto adsDto) {
         Ad mappedAd = new Ad();
@@ -38,6 +51,12 @@ public class AdMapperImpl implements AdMapper {
         return mappedAd;
     }
 
+    /**
+     * The method that converts an object of the Ad class into an object of the FullAdsDTo class.
+     *
+     * @param ad
+     * @return FullAdsDTo
+     */
     @Override
     public FullAdsDto mapAdToFullAdsDTo(Ad ad) {
         FullAdsDto fullAdsDto = new FullAdsDto();
@@ -53,6 +72,12 @@ public class AdMapperImpl implements AdMapper {
         return fullAdsDto;
     }
 
+    /**
+     * The method that converts an object of the CreateAdsDto class into an object of the Ad class.
+     *
+     * @param createAdsDto
+     * @return Ad
+     */
     @Override
     public Ad mapCreatedAdsDtoToAd(CreateAdsDto createAdsDto) {
         Ad ad = new Ad();
@@ -62,6 +87,12 @@ public class AdMapperImpl implements AdMapper {
         return ad;
     }
 
+    /**
+     * The method that converts a Collection of the Ad classes into a Collection of the AdsDto classes.
+     *
+     * @param adCollection
+     * @return Collection<AdsDto>
+     */
     @Override
     public Collection<AdsDto> mapAdListToAdDtoList(Collection<Ad> adCollection) {
         List<AdsDto> dtoList = new ArrayList<AdsDto>(adCollection.size());

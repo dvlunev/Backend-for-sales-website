@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Класс, описывающий объявление
+ * The class describes an ad
  *
  * @see Image
  * @see User

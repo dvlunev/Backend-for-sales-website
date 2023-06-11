@@ -3,20 +3,20 @@ package ru.skypro.homework.dto;
 import lombok.Data;
 
 /**
- * Класс DTO для передачи информации о комментарии
+ * DTO class for passing information about a comment
  */
 @Data
 public class CommentDto {
-    //id комментария
+    //comment id
     private int pk;
-    //id автора комментария
+    //comment author`s id
     private int author;
-    //ссылка на аватар автора комментария
+    //link commenter`s image
     private String authorImage;
-    //имя создателя комментария
+    //commenter`s name
     private String authorFirstName;
-    //дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
+    //comment`s date and time creating in milliseconds from 00:00:00 01.01.1970
     private long createdAt;
-    //текст комментария
+    //comment text
     private String text;
 }

@@ -20,6 +20,12 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The service class containing the implementation of the interface {@link AdService}
+ *
+ * @see Ad
+ * @see AdRepository
+ */
 @Service
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
@@ -30,7 +36,7 @@ public class AdServiceImpl implements AdService {
     private final AdMapper adMapper;
 
     /**
-     * Метод ищет и возвращает список всех объявлений
+     * The method searches and returns a list of all ads
      *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -42,7 +48,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод создает объявление
+     * The method creates an ad
      *
      * @param adDto
      * @param image
@@ -60,7 +66,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод ищет и возвращает объявление по id
+     * The method searches for and returns the ad by id
      *
      * @param id
      * @return FullAdsDto
@@ -73,7 +79,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод удаляет объявление по id
+     * The method removes the ad by id
      *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -88,7 +94,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод редактирует объявление по id
+     * The method edits the ad by id
      *
      * @param id
      * @param createAdsDto
@@ -108,7 +114,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод ищет и возвращает список всех объявлений авторизированного пользователя
+     * The method searches and returns a list of all the authorized user's ads
      *
      * @return ResponseWrapperAdsDto
      * @see ru.skypro.homework.service.impl.AdServiceImpl
@@ -122,7 +128,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод обновляет изображение к объявлению по id
+     * The method updates the ad`s image by id
      *
      * @param id
      * @param image
@@ -137,7 +143,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * Метод проверяет наличие доступа к объявлению по id
+     * The method checks for access to the ad by id
      *
      * @param id
      * @see ru.skypro.homework.service.impl.AdServiceImpl

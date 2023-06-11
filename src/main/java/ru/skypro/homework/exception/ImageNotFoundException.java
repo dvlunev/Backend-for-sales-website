@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Класс - исключение, описывающий ситуацию, когда изображение не найдено
+ * The class is an exception that describes the situation when an image is not found
  *
  * @see ru.skypro.homework.entity.Image
  * @see ru.skypro.homework.service.impl.ImageServiceImpl

@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.Collection;
 
 /**
- * Класс DTO для передачи списка объявлений
+ * DTO class for passing list of ads
  */
 @Data
 public class ResponseWrapperAdsDto {
-    //общее количество объявлений
+    //total ads count
     private int count;
     private Collection<AdsDto> results;
 

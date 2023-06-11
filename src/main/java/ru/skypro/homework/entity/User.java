@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
- * Класс, описывающий пользователя
+ * The class describes a user
  *
  * @see Image
  * @see Ad

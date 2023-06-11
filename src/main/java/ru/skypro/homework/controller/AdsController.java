@@ -19,7 +19,7 @@ import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.ImageService;
 
 /**
- * Класс - контроллер для работы с объявлениями и комментариями, содержащий набор API endpoints
+ * Class - controller for working with ads and comments, containing a set of API endpoints
  *
  * @see AdService
  * @see CommentService
@@ -36,8 +36,8 @@ public class AdsController {
     private final ImageService imageService;
 
     @Operation(
-            summary = "Получить все объявления",
-            tags = "Объявления",
+            summary = "Get all ads",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -50,8 +50,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Добавить объявление",
-            tags = "Объявления",
+            summary = "Add ad",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -67,7 +67,7 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Получить комментарии объявления",
+            summary = "Get comments of the ad",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -75,11 +75,11 @@ public class AdsController {
                     }),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
             },
-            tags = "Комментарии"
+            tags = "Comments"
     )
     @GetMapping("/{id}/comments")
     public ResponseEntity<ResponseWrapperCommentDto> getComments(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
         ResponseWrapperCommentDto comments = commentService.getCommentsDto(id);
@@ -87,7 +87,7 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Добавить комментарий к объявлению",
+            summary = "Add comment to ad",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -97,11 +97,11 @@ public class AdsController {
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content()),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content())
             },
-            tags = "Комментарии"
+            tags = "Comments"
     )
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDto> addComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @RequestBody CommentDto commentDto) {
@@ -110,8 +110,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Получить информацию об объявлении",
-            tags = "Объявления",
+            summary = "Get information about the ad",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -121,15 +121,15 @@ public class AdsController {
             })
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAds(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
         return ResponseEntity.ok(adService.getFullAdDto(id));
     }
 
     @Operation(
-            summary = "Удалить объявление",
-            tags = "Объявления",
+            summary = "Remove ad",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content", content = @Content()),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content()),
@@ -137,7 +137,7 @@ public class AdsController {
             })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAd(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id) {
         adService.removeAdDto(id);
@@ -145,8 +145,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Обновить информацию об объявлении",
-            tags = "Объявления",
+            summary = "Update ad information",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -158,7 +158,7 @@ public class AdsController {
             })
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(required = true)
@@ -167,18 +167,18 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Удалить комментарий",
+            summary = "Remove comment",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "401", description = "Unauthorized"),
                     @ApiResponse(responseCode = "403", description = "Forbidden"),
                     @ApiResponse(responseCode = "404", description = "Not Found")
             },
-            tags = "Комментарии"
+            tags = "Comments"
     )
     @DeleteMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer adId,
             @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH,
@@ -191,7 +191,7 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Обновить комментарий",
+            summary = "Update comment",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -201,14 +201,14 @@ public class AdsController {
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content()),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
             },
-            tags = "Комментарии"
+            tags = "Comments"
     )
     @PatchMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer adId,
-            @Parameter(description = "id комментария", required = true, in = ParameterIn.PATH,
+            @Parameter(description = "id of the comment", required = true, in = ParameterIn.PATH,
                     schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer commentId,
             @RequestBody CommentDto commentDto) {
@@ -217,8 +217,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Получить объявления авторизованного пользователя",
-            tags = "Объявления",
+            summary = "Get authorized user ads",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -234,8 +234,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Обновить картинку объявления",
-            tags = "Объявления",
+            summary = "Update ad image",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
@@ -245,7 +245,7 @@ public class AdsController {
             })
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateImage(
-            @Parameter(description = "id объявления", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
+            @Parameter(description = "id of the ad", required = true, in = ParameterIn.PATH, schema = @Schema(type = "integer", format = "int32"))
             @PathVariable Integer id,
             @Parameter(schema = @Schema(type = "string", format = "binary"))
             @RequestPart MultipartFile image) {
@@ -254,8 +254,8 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "Получить картинку объявления",
-            tags = "Объявления",
+            summary = "Get ad image",
+            tags = "Ads",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())

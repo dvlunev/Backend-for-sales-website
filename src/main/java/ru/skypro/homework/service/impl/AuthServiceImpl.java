@@ -19,7 +19,7 @@ import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 /**
- * Класс - сервис, содержащий реализацию интерфейса {@link AuthService}
+ * The service class containing the implementation of the interface {@link AuthService}
  */
 @Service
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
 
     /**
-     * Метод производит авторизацию пользователя в системе {@link UserServiceImpl#findAuthUser()}
+     * The method authorizes a user in the system {@link UserServiceImpl#findAuthUser()}
      *
      * @param userName
      * @param password
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     /**
-     * Метод регистрирует пользователя в системе:
+     * The method registers the user in the system:
      * {@link UserMapper#mapToUser(UserDto)}, {@link PasswordEncoder#encode(CharSequence)}
      *
      * @param registerReqDto
@@ -65,11 +65,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     /**
-     * Метод меняет пароль {@link PasswordEncoder#encode(CharSequence)}
+     * The method changes the password {@link PasswordEncoder#encode(CharSequence)}
      *
      * @param newPasswordDto
-     * @throws UserNotFoundException     если пользователь не найден
-     * @throws UserUnauthorizedException если пользователь не аутентифицирован и поэтому не имеет права доступа к ресурсу
+     * @throws UserNotFoundException     if the user is not found
+     * @throws UserUnauthorizedException if the user is not authenticated and therefore does not have the right to access the resource
      */
     @Override
     public void changePassword(NewPasswordDto newPasswordDto) {

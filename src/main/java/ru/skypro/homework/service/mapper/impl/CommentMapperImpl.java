@@ -9,10 +9,17 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 /**
- * Класс - сервис-маппер, содержащий реализацию интерфейса {@link CommentMapper}
+ * Service-mapper class containing the implementation of the interface {@link CommentMapper}
  */
 @Component
 public class CommentMapperImpl implements CommentMapper {
+
+    /**
+     * The method that converts an object of the Comment class into an object of the CommentDto class.
+     *
+     * @param comment
+     * @return CommentDto
+     */
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
@@ -25,6 +32,12 @@ public class CommentMapperImpl implements CommentMapper {
         return commentDto;
     }
 
+    /**
+     * The method that converts an object of the CommentDto class into an object of the Comment class.
+     *
+     * @param commentDto
+     * @return Comment
+     */
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
         mappedComment.setId(commentDto.getPk());

@@ -3,13 +3,13 @@ package ru.skypro.homework.dto;
 import lombok.Data;
 
 /**
- * Класс DTO для передачи данных при авторизации пользователя
+ * DTO class for passing data during user authorization
  */
 @Data
 public class LoginReqDto {
-    //пароль
+    //password
     private String password;
-    //логин
+    //login
     private String username;
 
 }

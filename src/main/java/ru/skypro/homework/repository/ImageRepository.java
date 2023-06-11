@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.entity.Image;
 
 /**
- * Интерфейс, содержащий методы для работы с базой данных изображений
+ * Interface containing methods for working with the image database
  *
  * @see Image
  * @see ru.skypro.homework.service.ImageService

@@ -3,7 +3,7 @@ package ru.skypro.homework.dto;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Класс является перечислением Role, представляет собой роли пользователя для управления доступом в приложении.
+ * The class is a Role enum, represents the user's roles for access control in the application
  *
  * @see GrantedAuthority
  */

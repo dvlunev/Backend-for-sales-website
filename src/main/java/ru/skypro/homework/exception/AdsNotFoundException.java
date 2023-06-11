@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Класс - исключение, описывающий ситуацию, когда объявление не найдено
+ * The class is an exception that describes the situation when an ad is not found
  *
  * @see ru.skypro.homework.entity.Ad
  * @see ru.skypro.homework.service.impl.AdServiceImpl

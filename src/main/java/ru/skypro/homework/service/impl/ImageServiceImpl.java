@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * Класс - сервис, содержащий реализацию интерфейса {@link ImageService}
+ * The service class containing the implementation of the interface {@link ImageService}
  *
  * @see Image
  * @see ImageRepository
@@ -24,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
 
     /**
-     * Метод сохраняет картинку в базу данных
+     * The method saves an image to the database
      *
      * @param image
      * @return {@link ru.skypro.homework.repository.ImageRepository#saveAndFlush(Object)}
@@ -43,7 +43,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * Метод обновляет картинку в базе данных
+     * The method updates the image in the database
      *
      * @param newImage
      * @param oldImage
@@ -61,7 +61,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * Метод достает картинку из базы данных по ее id {@link ru.skypro.homework.repository.ImageRepository#findById(Object)}
+     * The method gets an image from database by its id {@link ru.skypro.homework.repository.ImageRepository#findById(Object)}
      *
      * @param id
      * @throws ru.skypro.homework.exception.ImageNotFoundException

@@ -12,7 +12,7 @@ import ru.skypro.homework.service.UserService;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
- * Класс для конфигурации безопасности.
+ * The class for the security configuration
  */
 @Configuration
 @EnableWebSecurity
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Создает экземпляр кодировщика паролей и задает силу.
+     * The method creates the password encoder and sets the strength.
      *
      * @return PasswordEncoder
      */
@@ -44,10 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Метод конфигурирует безопасность для HTTP запросов, определяет права доступа и авторизацию.
+     * The method configures security for HTTP requests, defines access rights and authorization.
      *
      * @param http
-     * @throws Exception в случае возникновения ошибок при настройке безопасности.
+     * @throws Exception in case of errors during security settings.
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {

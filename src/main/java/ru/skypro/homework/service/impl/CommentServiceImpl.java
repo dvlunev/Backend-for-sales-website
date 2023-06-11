@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс - сервис, содержащий реализацию интерфейса {@link CommentService}
+ * The service class containing the implementation of the interface {@link CommentService}
  *
  * @see Comment
  * @see CommentRepository
@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserService userService;
 
     /**
-     * Метод ищет и возвращает список всех комментариев {@link ResponseWrapperCommentDto} к объявлению по id объявления
+     * The method searches and returns a list of all ad`s comments by ad id {@link ResponseWrapperCommentDto}
      *
      * @param adId
      * @return {@link CommentRepository#findAll()}, {@link CommentMapper#mapToCommentDto(Comment)},
@@ -58,13 +58,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Метод создает комментарий к объявлению по id объявления
+     * The method creates a comment to the ad by ad id
      *
      * @param adId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
-     * @throws AdsNotFoundException  если объявление по указанному id не найдено
-     * @throws UserNotFoundException если пользователь не найден
+     * @throws AdsNotFoundException  if the ad by id is not found
+     * @throws UserNotFoundException if the user is not found
      * @see CommentMapper
      */
     @Override
@@ -79,12 +79,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Метод удаляет комментарий к объявлению по id объявления
+     * The method removes the ad`s comment by ad`s id
      *
      * @param adId
      * @param commentId
      * @return {@link CommentRepository#delete(Object)}
-     * @throws UserForbiddenException если нет прав на удаление комментария
+     * @throws UserForbiddenException if there are no rights to remove the comment
      */
     @Override
     public boolean removeCommentDto(Integer adId, Integer commentId) {
@@ -96,14 +96,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Метод редактирует комментарий к объявлению по id
+     * The method edits the ad`s comment by id
      *
      * @param adId
      * @param commentId
      * @param commentDto
      * @return {@link CommentRepository#save(Object)}, {@link CommentMapper#mapToCommentDto(Comment)}
-     * @throws CommentNotFoundException если комментарий не найден
-     * @throws UserForbiddenException   если нет прав на обновление комментария
+     * @throws CommentNotFoundException if the comment is not found
+     * @throws UserForbiddenException   if there are no rights of comment updating
      * @see CommentMapper
      */
     @Override
@@ -118,10 +118,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Метод проверяет наличие доступа к комментарию по id
+     * The method checks for access to the comment by id
      *
      * @param id
-     * @throws CommentNotFoundException если комментарий не найден
+     * @throws CommentNotFoundException if the comment is not found
      * @see UserService
      */
     @Override

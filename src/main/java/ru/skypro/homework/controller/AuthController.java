@@ -23,7 +23,7 @@ import ru.skypro.homework.service.AuthService;
 import static ru.skypro.homework.dto.Role.USER;
 
 /**
- * Класс - контроллер для работы с регистрацией и авторизацией пользователя, содержащий набор API endpoints
+ * Class - controller for working with user registration and authorization, containing a set of API endpoints
  *
  * @see AuthService
  */
@@ -35,14 +35,14 @@ public class AuthController {
     private final AuthService authService;
 
     @Operation(
-            summary = "Авторизация пользователя",
-            description = "Авторизация пользователя из тела запроса",
-            tags = "Авторизация"
+            summary = "User authorization",
+            description = "User authorization from the request body",
+            tags = "Authorization"
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "OK. Пользователь авторизирован",
+                    description = "OK. User is authorized",
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -65,9 +65,9 @@ public class AuthController {
     }
 
     @Operation(
-            summary = "Регистрация пользователя",
-            description = "Регистрация пользователя из тела запроса",
-            tags = "Регистрация"
+            summary = "User registration",
+            description = "User registration from the request body",
+            tags = "Registration"
     )
     @ApiResponses(value = {
             @ApiResponse(

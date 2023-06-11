@@ -9,13 +9,13 @@ import ru.skypro.homework.service.mapper.UserMapper;
 import java.util.Optional;
 
 /**
- * Класс - сервис-маппер, содержащий реализацию интерфейса {@link UserMapper}
+ * Service-mapper class containing the implementation of the interface {@link UserMapper}
  */
 @Component
 public class UserMapperImpl implements UserMapper {
 
     /**
-     * Метод, преобразующий объект класса User в объект класса UserDto.
+     * The method that converts an object of the User class into an object of the UserDto class.
      *
      * @param user
      * @return UserDto
@@ -33,7 +33,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     /**
-     * Метод, преобразующий объект класса UserDto в объект класса User.
+     * The method that converts an object of the UserDto class into an object of the User class.
      *
      * @param userDto
      * @return User
@@ -50,7 +50,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     /**
-     * Метод, преобразующий объект класса RegisterReqDto в объект класса User.
+     * The method that converts an object of the RegisterReqDto class into an object of the User class.
      *
      * @param registerReqDto
      * @return User

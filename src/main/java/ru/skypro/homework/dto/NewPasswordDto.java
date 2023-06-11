@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Класс DTO для передачи данных при смене пароля пользователя
+ * DTO class for passing data during user password change
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewPasswordDto {
-    //текущий пароль
+    //current password
     private String currentPassword;
-    //новый пароль
+    //new password
     private String newPassword;
 }
